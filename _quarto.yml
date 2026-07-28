@@ -4,6 +4,8 @@ project:
 book:
   title: "Risk Analysis"
   author: "Pairote Sat"
+  chapters:
+    - index.qmd  
 
 format:
   html:
