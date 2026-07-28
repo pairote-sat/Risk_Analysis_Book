@@ -27,3 +27,8 @@ renv/staging/
 .DS_Store
 /.quarto/
 **/*.quarto_ipynb
+
+# Draft Chapters
+# Temporary rendered output for draft chapters
+drafts/_output/
+

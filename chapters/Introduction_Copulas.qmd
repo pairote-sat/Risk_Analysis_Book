@@ -1,0 +1,1123 @@
+---
+title: "Introduction to Copulas"
+---
+
+## Setting the Stage
+
+### A Real-World Problem
+
+Imagine you are the chief actuary of an insurance company that sells both **home insurance** and **motor insurance**.
+
+On most days, claims from these two portfolios appear to arise independently. Homeowners report losses caused by burst pipes or accidental damage, while motorists file claims following traffic accidents. Since these events seem unrelated, it is tempting to model the two portfolios separately.
+
+Now imagine that a severe storm sweeps across the region.
+
+Roofs are damaged, trees fall onto houses, roads become flooded, and driving conditions rapidly deteriorate. Within hours, the company begins receiving claims from both home and motor policyholders. What once appeared to be two separate sources of risk now seems closely connected.
+
+As the company's actuary, you are asked to estimate the **total loss** arising from this event.
+
+At first, this may seem straightforward. If you already have suitable probability models for home insurance losses and motor insurance losses, why not simply combine them?
+
+The answer is more subtle than it first appears.
+
+The two portfolios may experience **large losses simultaneously**, especially during extreme events. Ignoring this relationship could lead to an underestimation of the company's aggregate losses, with important consequences for capital requirements, reinsurance decisions, solvency assessments, and risk management.
+
+This naturally raises an important question:
+
+> **How can we model not only each type of loss, but also the way they occur together?**
+
+Answering this question is one of the primary motivations for studying **copulas**.
+
+::: {.callout-note}
+## Observation
+
+The individual distributions of home and motor insurance losses tell us **how each portfolio behaves separately**, but they do not describe **how the portfolios behave together**.
+:::
+
+### Why Do We Need Copulas?
+
+The severe storm illustrates an important feature of insurance risks: **losses from different portfolios do not always occur independently**.
+
+When weather conditions are normal, home insurance and motor insurance claims may appear to fluctuate separately. During an extreme event, however, both portfolios can experience unusually large losses at the same time.
+
+Suppose an actuary already has suitable probability models for:
+
+* the distribution of home insurance losses, and
+* the distribution of motor insurance losses.
+
+Knowing these individual distributions is an important first step, but it is not sufficient.
+
+To answer practical questions such as
+
+* *What is the probability that both portfolios experience large losses simultaneously?*
+* *How likely is the company's total loss to exceed a critical threshold?*
+* *How much capital should the insurer hold to remain solvent during extreme events?*
+
+we must also understand **how the two risks are related**.
+
+At first, it may seem tempting to assume that the two portfolios are independent. Unfortunately, this assumption often understates the likelihood of large simultaneous losses, leading to an underestimation of aggregate risk.
+
+What we need is a mathematical framework that allows us to model two separate aspects of risk:
+
+1. **the behaviour of each individual loss distribution**, and
+2. **the dependence structure that links them together.**
+
+This separation is one of the central ideas in modern multivariate risk modelling.
+
+The mathematical tool that makes this possible is called a **copula**.
+
+
+::: {.callout-tip}
+## Think Before Reading Further
+
+Suppose the probability distributions of home and motor insurance losses are known exactly.
+
+Is this information sufficient to determine the probability that **both portfolios experience unusually large losses at the same time**?
+
+Discuss your answer before continuing.
+:::
+
+
+
+## The Big Idea: Separating Individual Risk from Shared Risk
+
+Returning to our insurance portfolio example, suppose that an analysis of historical claims data reveals two key characteristics.
+
+* Home insurance claim amounts are highly skewed, with many small claims and a few catastrophic losses.
+* Motor insurance claims have a completely different distribution, with their own pattern of small accidents and occasional major collisions.
+
+These two types of insurance clearly behave differently. They should **not** be forced to follow the same probability distribution.
+
+However, another question is equally important.
+
+> **Do customers who make large home insurance claims also tend to make large motor insurance claims?**
+
+This question is **not** about the individual behaviour of each insurance product.
+
+It is about **how the two risks move together.**
+
+This distinction is the central motivation behind copulas.
+
+
+
+### Two Different Questions
+
+When modelling several random variables simultaneously, we are actually trying to answer two separate questions.
+
+#### Question 1: How does each variable behave individually?
+
+For example,
+
+* What distribution best describes home insurance claim amounts?
+* What distribution best describes motor insurance claim amounts?
+
+These are called the **marginal distributions**.
+
+Each marginal describes a variable **by itself**, without considering the other variable.
+
+
+#### Question 2: How do the variables move together?
+
+Once the marginal distributions have been chosen, another question remains.
+
+* Do large home claims tend to occur together with large motor claims?
+* Are extreme losses likely to happen at the same time?
+* Is the dependence weak, moderate, or very strong?
+
+These questions describe the **dependence structure**.
+
+Notice that dependence is **different** from the shapes of the individual distributions.
+
+Two variables may have completely different marginal distributions but still exhibit very similar patterns of dependence.
+
+::: {.callout-tip}
+## Key Insight
+
+When modelling several random variables, we are solving **two separate problems**:
+
+1. How does each variable behave on its own?
+2. How are the variables related?
+
+A copula allows us to answer these questions **independently**.
+:::
+
+
+
+### Why Classical Multivariate Models Are Limiting
+
+Traditional multivariate models often combine these two questions into a single mathematical model.
+
+For example, the **bivariate normal distribution** assumes that
+
+* each variable follows a normal distribution, **and**
+* their dependence is determined by a correlation coefficient.
+
+This works well when both assumptions are reasonable.
+
+Unfortunately, insurance data rarely behave this way.
+
+Claim amounts are usually
+
+* highly skewed,
+* heavy-tailed, and
+* sometimes bounded below by zero.
+
+If we insist on using a multivariate normal model, we may end up using an unrealistic marginal distribution simply because we want to model dependence.
+
+In practice, this forces us into an unnecessary compromise.
+
+::: {.callout-warning}
+## Common Misconception
+
+Many students think that dependence can be described completely by a correlation coefficient.
+
+In reality, two datasets can have the **same correlation** but very different dependence structures, especially during extreme events.
+
+Copulas provide a much richer description of dependence.
+:::
+
+
+
+### The Copula Idea
+
+Copulas solve this problem by **separating** these two modelling tasks.
+
+Instead of building one large model that describes everything at once, we model
+
+1. the marginal distribution of each variable, and
+2. the dependence structure that links them together.
+
+This separation gives us enormous flexibility.
+
+For example,
+
+* home insurance claims might follow a Gamma distribution,
+* motor insurance claims might follow a Lognormal distribution,
+
+while a single copula describes how these two risks are connected.
+
+Each component can be chosen independently to best represent the data.
+
+
+
+### An Analogy: The Building and the Framework
+
+A useful analogy is constructing a building.
+
+The individual rooms may all look different.
+
+* Some are large.
+* Some are small.
+* Some are offices.
+* Others are meeting rooms.
+
+These rooms represent the **marginal distributions**.
+
+The steel framework that connects all of these rooms into one stable building represents the **copula**.
+
+Changing the size or shape of one room does not necessarily require changing the entire framework.
+
+Likewise, we can choose different marginal distributions without changing the dependence structure that links them together.
+
+
+
+### Looking Only at Dependence
+
+To study dependence alone, we first remove the effects of the marginal distributions.
+
+Instead of comparing claim amounts measured in dollars, we transform every observation into its **percentile rank**, placing all observations on a common scale from 0 to 1.
+
+After this transformation,
+
+* the original units disappear,
+* the different marginal distributions disappear,
+* only the pattern of dependence remains.
+
+This transformed data live on the **unit square**, where each point records the percentile positions of the two variables rather than their original values.
+
+A copula is precisely the mathematical object that describes this dependence pattern on the unit square.
+
+
+
+### Why This Matters
+
+Separating marginal behaviour from dependence gives actuaries much greater modelling flexibility.
+
+It allows us to
+
+* choose the most appropriate distribution for each insurance product,
+* model dependence independently,
+* capture complex relationships that ordinary correlation may miss, and
+* better understand how risks behave together during extreme events.
+
+This flexibility is one of the main reasons why copulas have become an essential tool in modern actuarial science, finance, and risk management.
+
+
+
+::: {.callout-important}
+## Key Takeaway
+
+A copula separates a multivariate distribution into **two independent components**:
+
+* **Marginal distributions**, which describe how each variable behaves individually.
+* **The copula**, which describes how those variables are connected through their dependence structure.
+
+This separation allows us to model each component using the method that best reflects the underlying data.
+
+:::
+
+
+
+
+## Mathematical Foundations
+
+
+Having established the conceptual motivation for copulas, we now develop the mathematical theory that underpins their construction.
+
+The central objective of copula theory is to provide a rigorous framework for modeling multivariate distributions by separating two distinct components:
+
+1. the marginal distribution of each random variable; and
+2. the dependence structure linking those variables.
+
+This separation is one of the defining features of copula models. Rather than specifying a multivariate distribution directly, copula theory allows the marginal distributions and the dependence structure to be modeled independently before combining them into a valid joint distribution.
+
+To develop this framework, we begin with the mathematical foundations of multivariate distribution functions and probability integral transforms. These concepts lead naturally to the definition of copulas and culminate in Sklar's Theorem, which provides the theoretical basis for constructing multivariate models from arbitrary marginal distributions.
+
+
+:::{.callout-important}
+## Learning Goal
+
+By the end of this section, you should be able to
+
+- describe a joint distribution function,
+- explain the role of marginal distributions,
+- state the main idea of Sklar's Theorem, and
+- understand why a copula is a joint distribution with uniform marginals.
+:::
+
+
+
+### Step 1: Modelling Several Risks Together
+
+In many actuarial applications, multiple risks are observed simultaneously. For example, consider
+
+- $X =$ home insurance claim amount,
+- $Y =$ motor insurance claim amount.
+
+When analyzing these risks jointly, their individual distributions alone are insufficient. In addition to understanding the behaviour of each variable separately, we require a probabilistic model that describes their **simultaneous behaviour**.
+
+This leads to the concept of a **joint distribution function**, which forms the foundation of multivariate probability models.
+
+::: {#def-Joint-Distribution-Function}
+## Joint Distribution Function
+
+Let $X$ and $Y$ be two random variables. Their **joint cumulative distribution function (joint CDF)** is defined by
+
+$$
+F_{X,Y}(x,y)
+=
+P(X \le x,\; Y \le y),
+\qquad
+-\infty < x,y < \infty.
+$$
+:::
+
+
+The value of $F_{X,Y}(x,y)$ represents the probability that **both** events occur simultaneously:
+
+- the home insurance claim does not exceed $x$; and
+- the motor insurance claim does not exceed $y$.
+
+More generally, let $(X_1,\ldots,X_d)$ be a $d$-dimensional random vector. Its joint cumulative distribution function is
+
+$$
+F(x_1,\ldots,x_d)
+=
+P(X_1 \le x_1,\ldots,X_d \le x_d).
+$$
+
+The joint distribution function completely characterizes the probabilistic behaviour of the random vector. It contains information about both the marginal behaviour of each variable and the dependence structure describing how the variables vary together.
+
+
+
+:::{.callout-note}
+## Interpretation
+
+Think of the joint distribution as answering questions such as
+
+> *"What is the probability that a customer's home insurance claim is less than \$5,000 **and** their motor insurance claim is less than \$2,000?"*
+
+The joint distribution describes the behaviour of the entire insurance portfolio rather than a single line of business.
+:::
+
+
+
+<!-- #### Why Classical Multivariate Models Are Restrictive -->
+
+<!-- Classical multivariate distributions, such as the multivariate normal distribution, describe both -->
+
+<!-- * the marginal distributions, and -->
+<!-- * the dependence structure, -->
+
+<!-- using one mathematical model. -->
+
+<!-- This works well when every variable naturally follows the same distributional family. -->
+
+<!-- Insurance data, however, rarely satisfy this assumption. -->
+
+<!-- For example, -->
+
+<!-- | Variable               | Suitable Distribution | -->
+<!-- | ---------------------- | --------------------- | -->
+<!-- | Home insurance claims  | Gamma                 | -->
+<!-- | Motor insurance claims | Lognormal             | -->
+<!-- | Claim frequency        | Poisson               | -->
+
+<!-- Forcing all of these variables into one multivariate normal model often produces unrealistic results. -->
+
+<!-- What we really want is -->
+
+<!-- * the **best distribution for each variable**, and -->
+<!-- * an independent way of modelling how they are related. -->
+
+<!-- This is precisely what copulas provide. -->
+
+
+
+<!-- :::{.callout-tip} -->
+<!-- ## Key Insight -->
+
+<!-- A copula does **not** replace marginal distributions. -->
+
+<!-- Instead, it connects them. -->
+
+<!-- You may think of a copula as the mathematical "glue" that joins individually selected marginal distributions into one multivariate model. -->
+<!-- ::: -->
+
+### Step 2: Marginal Distribution Functions
+
+Although the joint distribution function completely describes the behaviour of a random vector, it is often useful to examine the distribution of each component individually. These individual distributions are called **marginal distributions**.
+
+
+::: {#def-Marginal-Distribution-Function}
+## Marginal Distribution Function
+
+Let $(X,Y)$ be a random vector with joint cumulative distribution function
+
+$$
+F_{X,Y}(x,y)
+=
+P(X \le x,\; Y \le y).
+$$
+
+The **marginal cumulative distribution functions (marginal CDFs)** of $X$ and $Y$ are defined as
+
+$$
+F_X(x)
+=
+P(X \le x),
+$$
+
+and
+
+$$
+F_Y(y)
+=
+P(Y \le y).
+$$
+
+:::
+
+The marginal distribution functions can be obtained from the joint distribution by allowing the other variable to take any possible value:
+
+$$
+F_X(x)
+=
+\lim_{y \to \infty} F_{X,Y}(x,y),
+$$
+
+and
+
+$$
+F_Y(y)
+=
+\lim_{x \to \infty} F_{X,Y}(x,y).
+$$
+
+More generally, for a $d$-dimensional random vector $(X_1,\ldots,X_d)$, the marginal distribution of $X_i$ is obtained by integrating or summing over the remaining variables, depending on whether the variables are continuous or discrete.
+
+The marginal distribution describes the probabilistic behaviour of a single random variable without reference to the other variables in the model.
+
+::: {.callout-note title="Insurance Interpretation"}
+
+In an insurance portfolio,
+
+- the marginal distribution of the **home insurance claim amount** describes the uncertainty in home claims alone;
+- the marginal distribution of the **motor insurance claim amount** describes the uncertainty in motor claims alone.
+
+At this stage, the marginal distributions provide **no information about how the two risks are related**. Their dependence is contained in the joint distribution and, later, will be represented explicitly by a copula.
+
+:::
+
+
+### Step 3: Probability Integral Transform
+
+One of the key ideas underlying copula theory is that **every continuous random variable can be transformed to a common scale**. Regardless of its original distribution, a random variable can be converted into a standard uniform random variable using its cumulative distribution function.
+
+This remarkable result is known as the **Probability Integral Transform**. It provides the mathematical foundation for copulas by allowing variables with different marginal distributions to be represented on the same scale.
+
+
+::: {.theorem #thm-probability-integral-transform}
+## Probability Integral Transform
+
+Let $X$ be a continuous random variable with cumulative distribution function (CDF) $F_X$. Define
+
+$$
+U = F_X(X).
+$$
+
+Then
+
+$$
+U \sim \operatorname{Uniform}(0,1).
+$$
+
+In other words, applying the cumulative distribution function to a continuous random variable transforms it into a standard uniform random variable.
+
+:::
+
+
+
+::: {.proof}
+
+To show that $U$ follows a standard uniform distribution, we derive its cumulative distribution function.
+
+For any $0 \le u \le 1$,
+
+$$
+\begin{aligned}
+P(U \le u)
+&= P(F_X(X) \le u).
+\end{aligned}
+$$
+
+Since $F_X$ is continuous and strictly increasing, it possesses an inverse function $F_X^{-1}$. Therefore,
+
+$$
+\begin{aligned}
+P(F_X(X)\le u)
+&=
+P(X \le F_X^{-1}(u)).
+\end{aligned}
+$$
+
+Using the definition of the cumulative distribution function,
+
+$$
+\begin{aligned}
+P(X \le F_X^{-1}(u))
+&=
+F_X(F_X^{-1}(u))
+\
+&=
+u.
+\end{aligned}
+$$
+
+Hence,
+
+$$
+P(U \le u)=u,
+\qquad
+0\le u\le1,
+$$
+
+which is precisely the cumulative distribution function of a standard uniform random variable. Therefore,
+
+$$
+U \sim \operatorname{Uniform}(0,1).
+$$
+
+:::
+
+#### Interpretation
+
+The Probability Integral Transform shows that the original scale of a random variable is no longer important. Whether a variable follows a Gamma, Lognormal, Weibull, Pareto, or any other continuous distribution, applying its cumulative distribution function maps every observation onto the common interval $[0,1]$.
+
+Consequently,
+
+* variables with completely different marginal distributions become directly comparable;
+* every transformed variable has the same standard uniform distribution; and
+* the original marginal behaviour is encoded in the transformation itself.
+
+This common representation is the key reason copulas can model dependence independently of the marginal distributions.
+
+::: {.callout-important title="Key Insight"}
+
+The Probability Integral Transform **does not remove dependence** between random variables.
+
+Instead, it removes differences in their marginal distributions while preserving the underlying dependence structure.
+
+:::
+
+#### Insurance Illustration
+
+Consider two insurance risks:
+
+* $X =$ Home insurance claim amount, with a Gamma distribution;
+* $Y =$ Motor insurance claim amount, with a Lognormal distribution.
+
+Applying the Probability Integral Transform gives
+
+$$
+U = F_X(X),
+\qquad
+V = F_Y(Y).
+$$
+
+Although $X$ and $Y$ follow different probability distributions, both transformed variables satisfy
+
+$$
+U,V \sim \operatorname{Uniform}(0,1).
+$$
+
+The variables are now expressed on the same scale, making it possible to model only their dependence. This is precisely the setting in which copulas operate.
+
+#### Why This Matters for Copulas
+
+The Probability Integral Transform separates a multivariate model into two components:
+
+1. **Marginal distributions**, which determine the behaviour of each variable individually; and
+2. **Uniform random variables**, which retain the dependence structure while removing the influence of the marginal distributions.
+
+In the next section, we will use these uniformly distributed variables to define a **copula**, which describes the dependence structure independently of the marginal distributions.
+
+
+
+
+### Step 4: Copulas
+
+The Probability Integral Transform shows that every continuous random variable can be transformed into a standard uniform random variable. Consequently, regardless of their original marginal distributions, we may represent a collection of random variables on the common domain
+
+$$
+[0,1]^d.
+$$
+
+The remaining question is how to describe the dependence among these transformed variables. This leads to the central concept of copula theory.
+
+
+::: {.theorem #def-copula}
+
+A **$d$-dimensional copula** is a multivariate cumulative distribution function
+
+$$
+C:[0,1]^d \longrightarrow [0,1]
+$$
+
+whose marginal distributions are all standard uniform distributions.
+
+Equivalently, if
+
+$$
+(U_1,\ldots,U_d)
+$$
+
+is a random vector such that
+
+$$
+U_i \sim \operatorname{Uniform}(0,1),
+\qquad
+i=1,\ldots,d,
+$$
+
+then the copula is defined by
+
+$$
+C(u_1,\ldots,u_d)
+=
+P(U_1\le u_1,\ldots,U_d\le u_d),
+$$
+
+where
+
+$$
+0\le u_i\le1,
+\qquad
+i=1,\ldots,d.
+$$
+
+:::
+
+The copula is therefore the joint cumulative distribution function of uniformly distributed random variables. Unlike an ordinary multivariate distribution, the copula contains **only the dependence structure**, since all marginal distributions have already been transformed to the standard uniform distribution.
+
+#### Why Does a Copula Use Uniform Variables?
+
+Each original random variable may follow a completely different probability distribution.
+
+For example,
+
+| Random Variable | Marginal Distribution |
+|-----------------|----------------------|
+| Home insurance claim amount | Gamma |
+| Motor insurance claim amount | Lognormal |
+| Claim severity | Weibull |
+
+Applying the Probability Integral Transform produces
+
+$$
+U_i
+=
+F_i(X_i),
+\qquad
+i=1,\ldots,d,
+$$
+
+where each transformed variable satisfies
+
+$$
+U_i
+\sim
+\operatorname{Uniform}(0,1).
+$$
+
+Because every variable now has the same marginal distribution, differences in their individual distributions have been removed. The copula therefore models only the dependence among the variables.
+
+::: {.callout-important title="Key Idea"}
+
+A copula does **not** describe the behaviour of individual variables.
+
+Instead, it describes **how uniformly distributed variables move together** after their marginal distributions have been removed through the Probability Integral Transform.
+
+:::
+
+#### Properties of Copulas
+
+Every copula satisfies several fundamental mathematical properties.
+
+##### 1. Domain and Range
+
+A copula is defined on the $d$-dimensional unit cube,
+
+$$
+[0,1]^d,
+$$
+
+and satisfies
+
+$$
+0
+\le
+C(u_1,\ldots,u_d)
+\le
+1.
+$$
+
+##### 2. Uniform Marginals
+
+Each marginal distribution is standard uniform. For example,
+
+$$
+C(1,\ldots,1,u_i,1,\ldots,1)
+=
+u_i,
+$$
+
+for every
+
+$$
+u_i\in[0,1].
+$$
+
+This property distinguishes copulas from general multivariate distribution functions.
+
+##### 3. Groundedness
+
+If any argument equals zero, then
+
+$$
+C(u_1,\ldots,u_d)=0.
+$$
+
+That is,
+
+$$
+C(u_1,\ldots,u_{i-1},0,u_{i+1},\ldots,u_d)=0.
+$$
+
+##### 4. Increasing Property
+
+A copula is $d$-increasing.
+
+This ensures that every rectangular region in the unit cube is assigned a non-negative probability, guaranteeing that the copula is a valid multivariate distribution function.
+
+
+::: {.callout-tip}
+## 4. Increasing Property
+
+A copula is **$d$-increasing**, meaning that it assigns a non-negative probability to every hyperrectangle in the unit cube $[0,1]^d$.
+
+For the two-dimensional case, consider a rectangle
+
+$$
+[a,b]\times[c,d],
+$$
+
+where
+
+$$
+0 \le a \le b \le 1,
+\qquad
+0 \le c \le d \le 1.
+$$
+
+The probability assigned to this rectangle is
+
+$$
+\begin{aligned}
+&P(a < U \le b,\; c < V \le d) \\
+&\quad = C(b,d)-C(a,d)-C(b,c)+C(a,c),
+\end{aligned}
+$$
+
+which must satisfy
+
+$$
+C(b,d)-C(a,d)-C(b,c)+C(a,c)\ge0.
+$$
+
+More generally, the corresponding probability for any hyperrectangle in $[0,1]^d$ must also be non-negative.
+
+This property guarantees that a copula is a **valid multivariate cumulative distribution function**. Without the $d$-increasing property, a copula could assign negative probabilities to certain regions, violating one of the fundamental axioms of probability.
+:::
+
+### Step 5:  Absolutely Continuous Copulas and Copula Densities
+
+#### Why Do We Need a Copula Density?
+
+So far, we have treated a copula as a **joint cumulative distribution function (CDF)** defined on the unit hypercube $[0,1]^d$. Like any multivariate CDF, a copula must satisfy several mathematical properties to ensure that it represents a valid probability distribution.
+
+One of these requirements is the **$d$-increasing property**, which guarantees that every rectangular region in the unit cube is assigned a non-negative probability.
+
+Although this property is mathematically fundamental, it is often difficult to verify directly for newly proposed copula models. Fortunately, for the vast majority of copulas used in actuarial science, finance, and statistics, there is a much simpler criterion.
+
+When a copula is **absolutely continuous**, we only need to verify that its **copula density** exists and is non-negative everywhere.
+
+
+#### Absolutely Continuous Copulas
+
+A copula $C(u_1,\ldots,u_d)$ is said to be **absolutely continuous** if all mixed partial derivatives exist almost everywhere on $[0,1]^d$.
+
+Its corresponding **copula density** is
+
+$$
+c(u_1,\ldots,u_d)
+=\frac{\partial^d}{\partial u_1\cdots\partial u_d}
+C(u_1,\ldots,u_d),
+$$
+
+for
+
+$$
+0 \le u_1,\ldots,u_d \le 1.
+$$
+
+For the bivariate case,
+
+$$
+c(u,v)
+=\frac{\partial^2 C(u,v)}
+{\partial u,\partial v}.
+$$
+
+The copula density plays exactly the same role as the probability density function (PDF) of an ordinary continuous distribution.
+
+
+#### Why Is This Important?
+
+For continuous copulas,
+
+$$
+C(u_1,\ldots,u_d)
+=\int_0^{u_1}
+\cdots
+\int_0^{u_d}
+c(t_1,\ldots,t_d)
+,dt_d\cdots dt_1.
+$$
+
+Therefore, the entire copula can be reconstructed from its density.
+
+This means that, in practice, **many copulas are specified through their density rather than directly through the cumulative distribution function**.
+
+
+
+#### Replacing the $d$-Increasing Property
+
+One of the defining properties of every copula is that it must be **$d$-increasing**.
+
+Mathematically, this means that every hyper-rectangular region
+
+$$
+[a_1,b_1]\times\cdots\times[a_d,b_d]
+\subseteq [0,1]^d
+$$
+
+must have non-negative probability.
+
+For a general copula, verifying this property can be quite involved because it requires checking the probability assigned to **every possible rectangle**.
+
+Fortunately, when the copula is absolutely continuous, this complicated condition can be replaced by a much simpler one.
+
+> **For an absolutely continuous copula, it is sufficient to verify that**
+>
+> $$
+> c(u_1,\ldots,u_d)\ge0
+> $$
+>
+> **for all**
+> $$
+> (u_1,\ldots,u_d)\in[0,1]^d.
+> $$
+
+Since probabilities are obtained by integrating the density,
+
+$$
+P(A)
+=\int_A
+c(u_1,\ldots,u_d)
+,du_1\cdots du_d,
+$$
+
+a non-negative density automatically guarantees that every region has non-negative probability.
+
+Thus,
+
+$$
+c(u_1,\ldots,u_d)\ge0
+\quad\Longrightarrow\quad
+C(u_1,\ldots,u_d)
+\text{ is }d\text{-increasing}.
+$$
+
+This is why textbooks and software implementations almost always work with the **copula density** instead of checking the $d$-increasing property directly.
+
+
+::: {.callout-important}
+
+For a general copula, validity requires proving that the copula is **$d$-increasing**.
+
+For an **absolutely continuous copula**, this difficult verification is replaced by the much simpler requirement that
+
+$$
+c(u_1,\ldots,u_d)\ge0
+$$
+
+everywhere on the unit hypercube.
+
+Consequently, most copula families used in actuarial science (such as the Gaussian, Student's $t$, Clayton, Gumbel, Frank, and Joe copulas) are studied and estimated through their **copula density** rather than by verifying the $d$-increasing property directly.
+
+
+
+**Intuition**
+
+Think of the copula as a map showing how probability is distributed over the unit square (or unit cube).
+
+* The **copula CDF** tells us the accumulated probability up to a point.
+* The **copula density** tells us how densely probability is concentrated at each location.
+* If the density is never negative, then accumulating it over any region can never produce a negative probability.
+
+This is exactly why checking the density is much easier than checking every possible rectangle in the unit cube.
+
+
+**Takeaway**
+
+* Every copula is a multivariate CDF and must satisfy the **$d$-increasing property**.
+* Directly verifying the $d$-increasing property is usually difficult.
+* For **absolutely continuous copulas**, we instead work with the **copula density**
+
+$$
+c(u_1,\ldots,u_d)
+=\frac{\partial^d C(u_1,\ldots,u_d)}
+{\partial u_1\cdots\partial u_d}.
+$$
+
+* A non-negative copula density guarantees that the copula assigns non-negative probability to every region, making it a valid copula.
+* Consequently, most practical copula modelling, inference, and likelihood estimation are performed using the copula density rather than the copula CDF itself.
+
+:::
+
+
+
+
+#### Interpretation
+
+Suppose two insurance risks have been transformed using their cumulative distribution functions,
+
+$$
+U=F_X(X),
+\qquad
+V=F_Y(Y).
+$$
+
+The copula
+
+$$
+C(u,v)
+=
+P(U\le u,\,V\le v)
+$$
+
+describes the probability that the transformed variables jointly fall below specified thresholds.
+
+Since both variables already follow standard uniform distributions, the copula measures only their dependence.
+
+Consequently,
+
+- changing the marginal distributions leaves the copula unchanged;
+- changing the copula alters only the dependence structure.
+
+This separation between marginal behaviour and dependence is the defining characteristic of copula models.
+
+#### Looking Ahead
+
+The copula provides a mathematical description of dependence among uniformly distributed random variables. An important question remains:
+
+> **Can every multivariate distribution be represented using a copula together with its marginal distributions?**
+
+The answer is provided by **Sklar's Theorem**, the fundamental result that establishes the theoretical foundation of copula modelling.
+
+
+### Step 6: Sklar's Theorem
+
+Having defined a copula, we now present the fundamental result that establishes its role in multivariate modelling.
+
+**Sklar's Theorem** (1959) provides the mathematical link between a multivariate distribution, its marginal distributions, and a copula. It shows that every multivariate distribution can be decomposed into two distinct components:
+
+- the marginal distributions, which describe the behaviour of each variable individually; and
+- a copula, which describes the dependence structure among the variables.
+
+This decomposition is the theoretical foundation of copula modelling.
+
+::: {.theorem #thm-sklar}
+
+## Sklar's Theorem
+
+Let $F$ be a $d$-dimensional cumulative distribution function with marginal cumulative distribution functions $F_1,F_2,\ldots,F_d$. Then there exists a $d$-dimensional copula $C$ such that
+
+$$
+F(x_1,\ldots,x_d)
+=
+C\!\left(
+F_1(x_1),
+F_2(x_2),
+\ldots,
+F_d(x_d)
+\right),
+$$
+
+for every $(x_1,\ldots,x_d)\in\mathbb{R}^d$.
+
+Furthermore,
+
+- if the marginal distributions are continuous, then the copula $C$ is unique;
+- if one or more marginal distributions are discrete, the copula is unique only on the product of the ranges of the marginal distributions.
+
+:::
+
+::: {.callout-important title="Key Idea"}
+
+Every multivariate distribution consists of **two building blocks**:
+
+- **Marginal distributions**, which describe the behaviour of each variable individually; and
+- **A copula**, which describes how the variables depend on one another.
+
+This separation allows the marginal distributions and the dependence structure to be modelled independently.
+
+:::
+
+#### Consequences of Sklar's Theorem
+
+Sklar's Theorem has two important consequences that make copulas particularly useful in practice.
+
+##### 1. Uniqueness
+
+When all marginal distributions are continuous, the associated copula is **unique**.
+
+Consequently, every continuous multivariate distribution has one—and only one—copula describing its dependence structure. Once the marginal distributions have been specified, the dependence is completely determined by this unique copula.
+
+##### 2. Converse of Sklar's Theorem
+
+Sklar's Theorem also works in the reverse direction.
+
+::: {.theorem #thm-converse-sklar}
+
+Let $C$ be any $d$-dimensional copula, and let $F_1,F_2,\ldots,F_d$ be any univariate cumulative distribution functions.
+
+Then the function
+
+$$
+F(x_1,\ldots,x_d)
+=
+C\!\left(
+F_1(x_1),
+F_2(x_2),
+\ldots,
+F_d(x_d)
+\right)
+$$
+
+is a valid $d$-dimensional joint cumulative distribution function with marginal distributions $F_1,F_2,\ldots,F_d$.
+
+:::
+
+This converse result provides enormous modelling flexibility. It allows any suitable marginal distributions to be combined with any valid copula to construct a multivariate probability model.
+
+#### Insurance Illustration
+
+Suppose an insurer models
+
+| Risk | Marginal Distribution |
+|------|-----------------------|
+| Home insurance claim amount | Gamma |
+| Motor insurance claim amount | Lognormal |
+
+These marginal distributions may be combined with different copulas, such as
+
+- the Gaussian copula,
+- the Clayton copula,
+- the Gumbel copula, or
+- the Frank copula,
+
+depending on the dependence observed in the data.
+
+Although the marginal distributions remain unchanged, selecting a different copula changes the dependence structure and therefore produces a different joint distribution.
+
+::: {.callout-note title="Why Sklar's Theorem Matters"}
+
+Sklar's Theorem transforms multivariate modelling into two separate tasks:
+
+1. selecting an appropriate marginal distribution for each variable; and
+2. selecting an appropriate copula to represent their dependence.
+
+This separation is the defining feature of copula models and one of their greatest advantages over classical multivariate distributions.
+
+:::
+
+
+
+
+:::{.callout-important}
+## Key Takeaway
+
+The mathematical foundations of copulas are built on three ideas:
+
+1. A **joint distribution** models several variables simultaneously.
+2. **Sklar's Theorem** separates the joint distribution into marginal distributions and a copula.
+3. A **copula** is a joint distribution with Uniform$(0,1)$ marginals, allowing dependence to be studied independently of the original variables.
+
+These ideas provide the mathematical framework for modern multivariate dependence modelling.
+:::
+
+
+
+

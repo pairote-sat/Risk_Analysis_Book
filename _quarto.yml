@@ -3,12 +3,31 @@ project:
 
 book:
   title: "Risk Analysis"
-  author: "Pairote Sat"
+  author: "Pairote Satiracoo"
   chapters:
     - index.qmd  
+    - chapters/Introduction_Copulas.qmd
+
 
 format:
   html:
-    theme: cosmo
+    toc: true
+    number-sections: true
+    number-depth: 3
+    code-fold: true
+
   pdf:
-    documentclass: scrreprt
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    number-depth: 3
+    colorlinks: true
+    geometry:
+      - margin=1in
+      
+execute:
+  echo: true
+  warning: false
+  message: false
+
+editor: source
