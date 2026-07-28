@@ -1,0 +1,12 @@
+project:
+  type: book
+
+book:
+  title: "Risk Analysis"
+  author: "Pairote Sat"
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
