@@ -1,6 +1,8 @@
 project:
   type: book
-
+  output-dir: _output
+  execute-dir: project # This forces all paths to start at your project root
+  
 book:
   title: "Risk Analysis"
   author: "Pairote Satiracoo"

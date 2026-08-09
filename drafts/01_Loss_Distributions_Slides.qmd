@@ -1,0 +1,1513 @@
+---
+title: "Chapter 1: Loss Distributions"
+
+format:
+  beamer:
+    theme: Boadilla
+    colortheme: default
+    fonttheme: professionalfonts
+    aspectratio: 169
+    pdf-engine: xelatex
+    keep-tex: true
+    toc: false
+    number-sections: false
+    
+# format:
+#   revealjs:
+#     theme: simple
+#     css: styles.css
+#     slide-number: true
+#     scrollable: true
+#     chalkboard:
+#       buttons: false
+#     preview-links: auto
+
+execute:
+  echo: false
+
+---
+
+# Part I: Introduction
+
+## Loss Distributions
+
+### Learning Outcomes
+
+By the end of this chapter, you should be able to
+
+- explain why probability distributions are used to model insurance claim amounts;
+- distinguish between claim frequency and claim severity;
+- identify the common characteristics of insurance losses;
+- explain why different loss distributions are required for different types of insurance data; and
+- describe the situations in which the Exponential, Gamma, Lognormal and Pareto distributions are appropriate.
+
+---
+
+## Why Study Loss Distributions?
+
+Insurance transfers financial risk from policyholders to an insurer.
+
+In exchange for a premium, the insurer agrees to compensate policyholders when insured events occur.
+
+Although the insurance contract is known in advance, **future claim amounts are uncertain**.
+
+The insurer therefore faces an important question:
+
+> **How much will future claims cost?**
+
+This question motivates the study of loss distributions.
+
+---
+
+## Why Is This Question Important?
+
+Insurance companies must make financial decisions **before** future claims are observed.
+
+These decisions include
+
+- determining premiums;
+- estimating claim liabilities;
+- purchasing reinsurance; and
+- holding sufficient capital to remain financially secure.
+
+Because future losses are uncertain, insurers require mathematical models to quantify this uncertainty.
+
+::: {.callout-note}
+## Key Idea
+
+Insurance decisions are made before future claims are observed. Probability distributions provide a mathematical framework for describing uncertainty in future claim amounts.
+:::
+
+---
+
+## Motivating Example
+
+Consider a motor insurer that issues **20,000 comprehensive motor insurance policies**.
+
+At the beginning of the year,
+
+- the insurer knows the premium charged for each policy;
+- no one knows which policyholders will submit claims; and
+- no one knows how much those claims will cost.
+
+By the end of the year,
+
+- many policyholders make no claims;
+- many claims are relatively small;
+- a few claims are large; and
+- a very small number of claims are extremely large.
+
+Although individual outcomes cannot be predicted, the overall pattern of claims often remains remarkably stable from year to year.
+
+---
+
+## From Individual Claims to Statistical Models
+
+Rather than predicting the outcome for a single policyholder, actuaries study the behaviour of **large portfolios** of insurance policies.
+
+Historical claims data reveal patterns that can be described using probability distributions.
+
+These models allow actuaries to estimate quantities such as
+
+- the expected claim amount;
+- the variability of claim amounts; and
+- the probability of unusually large losses.
+
+::: {.callout-note}
+## Key Idea
+
+Actuarial models describe the overall behaviour of an insurance portfolio rather than predicting individual claims.
+:::
+
+---
+
+## Insurance Claims Data {.small}
+
+Every reported claim contributes to the insurer's claims database.
+
+Typical information recorded for each claim includes
+
+- policy type; date of loss; cause of the claim;
+- amount paid; and settlement status.
+
+These data provide the foundation for statistical modelling.
+
+::: columns
+
+::: column
+
+| Policy | Claim Amount (USD) |
+|:------:|-------------------:|
+| 1 | 0 |
+| 2 | 420 |
+| 3 | 1,350 |
+| 4 | 0 |
+| 5 | 18,750 |
+
+:::
+
+::: column
+
+Several features are immediately apparent.
+
+- Most policyholders make no claim.
+- Many claims are relatively small.
+- A few claims are much larger than the rest.
+
+These features are typical of insurance claim data.
+
+:::
+
+:::
+
+---
+
+## Claim Frequency and Claim Severity {.small}
+
+The insurer's total claims depend on **two distinct sources of uncertainty**.
+
+::: columns
+
+::: column
+
+### Claim Frequency
+
+The **number of claims** occurring during a specified period.
+
+Answers the question
+
+> **How many claims will occur?**
+
+:::
+
+::: column
+
+### Claim Severity
+
+The **size of each individual claim**.
+
+Answers the question
+
+> **How large will each claim be?**
+
+:::
+
+:::
+
+Together, these determine the insurer's aggregate claims.
+
+---
+
+## Frequency and Severity {.small}
+
+```{mermaid}
+flowchart LR
+    A[Insurance Policies] --> B(Claims Occurred)
+    B --> C[Claim Frequency]
+    B --> D[Claim Severity]
+    C --> E([Aggregate Claims])
+    D --> E
+```
+
+This chapter focuses on **claim severity**, that is, modelling the probability distribution of individual claim amounts.
+
+Models for claim frequency and aggregate claims are developed in later chapters.
+
+---
+
+## Why Probability Distributions?
+
+Claim amounts vary from one policyholder to another.
+
+Even when two policyholders experience similar accidents, the resulting claim amounts may differ because of
+
+- repair costs;
+- medical expenses;
+- policy conditions; and
+- inflation.
+
+Since claim amounts are uncertain, they are naturally represented as **random variables**.
+
+A probability distribution describes
+
+- the possible claim amounts; and
+- the probability associated with each amount.
+
+---
+
+## What Can a Probability Distribution Tell Us?
+
+Once a suitable distribution has been selected, actuaries can calculate quantities such as
+
+- the expected claim amount;
+- the variability of losses;
+- the probability of large claims;
+- selected percentiles and risk measures; and
+- premiums based on expected losses.
+
+Probability distributions therefore provide the mathematical foundation for modelling insurance losses.
+
+---
+
+## Characteristics of Insurance Losses
+
+Insurance claim amounts exhibit several common features.
+
+- **Non-negative:** claim amounts cannot be negative.
+- **Right-skewed:** many small claims and relatively few large claims.
+- **Variable:** the spread of claim amounts differs across insurance classes.
+- **Heavy-tailed:** although rare, very large claims may have substantial financial consequences.
+
+These characteristics strongly influence the choice of an appropriate probability distribution.
+
+---
+
+
+## Characteristics of Insurance Losses
+
+Insurance claim amounts exhibit several common features that influence the choice of an appropriate loss distribution.
+
+![Characteristics of Insurance Losses](../figures/Characteristics_of_Insurance_Losses.png){fig-align="center" width=75%}
+
+---
+
+## Choosing an Appropriate Loss Distribution
+
+No single probability distribution is suitable for every insurance portfolio.
+
+The choice of model depends on
+
+- the characteristics of the claim data;
+- the degree of variability;
+- the behaviour of large claims; and
+- the purpose of the actuarial analysis.
+
+Selecting an appropriate model is one of the first and most important steps in actuarial modelling.
+
+---
+
+## Chapter Overview
+
+In this chapter we study four continuous distributions used to model claim severity.
+
+| Distribution | Typical Feature |
+|---------------|-----------------|
+| Exponential | Simple model for non-negative losses |
+| Gamma | More flexible than the Exponential distribution |
+| Lognormal | Suitable for highly skewed claim amounts |
+| Pareto | Models heavy-tailed insurance losses |
+
+Together, these distributions provide increasingly flexible models for insurance claim severity.
+
+
+# Part II: Exponential Distribution
+
+## Exponential Distribution
+
+The Exponential distribution is the simplest continuous probability distribution for modelling non-negative random variables.
+
+Although many insurance claim amounts exhibit greater variability than this model can capture, the Exponential distribution provides an excellent starting point because many fundamental ideas in loss modelling can be introduced using a single parameter.
+
+Throughout this chapter, it serves as a foundation for understanding more flexible distributions such as the Gamma, Lognormal and Pareto distributions.
+
+::: {.callout-note}
+## Key Idea
+
+The Exponential distribution is a simple model for non-negative random variables and introduces many of the concepts used throughout actuarial loss modelling.
+:::
+
+---
+
+## Why Study the Exponential Distribution?
+
+The Exponential distribution is frequently used when
+
+- observations are always non-negative;
+- small values occur much more frequently than large values; and
+- the probability decreases steadily as the variable increases.
+
+Typical actuarial applications include
+
+- time between successive insurance claims;
+- waiting time until the next event; and
+- relatively homogeneous claim amounts.
+
+Although this model is often too simple for real claim severity data, it provides the mathematical foundation for more advanced models.
+
+---
+
+## Definition of the Exponential Distribution
+
+::: {.definition}
+
+A continuous random variable $X$ is said to follow an **Exponential distribution** with rate parameter $\lambda>0$, denoted by
+
+$$
+X\sim\operatorname{Exp}(\lambda),
+$$
+
+if its probability density function is
+
+$$
+f_X(x)=
+\begin{cases}
+\lambda e^{-\lambda x}, & x>0,\\
+0, & \text{otherwise}.
+\end{cases}
+$$
+
+:::
+
+The parameter $\lambda$ is called the **rate parameter**.
+
+---
+
+## Understanding the Definition
+
+The probability density function satisfies the two requirements of a valid density.
+
+- It is always non-negative because $\lambda>0$ and $e^{-\lambda x}>0$.
+- The total probability equals one since
+
+$$
+\int_0^\infty \lambda e^{-\lambda x}\,dx=1.
+$$
+
+The support of the distribution is
+
+$$
+(0,\infty),
+$$
+
+which is appropriate for modelling quantities that cannot be negative, such as insurance claim amounts.
+
+---
+
+## Interpreting the Rate Parameter
+
+The rate parameter controls how rapidly the density decreases.
+
+- A **large** value of $\lambda$ causes the density to decrease rapidly.
+- Most observations are concentrated close to zero.
+- Large observations become relatively uncommon.
+
+Conversely,
+
+- a **small** value of $\lambda$ produces a slower decline;
+- observations are spread over a wider range; and
+- larger values occur more frequently.
+
+---
+
+## The Rate Parameter and the Mean
+
+The mean of an Exponential random variable is
+
+$$
+\mathrm{E}[X]=\frac1{\lambda}.
+$$
+
+This relationship provides a simple interpretation.
+
+- Increasing $\lambda$ decreases the average value.
+- Decreasing $\lambda$ increases the average value.
+
+::: {.callout-tip}
+## Interpretation
+
+The rate parameter is inversely related to the average claim amount.
+
+A larger rate implies a smaller average loss, while a smaller rate implies a larger average loss.
+:::
+
+---
+
+## Shape of the Density Function
+
+The Exponential density has several distinctive characteristics.
+
+- The maximum density occurs at $x=0$.
+- The density decreases continuously as $x$ increases.
+- There is no interior mode.
+- The distribution is positively skewed.
+
+This reflects situations where small claim amounts occur much more frequently than large claim amounts.
+
+---
+
+## Tail Behaviour
+
+Although the Exponential distribution has a right tail, the tail decreases **exponentially**.
+
+Consequently,
+
+- moderately large observations may occur;
+- extremely large observations become increasingly unlikely.
+
+This behaviour distinguishes the Exponential distribution from heavy-tailed models such as the Lognormal and Pareto distributions, which assign greater probability to very large claims.
+
+---
+
+## Density Function
+
+The probability density function describes the relative likelihood of different claim amounts.
+
+Small claim amounts have the highest density, and the density decreases continuously as the claim amount increases.
+
+```{r echo=FALSE, fig.align='center', fig.height=3.8}
+curve(dexp(x, rate=0.2),
+      from=0, to=30,
+      xlab="Claim amount",
+      ylab="Density",
+      lwd=2)
+```
+
+---
+
+## Effect of the Rate Parameter
+
+Changing $\lambda$ changes the shape of the distribution.
+
+- Larger $\lambda$ values produce steeper curves.
+- Smaller $\lambda$ values produce flatter curves with longer tails.
+
+```{r echo=FALSE, fig.align='center', fig.height=4}
+curve(dexp(x,0.1),0,40,
+      ylim=c(0,1.1),
+      lwd=2,
+      xlab="Claim amount",
+      ylab="Density")
+curve(dexp(x,0.3),0,40,
+      add=TRUE,
+      lwd=2,
+      lty=2)
+curve(dexp(x,0.6),0,40,
+      add=TRUE,
+      lwd=2,
+      lty=3)
+
+legend("topright",
+legend=c(expression(lambda==0.1),
+         expression(lambda==0.3),
+         expression(lambda==0.6)),
+lty=1:3,
+bty="n")
+```
+
+---
+
+## Cumulative Distribution Function
+
+The cumulative distribution function gives the probability that a claim amount does not exceed a specified value.
+
+For an Exponential random variable,
+
+$$
+F_X(x)=
+\begin{cases}
+1-e^{-\lambda x}, & x>0,\\
+0, & x\le0.
+\end{cases}
+$$
+
+As $x$ increases,
+
+- the cumulative probability increases;
+- eventually it approaches one.
+
+---
+
+## Calculating Probabilities
+
+Once the cumulative distribution function is known, probabilities are obtained directly.
+
+For example,
+
+$$
+P(X\le x)=F_X(x)=1-e^{-\lambda x},
+$$
+
+while
+
+$$
+P(X>x)=1-F_X(x)=e^{-\lambda x}.
+$$
+
+The second expression is called the **survival function**, and it plays an important role in insurance and reliability modelling.
+
+---
+
+## Mean and Variance
+
+The first two moments are
+
+$$
+\mathrm{E}[X]=\frac1{\lambda},
+$$
+
+and
+
+$$
+\mathrm{Var}(X)=\frac1{\lambda^2}.
+$$
+
+These formulas show that both the average and the variability depend entirely on the single parameter $\lambda$.
+
+---
+
+## Moment Generating Function
+
+The moment generating function is
+
+$$
+M_X(t)=
+\frac{\lambda}{\lambda-t},
+\qquad t<\lambda.
+$$
+
+The mgf is useful because
+
+- moments can be obtained by differentiation; and
+- it provides an alternative way to study the distribution.
+
+---
+
+## Summary of the Exponential Distribution
+
+| Property | Result |
+|-----------|--------|
+| Support | $(0,\infty)$ |
+| Parameter | $\lambda>0$ |
+| Mean | $\dfrac1{\lambda}$ |
+| Variance | $\dfrac1{\lambda^2}$ |
+| PDF | $\lambda e^{-\lambda x}$ |
+| CDF | $1-e^{-\lambda x}$ |
+| MGF | $\dfrac{\lambda}{\lambda-t},\;t<\lambda$ |
+
+---
+
+## Simulation from the Exponential Distribution
+
+Random samples from an Exponential distribution can be generated easily in R.
+
+## Simulated Exponential Distribution {.small}
+
+The figure below displays the simulated data overlayed with its true theoretical density function.
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-width: 4.5
+#| fig-height: 2.4
+library(ggplot2)
+
+# 1. Generate data and store in a data frame
+set.seed(123)
+df <- data.frame(x = rexp(1000, rate = 0.2))
+
+# 2. Recreate the base R histogram + curve in ggplot2
+ggplot(df, aes(x = x)) +
+  geom_histogram(
+    aes(y = after_stat(density)), 
+    bins = 30, 
+    color = "white", 
+    fill = "steelblue", 
+    alpha = 0.7
+  ) +
+  stat_function(
+    fun = dexp, 
+    args = list(rate = 0.2), 
+    color = "black", 
+    linewidth = 0.8
+  ) +
+  labs(y = "Density", x = "Claim amount") +
+  ggtitle("Simulated Exponential Distribution") +
+  theme_minimal(base_size = 9) +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 10)
+  )
+```
+
+
+The histogram approaches the theoretical density as the sample size increases.
+
+
+
+<!-- ## Simulated Exponential Distribution  -->
+
+<!-- :::: {.columns} -->
+
+<!-- ::: {.column width="50%" .small} -->
+<!-- The code below generates 1,000 exponential random variables and plots their empirical density. -->
+
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- #| echo: true -->
+<!-- # 1. Simulate data -->
+<!-- set.seed(123) -->
+<!-- df <- data.frame( -->
+<!--   x = rexp(1000, rate = 0.2) -->
+<!-- ) -->
+
+<!-- # 2. Build plot -->
+<!-- ggplot(df, aes(x = x)) + -->
+<!--   geom_histogram( -->
+<!--     aes(y = after_stat(density)),  -->
+<!--     bins = 30,  -->
+<!--     color = "white",  -->
+<!--     fill = "steelblue" -->
+<!--   ) + -->
+<!--   stat_function( -->
+<!--     fun = dexp,  -->
+<!--     args = list(rate = 0.2),  -->
+<!--     color = "black",  -->
+<!--     linewidth = 0.8 -->
+<!--   ) + -->
+<!--   labs( -->
+<!--     y = "Density",  -->
+<!--     x = "Claim amount" -->
+<!--   ) + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+<!-- ::: -->
+
+<!-- ::: {.column width="50%"} -->
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- #| fig-align: center -->
+<!-- #| fig-width: 4.2 -->
+<!-- #| fig-height: 3.2 -->
+<!-- library(ggplot2) -->
+
+<!-- set.seed(123) -->
+<!-- df <- data.frame(x = rexp(1000, rate = 0.2)) -->
+
+<!-- ggplot(df, aes(x = x)) + -->
+<!--   geom_histogram( -->
+<!--     aes(y = after_stat(density)),  -->
+<!--     bins = 30,  -->
+<!--     color = "white",  -->
+<!--     fill = "steelblue",  -->
+<!--     alpha = 0.7 -->
+<!--   ) + -->
+<!--   stat_function( -->
+<!--     fun = dexp,  -->
+<!--     args = list(rate = 0.2),  -->
+<!--     color = "black",  -->
+<!--     linewidth = 0.8 -->
+<!--   ) + -->
+<!--   labs(y = "Density", x = "Claim amount") + -->
+<!--   ggtitle("Simulated Distribution") + -->
+<!--   theme_minimal(base_size = 9) + -->
+<!--   theme( -->
+<!--     plot.title = element_text(hjust = 0.5, size = 10) -->
+<!--   ) -->
+<!-- ``` -->
+<!-- ::: -->
+
+<!-- :::: -->
+
+
+
+<!-- ## Simulated Exponential Distribution  -->
+
+<!-- :::: {.columns} -->
+
+<!-- ::: {.column width="50%" style="font-size: 60%;"} -->
+<!-- The code below generates 1,000 exponential random variables and plots their empirical density. -->
+
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- #| echo: true -->
+<!-- # 1. Simulate data -->
+<!-- set.seed(123) -->
+<!-- df <- data.frame( -->
+<!--   x = rexp(1000, rate = 0.2) -->
+<!-- ) -->
+
+<!-- # 2. Build plot -->
+<!-- ggplot(df, aes(x = x)) + -->
+<!--   geom_histogram( -->
+<!--     aes(y = after_stat(density)),  -->
+<!--     bins = 30,  -->
+<!--     color = "white",  -->
+<!--     fill = "steelblue" -->
+<!--   ) + -->
+<!--   stat_function( -->
+<!--     fun = dexp,  -->
+<!--     args = list(rate = 0.2),  -->
+<!--     color = "black",  -->
+<!--     linewidth = 0.8 -->
+<!--   ) + -->
+<!--   labs( -->
+<!--     y = "Density",  -->
+<!--     x = "Claim amount" -->
+<!--   ) + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+<!-- ::: -->
+
+<!-- ::: {.column width="50%"} -->
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- #| fig-align: center -->
+<!-- #| fig-width: 4.2 -->
+<!-- #| fig-height: 3.2 -->
+<!-- library(ggplot2) -->
+
+<!-- set.seed(123) -->
+<!-- df <- data.frame(x = rexp(1000, rate = 0.2)) -->
+
+<!-- ggplot(df, aes(x = x)) + -->
+<!--   geom_histogram( -->
+<!--     aes(y = after_stat(density)),  -->
+<!--     bins = 30,  -->
+<!--     color = "white",  -->
+<!--     fill = "steelblue",  -->
+<!--     alpha = 0.7 -->
+<!--   ) + -->
+<!--   stat_function( -->
+<!--     fun = dexp,  -->
+<!--     args = list(rate = 0.2),  -->
+<!--     color = "black",  -->
+<!--     linewidth = 0.8 -->
+<!--   ) + -->
+<!--   labs(y = "Density", x = "Claim amount") + -->
+<!--   ggtitle("Simulated Distribution") + -->
+<!--   theme_minimal(base_size = 9) + -->
+<!--   theme( -->
+<!--     plot.title = element_text(hjust = 0.5, size = 10) -->
+<!--   ) -->
+<!-- ``` -->
+<!-- ::: -->
+
+<!-- :::: -->
+
+## Simulated Exponential Distribution Code
+
+:::: {.columns}
+
+::: {.column width="48%" style="font-size: 65%;"}
+### Part 1: Data Simulation
+
+<!-- The first step initializes the random seed for reproducibility and generates 1,000 observations from an exponential distribution with a rate parameter ($\lambda = 0.2$). -->
+
+```{r}
+#| eval: false
+#| echo: true
+# 1. Load required libraries
+library(ggplot2)
+
+# 2. Set seed for reproducibility
+set.seed(123)
+
+# 3. Simulate exponential data
+df <- data.frame(
+  x = rexp(1000, rate = 0.2)
+)
+```
+:::
+
+::: {.column width="4%"}
+<!-- Clear space gutter between columns -->
+:::
+
+::: {.column width="48%" style="font-size: 65%;"}
+### Part 2: Density Plotting
+
+<!-- The second step constructs the empirical histogram framework and overlays the exact theoretical density curve for comparison. -->
+
+```{r}
+#| eval: false
+#| echo: true
+# 4. Initialize ggplot setup
+ggplot(df, aes(x = x)) +
+  geom_histogram(
+    aes(y = after_stat(density)), 
+    bins = 30, 
+    color = "white", 
+    fill = "steelblue"
+  ) +
+  # 5. Overlay theoretical density curve
+  stat_function(
+    fun = dexp, 
+    args = list(rate = 0.2), 
+    color = "black", 
+    linewidth = 0.8
+  ) +
+  labs(
+    y = "Density", 
+    x = "Claim amount"
+  ) +
+  theme_minimal()
+```
+:::
+
+::::
+
+
+
+## Looking Ahead
+
+The Exponential distribution is mathematically simple and provides a useful introduction to continuous loss models.
+
+However, many insurance claim datasets exhibit greater variability than this distribution can accommodate.
+
+The next distribution, the **Gamma distribution**, extends the Exponential model by introducing an additional parameter, providing substantially greater flexibility while retaining many of the same mathematical properties.
+
+
+# Part III: Gamma Distribution
+
+## Gamma Distribution
+
+The Gamma distribution extends the Exponential distribution by introducing a second parameter.
+
+This additional parameter allows the distribution to model a much wider range of claim amount data while retaining many of the mathematical properties of the Exponential distribution.
+
+::: {.callout-note}
+## Key Idea
+
+The Exponential distribution is a special case of the Gamma distribution.
+:::
+
+---
+
+## Why Introduce the Gamma Distribution?
+
+The Exponential distribution assumes that the mean and variability are both determined by a single parameter.
+
+In practice, insurance claim amounts often exhibit greater variability than this simple model can capture.
+
+The Gamma distribution introduces an additional **shape parameter**, allowing greater flexibility while remaining mathematically tractable.
+
+---
+
+## Definition
+
+A random variable $X$ has a Gamma distribution with shape parameter $\alpha>0$ and rate parameter $\lambda>0$, denoted by
+
+$$
+X\sim\Gamma(\alpha,\lambda),
+$$
+
+if its probability density function is
+
+$$
+f_X(x)=
+\frac{\lambda^\alpha}{\Gamma(\alpha)}
+x^{\alpha-1}
+e^{-\lambda x},
+\qquad x>0.
+$$
+
+---
+
+## The Gamma Function
+
+The Gamma function is defined by
+
+$$
+\Gamma(\alpha)
+=
+\int_0^\infty
+x^{\alpha-1}e^{-x}\,dx,
+\qquad
+\alpha>0.
+$$
+
+It generalises the factorial function since
+
+$$
+\Gamma(n)=(n-1)!,
+\qquad n=1,2,\ldots
+$$
+
+This ensures that the Gamma density integrates to one.
+
+---
+
+## Relationship with the Exponential Distribution
+
+When
+
+$$
+\alpha=1,
+$$
+
+the Gamma density becomes
+
+$$
+f(x)
+=
+\lambda e^{-\lambda x},
+$$
+
+which is exactly the Exponential distribution.
+
+Thus,
+
+$$
+\operatorname{Exp}(\lambda)
+=
+\Gamma(1,\lambda).
+$$
+
+---
+
+## Distribution Function
+
+The cumulative distribution function is
+
+$$
+F_X(x)
+=
+\int_0^x
+f_X(t)\,dt.
+$$
+
+Unlike the Exponential distribution, no simple closed-form expression exists for general values of $\alpha$.
+
+In practice, probabilities are evaluated using statistical software.
+
+---
+
+## Properties
+
+| Property | Result |
+|-----------|--------|
+| Mean | $\dfrac{\alpha}{\lambda}$ |
+| Variance | $\dfrac{\alpha}{\lambda^2}$ |
+| MGF | $\left(\dfrac{\lambda}{\lambda-t}\right)^\alpha,\quad t<\lambda$ |
+
+Because two parameters are available, the mean and variance can be adjusted more flexibly than for the Exponential distribution.
+
+---
+
+## Effect of the Shape Parameter
+
+The shape parameter controls the overall form of the distribution.
+
+- $\alpha=1$ gives the Exponential distribution.
+- Larger values of $\alpha$ produce a more symmetric density.
+- Small values of $\alpha$ produce a strongly right-skewed distribution.
+
+## Shape of the Density {.small}
+
+The figure below illustrates how the density changes for different parameter values.
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-width: 4.5
+#| fig-height: 2.4
+library(ggplot2)
+
+ggplot(data.frame(x = c(0, 20)), aes(x = x)) +
+  labs(y = "Probability density", x = "x") +
+  ggtitle("Gamma Distribution") +
+  theme_minimal(base_size = 9) +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 10),
+    legend.position = "right",
+    legend.title = element_text(size = 8),
+    legend.text = element_text(size = 7)
+  ) +
+  # 1. Map to distinct internal names for color routing
+  stat_function(
+    fun = dgamma, 
+    args = list(shape = 2, rate = 1), 
+    aes(colour = "param1")
+  ) +
+  stat_function(
+    fun = dgamma, 
+    args = list(shape = 6, rate = 1), 
+    aes(colour = "param2")
+  ) +
+  # 2. Use pure expressions to guarantee PDF Greek letter rendering
+  scale_colour_manual(
+    name = expression(lambda == 1),
+    breaks = c("param1", "param2"),
+    values = c("param1" = "red", "param2" = "blue"),
+    labels = c(
+      expression(alpha == 2),
+      expression(alpha == 6)
+    )
+  )
+```
+
+
+---
+
+## When Is the Gamma Distribution Useful?
+
+The Gamma distribution is widely used for modelling
+
+- insurance claim amounts,
+- repair costs,
+- waiting times,
+- aggregate losses.
+
+Compared with the Exponential distribution, it provides a better fit when claim data exhibit moderate variability.
+
+---
+
+## Summary
+
+Compared with the Exponential distribution, the Gamma distribution
+
+- introduces an additional shape parameter;
+- provides substantially greater modelling flexibility;
+- includes the Exponential distribution as a special case; and
+- remains one of the most widely used continuous loss distributions in actuarial science.
+
+---
+
+## Looking Ahead
+
+Although the Gamma distribution is highly flexible, some insurance claim data exhibit even stronger positive skewness and heavier tails.
+
+The next distribution, the **Lognormal distribution**, is often more appropriate for modelling these types of losses.
+
+
+# Part IV: Lognormal Distribution
+
+## Lognormal Distribution
+
+Many insurance claim amounts are highly right-skewed.
+
+Although the Gamma distribution provides greater flexibility than the Exponential distribution, it may still underestimate the probability of very large claims.
+
+The Lognormal distribution is often a better choice for modelling claim amounts with a long right tail.
+
+::: {.callout-note}
+## Key Idea
+
+A random variable is **Lognormally distributed** if its logarithm follows a Normal distribution.
+:::
+
+---
+
+## Why Introduce the Lognormal Distribution?
+
+The Lognormal distribution is appropriate when
+
+- claim amounts are always positive;
+- most claims are relatively small;
+- a small number of claims are extremely large.
+
+These characteristics are commonly observed in insurance claim severity data.
+
+---
+
+## Definition
+
+A random variable $X$ has a **Lognormal distribution** with parameters $\mu$ and $\sigma^2$, denoted by
+
+$$
+X \sim \operatorname{LN}(\mu,\sigma^2),
+$$
+
+if
+
+$$
+\ln(X)\sim N(\mu,\sigma^2).
+$$
+
+Thus, the logarithm of the claim amount follows a Normal distribution.
+
+---
+
+## Probability Density Function
+
+The probability density function is
+
+$$
+f_X(x)=
+\frac{1}{x\sigma\sqrt{2\pi}}
+\exp\!\left[
+-\frac{(\ln x-\mu)^2}{2\sigma^2}
+\right],
+\qquad x>0.
+$$
+
+The support is
+
+$$
+(0,\infty),
+$$
+
+making the Lognormal distribution suitable for modelling positive claim amounts.
+
+---
+
+## Distribution Function
+
+The cumulative distribution function is
+
+$$
+F_X(x)
+=
+\Phi
+\left(
+\frac{\ln x-\mu}{\sigma}
+\right),
+\qquad x>0,
+$$
+
+where $\Phi(\cdot)$ denotes the cumulative distribution function of the standard Normal distribution.
+
+In practice, probabilities are evaluated using statistical software.
+
+---
+
+## Properties
+
+| Property | Result |
+|-----------|--------|
+| Mean | $e^{\mu+\sigma^2/2}$ |
+| Variance | $e^{2\mu+\sigma^2}\left(e^{\sigma^2}-1\right)$ |
+| MGF | Does not exist for $t>0$ |
+
+Unlike the Exponential and Gamma distributions, the Lognormal distribution has no finite moment generating function.
+
+---
+
+## Understanding the Parameters
+
+The two parameters influence the distribution in different ways.
+
+- $\mu$ controls the location of the distribution.
+- $\sigma$ controls the spread and the degree of right skewness.
+
+As $\sigma$ increases,
+
+- the distribution becomes more dispersed;
+- the right tail becomes longer; and
+- extremely large claims become more likely.
+
+---
+
+## Shape of the Density
+
+Compared with the Gamma distribution, the Lognormal density generally has
+
+- stronger positive skewness;
+- a longer right tail; and
+- greater probability of very large losses.
+
+## Shape of the Density {.small}
+
+The figure below illustrates how the density changes for different parameter values.
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-width: 4.5
+#| fig-height: 2.4
+library(ggplot2)
+
+ggplot(data.frame(x = c(0, 10)), aes(x = x)) +
+  labs(y = "Probability density", x = "x") +
+  ggtitle("Lognormal Distribution") +
+  theme_minimal(base_size = 9) +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 10),
+    legend.position = "right",
+    legend.title = element_text(size = 8),
+    legend.text = element_text(size = 7)
+  ) +
+  # 1. Map to distinct internal names to avoid conflicts
+  stat_function(
+    fun = dlnorm, 
+    args = list(meanlog = 0, sdlog = 0.25), 
+    aes(colour = "param1")
+  ) +
+  stat_function(
+    fun = dlnorm, 
+    args = list(meanlog = 0, sdlog = 1), 
+    aes(colour = "param2")
+  ) +
+  # 2. Use expressions for clean Greek symbols in PDF rendering
+  scale_colour_manual(
+    name = expression(mu == 0),
+    breaks = c("param1", "param2"),
+    values = c("param1" = "red", "param2" = "blue"),
+    labels = c(
+      expression(sigma == 0.25),
+      expression(sigma == 1.00)
+    )
+  )
+```
+
+
+---
+
+## When Is the Lognormal Distribution Useful?
+
+The Lognormal distribution is widely used to model
+
+- motor insurance claim amounts;
+- property insurance losses;
+- medical expenses;
+- liability claims.
+
+It often provides a better fit than the Exponential or Gamma distributions when large claims occur more frequently.
+
+---
+
+## Summary
+
+The Lognormal distribution
+
+- models positive and highly skewed claim amounts;
+- is defined through the Normal distribution;
+- produces a heavier right tail than the Exponential and Gamma distributions; and
+- is widely used for modelling claim severity.
+
+---
+
+## Looking Ahead
+
+Although the Lognormal distribution models heavy-tailed losses well, some insurance portfolios contain extremely large claims that require an even heavier-tailed model.
+
+The next section introduces the **Pareto distribution**, which is widely used in reinsurance and extreme loss modelling.
+
+# Part V: Pareto Distribution
+
+## Pareto Distribution
+
+The Exponential, Gamma and Lognormal distributions are useful for modelling many insurance claim amounts.
+
+However, some portfolios contain **very large claims** that occur more frequently than these models predict.
+
+The Pareto distribution provides a simple model for such **heavy-tailed** losses.
+
+::: {.callout-note}
+## Key Idea
+
+The Pareto distribution assigns relatively more probability to extremely large losses than the Exponential, Gamma and Lognormal distributions.
+:::
+
+---
+
+## Why Introduce the Pareto Distribution?
+
+The Pareto distribution is widely used for modelling
+
+- liability claims;
+- catastrophe losses;
+- excess-of-loss reinsurance claims;
+- large commercial insurance losses.
+
+These applications involve claim amounts with long right tails.
+
+---
+
+## Definition
+
+A random variable $X$ has a Pareto distribution with parameters
+$\alpha>0$ and $\lambda>0$, denoted by
+
+$$
+X\sim\operatorname{Pa}(\alpha,\lambda),
+$$
+
+if its probability density function is
+
+$$
+f_X(x)
+=
+\frac{\alpha\lambda^\alpha}
+{(\lambda+x)^{\alpha+1}},
+\qquad x>0.
+$$
+
+The cumulative distribution function is
+
+$$
+F_X(x)
+=
+1-
+\left(
+\frac{\lambda}{\lambda+x}
+\right)^\alpha,
+\qquad x>0.
+$$
+
+---
+
+## Properties
+
+| Property | Result |
+|-----------|--------|
+| Mean | $\displaystyle \frac{\lambda}{\alpha-1},\;\alpha>1$ |
+| Variance | $\displaystyle \frac{\alpha\lambda^2}{(\alpha-1)^2(\alpha-2)},\;\alpha>2$ |
+| $r$th moment | $\displaystyle \frac{\Gamma(\alpha-r)\Gamma(r+1)}{\Gamma(\alpha)}\lambda^r,\;0<r<\alpha$ |
+| MGF | Does not exist for $t>0$ |
+
+The existence of the moments depends on the value of the shape parameter $\alpha$.
+
+---
+
+## Understanding the Parameters
+
+The two parameters play different roles.
+
+- $\alpha$ controls the heaviness of the tail.
+- $\lambda$ controls the scale of the distribution.
+
+Smaller values of $\alpha$ produce heavier tails and increase the probability of extremely large claims.
+
+---
+
+## Shape of the Density {.small}
+
+The figure below illustrates how the density changes for different parameter values.
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-width: 4.5
+#| fig-height: 2.5
+library(actuar)
+library(ggplot2)
+
+ggplot(data.frame(x = c(0, 60)), aes(x = x)) +
+  labs(x = "Claim amount", y = "Density") +
+  ggtitle("Pareto Distribution") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "right"
+  ) +
+  
+  # 1. Map to simple text placeholders inside aes()
+  stat_function(
+    fun = dpareto,
+    args = list(shape = 3, scale = 20),
+    aes(colour = "param1")
+  ) + 
+  stat_function(
+    fun = dpareto,
+    args = list(shape = 6, scale = 50),
+    aes(colour = "param2")
+  ) +
+  
+  # 2. Use expressions to render crisp math symbols in the PDF legend
+  scale_colour_manual(
+    name = "Parameters",
+    breaks = c("param1", "param2"),
+    values = c("param1" = "red", "param2" = "blue"),
+    labels = c(
+      expression(alpha == 3*","~~lambda == 20),
+      expression(alpha == 6*","~~lambda == 50)
+    )
+  )
+```
+
+---
+
+## Conditional Tail Property
+
+One of the most useful properties of the Pareto distribution is its conditional tail behaviour.
+
+If
+
+$$
+X\sim\operatorname{Pa}(\alpha,\lambda),
+$$
+
+then
+
+$$
+X-w\mid X>w
+\sim
+\operatorname{Pa}(\alpha,\lambda+w).
+$$
+
+This property greatly simplifies calculations involving excess losses.
+
+---
+
+## Application to Reinsurance
+
+In excess-of-loss reinsurance,
+
+the insurer is responsible only for the amount exceeding a retention level $w$.
+
+Because the conditional excess remains Pareto distributed,
+
+the expected payment above the retention can often be obtained analytically.
+
+This is one reason why the Pareto distribution is widely used in actuarial modelling.
+
+---
+
+## Comparing the Four Distributions
+
+| Distribution | Tail Behaviour | Typical Use |
+|---------------|---------------|-------------|
+| Exponential | Light | Simple claim models |
+| Gamma | Moderate | General claim severity |
+| Lognormal | Heavy | Skewed claim amounts |
+| Pareto | Very heavy | Large and catastrophic claims |
+
+The Lognormal and Pareto distributions generally provide a better fit to claim severity data than the Exponential and Gamma distributions.
+
+---
+
+## Other Heavy-Tailed Models
+
+The Pareto distribution is one member of a broader family of loss models.
+
+Other distributions commonly used in actuarial science include
+
+- Burr distribution,
+- Weibull distribution,
+- Loggamma distribution.
+
+These models provide additional flexibility when fitting insurance claim data.
+
+---
+
+## Example: Fitting Loss Distributions
+
+Consider a portfolio containing **200 observed claim amounts**.
+
+The objective is to compare several candidate loss distributions.
+
+The analysis consists of the following steps.
+
+1. Calculate the sample mean and sample standard deviation.
+2. Fit Exponential and Gamma distributions using the method of moments.
+3. Construct class intervals with expected frequency 20 under the fitted Exponential distribution.
+4. Count the observed claims in each interval.
+5. Compute the expected frequencies under the Gamma, Lognormal and Pareto models.
+6. Compare histograms with the fitted density curves.
+
+---
+
+## Discussion
+
+The fitted models can be compared by examining
+
+- agreement between observed and expected frequencies;
+- goodness of fit of the density curves;
+- ability to represent large claims.
+
+In practice,
+
+the Lognormal and Pareto distributions often provide a substantially better fit than the Exponential and Gamma distributions because they assign greater probability to large claim amounts.
+
+---
+
+## Chapter Summary
+
+This chapter introduced four continuous loss distributions.
+
+- Exponential: simplest one-parameter model.
+- Gamma: more flexible two-parameter model.
+- Lognormal: suitable for highly skewed losses.
+- Pareto: suitable for heavy-tailed and extreme claims.
+
+These distributions provide the foundation for modelling claim severity in actuarial science and prepare us for the study of deductibles, reinsurance and collective risk models.
