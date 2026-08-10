@@ -8,10 +8,15 @@ format:
     toc: true
     number-sections: true
     code-fold: true
+    toc-depth: 2
+    number-depth: 3
+
 
   pdf:
     toc: true
     number-sections: true
+    number-depth: 3
+
 
 execute:
   echo: true

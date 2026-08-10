@@ -1,7 +1,3 @@
----
-title: "Risk Analysis"
----
-
-# Welcome
+# Welcome {.unnumbered}
 
 These lecture notes accompany the Risk Analysis course.

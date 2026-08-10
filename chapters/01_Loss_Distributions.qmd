@@ -2,7 +2,7 @@
 title: "Loss Distributions"
 ---
 
-# Loss Distributions
+<!-- # Loss Distributions -->
 
 ## Introduction
 
@@ -155,7 +155,7 @@ Third, the variability of claim amounts differs substantially across different c
 Finally, the probability of very large claims, referred to as the **tail behaviour** of the distribution, is of particular importance in actuarial practice. Although extreme claims occur rarely, they may have a significant financial impact on an insurer.
 
 
-![Characteristics of Insurance Losses](figures/Characteristics_of_Insurance_Losses.png){#fig-insurance-losses fig-align="center" width=75%}
+![Characteristics of Insurance Losses](../figures/Characteristics_of_Insurance_Losses.png){#fig-insurance-losses fig-align="center" width=75%}
 
 
 ::: {.callout-tip}
