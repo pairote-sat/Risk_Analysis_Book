@@ -1,28 +1,27 @@
 project:
   type: book
-  output-dir: _output
-  execute-dir: project # This forces all paths to start at your project root
-  
+
 book:
   title: "Risk Analysis"
   author: "Pairote Satiracoo"
   chapters:
     - index.qmd  
     - chapters/01_Loss_Distributions.qmd
+    - chapters/02_Risk_Sharing.qmd
 
 
 format:
   html:
     toc: true
     number-sections: true
-    number-depth: 2
+    number-depth: 3
     code-fold: true
 
   pdf:
     toc: true
     toc-depth: 3
     number-sections: true
-    number-depth: 2
+    number-depth: 3
     colorlinks: true
     geometry:
       - margin=1in

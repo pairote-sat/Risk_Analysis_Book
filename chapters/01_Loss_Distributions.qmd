@@ -1,8 +1,8 @@
 ---
-title: "Loss Distributions"
+title: "Chapter 1: Loss Distributions"
 ---
 
-<!-- # Loss Distributions -->
+<!-- # Chapter 1: Loss Distributions -->
 
 ## Introduction
 
@@ -89,6 +89,8 @@ The second source is the **size of each claim**, known as the **claim severity**
 
 These two components combine to determine the insurer's aggregate claims.
 
+<div style="width: 100%;">
+
 ```{mermaid}
 flowchart LR
     %% Node Definitions
@@ -117,6 +119,8 @@ flowchart LR
     linkStyle default stroke:#64748B,stroke-width:1.5px,circle:false;
 
 ```
+
+</div>
 
 This chapter focuses on **claim severity**, that is, modelling the distribution of individual claim amounts. Models for claim frequency and aggregate claims are developed in later chapters.
 
@@ -328,7 +332,121 @@ $$
 
 :::
 
-The simulation and graphical investigation in Parts 6 and 7 are presented in the next section using the original R code.
+
+**Solution**
+
+1. The probability density function is
+   $$
+   f_X(x)=\lambda e^{-\lambda x},\qquad x\geq0.
+   $$
+   Therefore,
+   $$
+   F_X(x)=\Pr(X\leq x)
+   =\int_0^x \lambda e^{-\lambda u},du
+   =1-e^{-\lambda x},\qquad x\geq0.
+   $$
+   Hence,
+   $$
+   \boxed{
+   F_X(x)=
+   \begin{cases}
+   0, & x<0,\\
+   1-e^{-\lambda x}, & x\geq0.
+   \end{cases}}
+   $$
+
+2. Using the density,
+   $$
+   \boxed{
+   \Pr(a<X\leq b)
+   =\int_a^b f_X(x),dx.
+   }
+   $$
+   Using the CDF,
+   $$
+   \boxed{
+   \Pr(a<X\leq b)
+   =F_X(b)-F_X(a).
+   }
+   $$
+   For the exponential distribution, both expressions give
+   $$
+   \Pr(a<X\leq b)=e^{-\lambda a}-e^{-\lambda b}.
+   $$
+
+3. By definition,
+   $$
+   \begin{aligned}
+   M_X(t)
+   &=E[e^{tX}]\
+   &=\int_0^\infty e^{tx}\lambda e^{-\lambda x},dx\
+   &=\lambda\int_0^\infty e^{-(\lambda-t)x},dx.
+   \end{aligned}
+   $$
+   The integral is finite when $t<\lambda$, giving
+   $$
+   M_X(t)
+   =\frac{\lambda}{\lambda-t}
+   =\left(1-\frac{t}{\lambda}\right)^{-1}.
+   $$
+   Thus,
+   $$
+   \boxed{
+   M_X(t)=\left(1-\frac{t}{\lambda}\right)^{-1},
+   \qquad t<\lambda.
+   }
+   $$
+
+4. The $r$-th moment about the origin is
+   $$
+   E[X^r]
+   =\int_0^\infty x^r\lambda e^{-\lambda x},dx.
+   $$
+   Using the Gamma integral,
+   $$
+   \boxed{
+   E[X^r]=\frac{\Gamma(r+1)}{\lambda^r}
+   =\frac{r!}{\lambda^r},
+   \qquad r=1,2,\ldots
+   }
+   $$
+
+5. The first three moments are
+   $$
+   E[X]=\frac{1}{\lambda},
+   \qquad
+   E[X^2]=\frac{2}{\lambda^2},
+   \qquad
+   E[X^3]=\frac{6}{\lambda^3}.
+   $$
+
+   Therefore,
+   $$
+   \mu_3
+   =E[(X-E[X])^3]
+   =\frac{2}{\lambda^3},
+   $$
+   while
+   $$
+   \operatorname{Var}(X)=\frac{1}{\lambda^2}.
+   $$
+   Hence the coefficient of skewness is
+   $$
+   \gamma_1
+   =\frac{\mu_3}{\operatorname{Var}(X)^{3/2}}
+   =2.
+   $$
+   Thus,
+   $$
+   \boxed{\gamma_1=2}.
+   $$
+
+6. The simulation in Part 6 is presented in the next section.
+
+7. The histogram and graphical investigation in Part 7 are presented in the next section.
+
+
+
 
 
 ### Probability Calculations and Quantiles
@@ -634,7 +752,7 @@ Regardless of the value of $\lambda$, every Exponential distribution has the sam
 The rate parameter controls the horizontal scale of the distribution rather than its overall shape. Increasing $\lambda$ compresses the distribution towards zero, whereas decreasing $\lambda$ stretches the distribution towards larger values.
 :::
 
-#### Simulating Exponential Random Variables
+### Simulating Exponential Random Variables
 
 Random samples provide another way to understand the behaviour of a probability distribution. In practice, actuaries often generate simulated claim amounts to study the properties of statistical estimators, evaluate insurance portfolios, or investigate the impact of different assumptions.
 
@@ -717,6 +835,7 @@ The Exponential distribution provides a mathematically simple model for non-nega
 The next section introduces the **Gamma distribution**, which extends the Exponential distribution by introducing an additional shape parameter. This extra flexibility enables the Gamma distribution to model a much wider variety of insurance claim data while retaining many desirable mathematical properties.
 
 
+
 ## Gamma Distribution {#sec-gamma}
 
 ### Motivation and Definition
@@ -749,7 +868,7 @@ The Gamma distribution generalises this idea by describing the waiting time unti
 Throughout this section we assume that
 
 $$
-X \sim \Gamma(\alpha,\lambda),
+X \sim \operatorname{Gamma}(\alpha,\lambda),
 $$
 
 where
@@ -779,7 +898,7 @@ $$
 We write
 
 $$
-X\sim\Gamma(\alpha,\lambda).
+X\sim\operatorname{Gamma}(\alpha,\lambda).
 $$
 
 The support of the distribution is
@@ -917,7 +1036,7 @@ The Gamma distribution possesses several mathematical properties that make it pa
 Throughout this section, let
 
 $$
-X \sim \Gamma(\alpha,\lambda),
+X \sim \operatorname{Gamma}(\alpha,\lambda),
 $$
 
 where $\alpha>0$ is the shape parameter and $\lambda>0$ is the rate parameter.
@@ -1202,7 +1321,7 @@ Figure @fig-gamma-rate illustrates the effect of changing the rate parameter whi
 
 curve(dgamma(x, shape = 2, rate = 0.5),
       from = 0, to = 15,
-      ylim = c(0,0.45),
+      ylim = c(0,0.75),
       lwd = 2,
       col = "blue",
       xlab = "x",
@@ -1920,7 +2039,7 @@ Figure @fig-lognormal-location illustrates the effect of changing $\mu$ while ke
 
 curve(dlnorm(x, meanlog = 0, sdlog = 0.5),
       from = 0, to = 20,
-      ylim = c(0,0.8),
+      ylim = c(0,1),
       lwd = 2,
       col = "blue",
       xlab = "x",
@@ -1961,7 +2080,7 @@ Figure @fig-lognormal-scale illustrates the effect of changing $\sigma$ while ke
 
 curve(dlnorm(x, meanlog = 0, sdlog = 0.25),
       from = 0, to = 30,
-      ylim = c(0,1),
+      ylim = c(0,1.6),
       lwd = 2,
       col = "blue",
       xlab = "x",
@@ -2622,7 +2741,7 @@ The same procedure can be applied to the other fitted distributions.
 
 #### Interpretation
 
-The observed data show a substantial concentration of relatively small claims, together with a number of very large claims. In particular, 17 claims are greater than $2,372$, and five claims, representing $2.5%$ of the observations, are greater than $10,000$.
+The observed data show a substantial concentration of relatively small claims, together with a number of very large claims. In particular, 17 claims are greater than $2,372$, and five claims, representing $2.5\%$ of the observations, are greater than $10,000$.
 
 This behaviour is difficult to capture with the exponential distribution. The exponential model assigns the same expected frequency to each of the ten groups and therefore does not reflect the concentration of observations among small claims and the presence of unusually large claims.
 
@@ -2987,19 +3106,40 @@ frequency_table
 
 The table provides a direct comparison between the observed claim frequencies and those expected under each fitted model.
 
-#### Goodness-of-Fit for the Exponential Model
+#### Goodness-of-Fit for the Fitted Models
 
-For example, the chi-square goodness-of-fit statistic for the fitted exponential distribution is
+The histogram provides a visual comparison between the observed claim amounts and the fitted distributions. We can also make a more formal comparison using a **chi-square goodness-of-fit test**.
+
+The same class intervals are used for all four fitted distributions. Let $O_j$ denote the observed number of claims in group $j$, and let $E_j$ denote the expected number of claims under a fitted distribution. The expected number of claims in the interval $(a_{j-1},a_j]$ is
+
+$$
+E_j
+=n\left[
+F(a_j)-F(a_{j-1})
+\right],
+$$
+
+where $F$ is the CDF of the fitted distribution.
+
+The chi-square goodness-of-fit statistic is
 
 $$
 \chi^2
-=\sum_{j=1}^{10}
+=\sum_{j=1}^{k}
 \frac{(O_j-E_j)^2}{E_j},
 $$
 
-where $O_j$ and $E_j$ denote the observed and expected frequencies in group $j$.
+where $k$ is the number of groups.
 
-The statistic can be calculated in R as follows:
+We can also perform the corresponding chi-square tests. Since the expected frequencies are calculated from the fitted distributions, the test provides a formal assessment of the discrepancy between the observed and expected frequencies.
+
+The null hypothesis for each model is
+$$H_0:\text{ the observed claim amounts follow the specified fitted distribution},$$
+while the alternative hypothesis is
+$$H_1:\text{ the observed claim amounts do not follow the specified fitted distribution}.$$
+
+
+For the four fitted distributions:
 
 ```{r}
 chisq_exp <- sum(
@@ -3007,22 +3147,124 @@ chisq_exp <- sum(
     expected_exp
 )
 
-chisq_exp
-```
+chisq_gamma <- sum(
+  (observed_counts - expected_gamma)^2 /
+    expected_gamma
+)
 
-The corresponding chi-square test can also be obtained using:
+chisq_lognormal <- sum(
+  (observed_counts - expected_lognormal)^2 /
+    expected_lognormal
+)
 
-```{r}
-chisq.test(
-  x = observed_counts,
-  p = expected_exp / sum(expected_exp)
+chisq_pareto <- sum(
+  (observed_counts - expected_pareto)^2 /
+    expected_pareto
 )
 ```
 
-The same approach can be applied to the Gamma, lognormal, and Pareto fits.
+The resulting chi-square statistics are:
 
-#### Comparing the Fits
+```{r}
+chisq_statistics <- data.frame(
+  Distribution = c(
+    "Exponential",
+    "Gamma",
+    "Lognormal",
+    "Pareto"
+  ),
+  Chi_square = c(
+    chisq_exp,
+    chisq_gamma,
+    chisq_lognormal,
+    chisq_pareto
+  )
+)
 
-For this data set, the comparison should focus particularly on the upper tail. A model that fits the central part of the data well may still provide a poor representation of the largest claims.
+chisq_statistics
+```
 
-The fitted Pareto distribution is especially relevant because its heavy tail allows it to assign greater probability to unusually large claims. This is one of the main reasons why Pareto models are frequently considered for insurance loss data.
+A smaller value of $\chi^2$ indicates a smaller discrepancy between the observed and expected frequencies and therefore provides evidence of a better fit. 
+
+The chi-square test can be performed in R for each fitted model:
+
+
+```{r}
+test_exp <- chisq.test(
+  x = observed_counts,
+  p = expected_exp / sum(expected_exp)
+)
+
+test_gamma <- chisq.test(
+  x = observed_counts,
+  p = expected_gamma / sum(expected_gamma)
+)
+
+test_lognormal <- chisq.test(
+  x = observed_counts,
+  p = expected_lognormal / sum(expected_lognormal)
+)
+
+test_pareto <- chisq.test(
+  x = observed_counts,
+  p = expected_pareto / sum(expected_pareto)
+)
+```
+
+The test statistics and $p$-values can be summarised as follows:
+
+```{r}
+gof_results <- data.frame(
+  Distribution = c(
+    "Exponential",
+    "Gamma",
+    "Lognormal",
+    "Pareto"
+  ),
+  Chi_square = c(
+    test_exp$statistic,
+    test_gamma$statistic,
+    test_lognormal$statistic,
+    test_pareto$statistic
+  ),
+  p_value = c(
+    test_exp$p.value,
+    test_gamma$p.value,
+    test_lognormal$p.value,
+    test_pareto$p.value
+  )
+)
+
+gof_results
+```
+
+#### Comparing the Four Models
+
+The chi-square statistics provide a direct comparison of the discrepancies between the observed and expected frequencies. A smaller chi-square statistic indicates closer agreement between the fitted model and the observed data. Among the four models, the Lognormal distribution gives the smallest value,
+
+$$
+\chi^2 = 22.36,
+$$
+
+followed by the Pareto distribution with $\chi^2 = 36.58$. The Gamma and Exponential distributions give substantially larger values of $95.18$ and $115.70$, respectively. Thus, based on the chi-square statistic, the Lognormal distribution provides the best fit among the four fitted models.
+
+The $p$-value provides a formal goodness-of-fit test. At significance level $\alpha_0$, we reject the fitted model when
+
+$$
+p\text{-value}<\alpha_0.
+$$
+
+For $\alpha_0=0.05$, the results are
+
+| Distribution | $\chi^2$ |            $p$-value | Decision |
+| ------------ | -------: | -------------------: | -------- |
+| Exponential  |   115.70 | $1.01\times10^{-20}$ | Reject   |
+| Gamma        |    95.18 | $1.48\times10^{-16}$ | Reject   |
+| Lognormal    |    22.36 |             $0.0078$ | Reject   |
+| Pareto       |    36.58 |  $3.13\times10^{-5}$ | Reject   |
+
+Although the Lognormal distribution has the best fit among the four models, its $p$-value is still below $0.05$. Therefore, the chi-square test rejects all four fitted distributions at the 5% significance level. The results suggest that none of the four models provides an adequate fit to the data according to the chi-square goodness-of-fit test.
+
+The numerical results should nevertheless be considered together with the histogram and the frequency table. In particular, the upper tail is important for insurance loss data because a relatively small number of very large claims can have a substantial impact on total losses. The comparison therefore indicates that the Lognormal distribution is the most plausible of the four models considered, but its lack of fit remains statistically significant.
+
+

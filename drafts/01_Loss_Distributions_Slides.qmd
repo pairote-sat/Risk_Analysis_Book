@@ -887,7 +887,7 @@ The Gamma distribution introduces an additional **shape parameter**, allowing gr
 A random variable $X$ has a Gamma distribution with shape parameter $\alpha>0$ and rate parameter $\lambda>0$, denoted by
 
 $$
-X\sim\Gamma(\alpha,\lambda),
+X\sim\operatorname{Gamma}(\alpha,\lambda),
 $$
 
 if its probability density function is

@@ -1,0 +1,3386 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+  aspectratio=169,
+]{beamer}
+\newif\ifbibliography
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% remove section numbering
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{section title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{subsection title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+
+\usetheme[]{Boadilla}
+\usecolortheme[]{default}
+\usefonttheme[]{professionalfonts}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+\usepackage{caption}
+% Make caption package work with longtable
+\makeatletter
+\def\fnum@table{\tablename~\thetable}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Chapter 2: Risk Sharing --- Reinsurance and Deductibles},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{\texorpdfstring{Chapter 2: Risk Sharing --- Reinsurance and
+Deductibles}{Chapter 2: Risk Sharing --- Reinsurance and Deductibles}}
+\author{}
+\date{}
+
+\begin{document}
+\frame{\titlepage}
+
+
+\section{Introduction to Risk
+Sharing}\label{introduction-to-risk-sharing}
+
+\begin{frame}{Risk Sharing in Insurance}
+\protect\phantomsection\label{risk-sharing-in-insurance}
+Insurance is a form of \textbf{risk sharing}.
+
+When a loss occurs, the financial burden may be shared among:
+
+\begin{itemize}
+\tightlist
+\item
+  the \textbf{policyholder},
+\item
+  the \textbf{direct insurer}, and
+\item
+  the \textbf{reinsurer}.
+\end{itemize}
+
+The way the loss is divided depends on the insurance and reinsurance
+arrangements.
+
+The main question is:
+
+\begin{quote}
+Given a gross claim, how much does each party pay?
+\end{quote}
+\end{frame}
+
+\begin{frame}{The Basic Risk-Sharing Framework}
+\protect\phantomsection\label{the-basic-risk-sharing-framework}
+Let \(X\) denote the \textbf{gross claim amount}.
+
+Define:
+
+\begin{itemize}
+\tightlist
+\item
+  \(V\): amount paid by the \textbf{policyholder};
+\item
+  \(Y\): amount ultimately paid by the \textbf{direct insurer};
+\item
+  \(Z\): amount paid by the \textbf{reinsurer}.
+\end{itemize}
+
+The payments must satisfy
+
+\[
+\boxed{X=V+Y+Z}.
+\]
+
+This is the basic accounting identity for risk sharing.
+\end{frame}
+
+\begin{frame}{The Three-Party Risk-Sharing Framework}
+\protect\phantomsection\label{the-three-party-risk-sharing-framework}
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{../figures/Basic_Risk_Sharing_Three-Party_Framework.png}
+
+}
+
+\caption{\label{fig-basic-risk-sharing}Basic Risk-Sharing Three-Party
+Framework}
+
+\end{figure}%
+\end{frame}
+
+\begin{frame}{No Deductible}
+\protect\phantomsection\label{no-deductible}
+Initially, suppose there is \textbf{no deductible}.
+
+Then the policyholder does not contribute to the claim payment:
+
+\[
+V=0.
+\]
+
+Therefore,
+
+\[
+\boxed{X=Y+Z}.
+\]
+
+The gross claim is divided between:
+
+\begin{itemize}
+\tightlist
+\item
+  the amount retained by the insurer, \(Y\); and
+\item
+  the amount transferred to the reinsurer, \(Z\).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Two Stages of Risk Sharing}
+\protect\phantomsection\label{two-stages-of-risk-sharing}
+Risk sharing can occur at two stages.
+
+\textbf{Insurance}
+
+The insurance contract determines how the loss is divided between:
+
+\begin{itemize}
+\tightlist
+\item
+  the policyholder, and
+\item
+  the direct insurer.
+\end{itemize}
+
+A deductible is one example.
+
+\textbf{Reinsurance}
+
+The direct insurer may transfer part of its risk to a reinsurer.
+
+The reinsurer then pays part of the claim according to the reinsurance
+contract.
+
+Thus,
+
+\[
+\boxed{X=V+Y+Z}.
+\]
+\end{frame}
+
+\begin{frame}{Why Does an Insurer Reinsure?}
+\protect\phantomsection\label{why-does-an-insurer-reinsure}
+An insurer may receive many claims of different sizes.
+
+Most claims may be relatively small, but an individual claim can
+occasionally be very large.
+
+Without reinsurance:
+
+\[
+Y=X,
+\qquad
+Z=0.
+\]
+
+With reinsurance, part of the claim may be recovered from the reinsurer:
+
+\[
+Y<X,
+\qquad
+Z>0.
+\]
+
+Reinsurance therefore transfers part of the insurer's claim risk to
+another insurer.
+\end{frame}
+
+\begin{frame}{Gross and Net Claims}
+\protect\phantomsection\label{gross-and-net-claims}
+The \textbf{gross claim} \(X\) is the loss before considering
+reinsurance.
+
+The \textbf{net claim} \(Y\) is the amount ultimately paid by the direct
+insurer.
+
+The \textbf{reinsurance recovery} \(Z\) is the amount paid by the
+reinsurer.
+
+With no deductible,
+
+\[
+X=Y+Z.
+\]
+
+Taking expectations,
+
+\[
+E(X)=E(Y)+E(Z).
+\]
+
+The same decomposition applies to other quantities, such as claim
+variability.
+\end{frame}
+
+\begin{frame}{Reinsurance and Claim Variability}
+\protect\phantomsection\label{reinsurance-and-claim-variability}
+The gross claim distribution describes the losses generated by the
+insurance portfolio.
+
+The net claim distribution describes the amounts that remain with the
+insurer after reinsurance.
+
+For example,
+
+\[
+\operatorname{Var}(X)
+\]
+
+measures the variability of gross claims, whereas
+
+\[
+\operatorname{Var}(Y)
+\]
+
+measures the variability of the insurer's claim payments.
+
+A purpose of reinsurance is to reduce the insurer's exposure to large
+claims and hence reduce the variability of its claim payments.
+\end{frame}
+
+\begin{frame}{Two Broad Forms of Reinsurance}
+\protect\phantomsection\label{two-broad-forms-of-reinsurance}
+Reinsurance arrangements can be broadly classified as:
+
+\textbf{Proportional reinsurance}
+
+The reinsurer takes a fixed proportion of each claim.
+
+\textbf{Non-proportional reinsurance}
+
+The amount paid by the reinsurer depends on the size of the claim.
+
+A common example is \textbf{excess-of-loss reinsurance}.
+
+The key distinction is therefore:
+
+\[
+\text{fixed proportion}
+\quad\text{versus}\quad
+\text{claim size}.
+\]
+\end{frame}
+
+\begin{frame}{Proportional versus Non-Proportional Reinsurance}
+\protect\phantomsection\label{proportional-versus-non-proportional-reinsurance}
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{../figures/Proportional_vs_Non-Proportional_Reinsurance.png}
+
+}
+
+\caption{\label{fig-reinsurance-comp}Proportional vs.~Non-Proportional
+Reinsurance}
+
+\end{figure}%
+\end{frame}
+
+\begin{frame}{Proportional Reinsurance}
+\protect\phantomsection\label{proportional-reinsurance}
+Let \(\alpha\) denote the \textbf{retained proportion}.
+
+The insurer retains \(\alpha\) of every claim, while the reinsurer pays
+\(1-\alpha\).
+
+Thus,
+
+\[
+\boxed{Y=\alpha X} \quad \text{ and } \quad \boxed{Z=(1-\alpha)X}.
+\] Hence,
+
+\[
+Y+Z=X.
+\]
+
+The insurer retains the same proportion regardless of the size of the
+claim.
+\end{frame}
+
+\begin{frame}{Proportional Reinsurance: Example}
+\protect\phantomsection\label{proportional-reinsurance-example}
+Suppose the insurer retains \(75\%\) of every claim:
+
+\[
+\alpha=0.75.
+\]
+
+For a claim of \(100{,}000\),
+
+\[
+Y=0.75(100{,}000)=75{,}000,  \quad \text{ and } \quad    Z=0.25(100{,}000)=25{,}000.
+\]
+
+Thus,
+
+\[
+X=Y+Z.
+\]
+
+The same proportions apply to every claim.
+\end{frame}
+
+\begin{frame}{Excess-of-Loss Reinsurance}
+\protect\phantomsection\label{excess-of-loss-reinsurance}
+Suppose the insurer retains claims up to an amount \(M\).
+
+The insurer pays:
+
+\[
+\boxed{Y=\min(X,M)}
+\]
+
+and the reinsurer pays:
+
+\[
+\boxed{Z=(X-M)_+},\quad \text{where } (x)_+=\max(x,0).
+\] Again, \(X=Y+Z.\)
+
+Unlike proportional reinsurance, the insurer's retained proportion is
+not constant.
+\end{frame}
+
+\begin{frame}{Excess-of-Loss: How Does It Work?}
+\protect\phantomsection\label{excess-of-loss-how-does-it-work}
+If \(X\leq M\),
+
+\[
+Y=X,
+\qquad
+Z=0.
+\]
+
+The insurer pays the claim in full.
+
+If \(X>M\),
+
+\[
+Y=M,
+\qquad
+Z=X-M.
+\]
+
+The insurer pays the retention and the reinsurer pays the excess.
+
+Thus, large claims generate larger reinsurance recoveries.
+\end{frame}
+
+\begin{frame}{Excess-of-Loss: Example}
+\protect\phantomsection\label{excess-of-loss-example}
+Suppose the retention is
+
+\[
+M=50{,}000.
+\]
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+Gross claim \(X\) & Insurer \(Y\) & Reinsurer \(Z\) \\
+\midrule\noalign{}
+\endhead
+\(30{,}000\) & \(30{,}000\) & \(0\) \\
+\(50{,}000\) & \(50{,}000\) & \(0\) \\
+\(80{,}000\) & \(50{,}000\) & \(30{,}000\) \\
+\(500{,}000\) & \(50{,}000\) & \(450{,}000\) \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+For large claims, the insurer's payment is capped at \(M\).
+\end{frame}
+
+\begin{frame}{Comparing the Payment Functions}
+\protect\phantomsection\label{comparing-the-payment-functions}
+The two arrangements can be described directly through the payment
+functions.
+
+\textbf{Proportional}
+
+\[
+Y=\alpha X,
+\qquad
+Z=(1-\alpha)X.
+\]
+
+\textbf{Excess-of-loss}
+
+\[
+Y=\min(X,M),
+\qquad
+Z=(X-M)_+.
+\]
+
+The important question is always:
+
+\begin{quote}
+Given \(X\), how much does the insurer pay and how much does the
+reinsurer pay?
+\end{quote}
+\end{frame}
+
+\begin{frame}{A Unified View of Risk Sharing}
+\protect\phantomsection\label{a-unified-view-of-risk-sharing}
+The different arrangements can all be described through payment
+functions.
+
+For proportional reinsurance,
+
+\[
+\begin{aligned}
+V&=0,\\
+Y&=\alpha X,\\
+Z&=(1-\alpha)X.
+\end{aligned}
+\]
+
+For excess-of-loss reinsurance,
+
+\[
+\begin{aligned}
+V&=0,\\
+Y&=\min(X,M),\\
+Z&=(X-M)_+.
+\end{aligned}
+\]
+
+In both cases, \(\boxed{X=V+Y+Z}.\)
+\end{frame}
+
+\begin{frame}{From Claims to Payment Functions}
+\protect\phantomsection\label{from-claims-to-payment-functions}
+The central idea for the remainder of the chapter is:
+
+\[
+\boxed{
+\text{Gross claim}
+\longrightarrow
+\text{risk-sharing arrangement}
+\longrightarrow
+\text{payment functions}
+}
+\]
+
+Once the payment functions are known, we can analyse quantities such as
+
+\[
+E(Y),\qquad E(Z),\qquad
+\operatorname{Var}(Y),
+\]
+
+using the distribution of the gross claim \(X\).
+\end{frame}
+
+\section{Reinsurance}\label{reinsurance}
+
+\begin{frame}{Types of Reinsurance}
+\protect\phantomsection\label{types-of-reinsurance}
+Reinsurance is an arrangement under which an insurer transfers part of
+the risk arising from its insurance portfolio to another insurer, known
+as the \textbf{reinsurer}.
+
+The original insurer is the \textbf{direct insurer} or \textbf{cedant}.
+
+With no deductible,
+
+\[
+X=Y+Z,
+\]
+
+where:
+
+\begin{itemize}
+\tightlist
+\item
+  \(X\) is the gross claim;
+\item
+  \(Y\) is the amount ultimately paid by the direct insurer;
+\item
+  \(Z\) is the amount paid by the reinsurer.
+\end{itemize}
+
+The reinsurance contract determines how \(X\) is divided between \(Y\)
+and \(Z\).
+\end{frame}
+
+\begin{frame}{Proportional Reinsurance}
+\protect\phantomsection\label{proportional-reinsurance-1}
+Under proportional reinsurance, the direct insurer and reinsurer share
+each claim according to an agreed proportion.
+
+Let \(\alpha\) denote the \textbf{retained proportion}.
+
+Then
+
+\[
+\boxed{Y=\alpha X}
+\]
+
+and
+
+\[
+\boxed{Z=(1-\alpha)X}.
+\]
+
+Therefore,
+
+\[
+X=Y+Z.
+\]
+
+The key feature is
+
+\[
+\boxed{\frac{Y}{X}=\alpha},
+\qquad X>0.
+\]
+
+The insurer retains the same proportion of every claim.
+\end{frame}
+
+\begin{frame}{Proportional Reinsurance: Example}
+\protect\phantomsection\label{proportional-reinsurance-example-1}
+Suppose the insurer retains \(75\%\) of each claim:
+
+\[
+\alpha=0.75.
+\]
+
+For a claim of \(100{,}000\),
+
+\[
+Y=0.75(100{,}000)=75{,}000,
+\]
+
+and
+
+\[
+Z=0.25(100{,}000)=25{,}000.
+\]
+
+Thus,
+
+\[
+X=75{,}000+25{,}000.
+\]
+
+The same proportions apply regardless of the claim size.
+\end{frame}
+
+\begin{frame}{Quota Share Reinsurance}
+\protect\phantomsection\label{quota-share-reinsurance}
+A common form of proportional reinsurance is \textbf{quota share
+reinsurance}.
+
+Under a quota share arrangement, the same retained proportion applies to
+all risks in the portfolio.
+
+For example, a \(75\%\) retained quota share means:
+
+\[
+Y=0.75X,
+\qquad
+Z=0.25X.
+\]
+
+Thus, the direct insurer retains \(75\%\) of every claim and the
+reinsurer pays \(25\%\).
+
+In this course, we focus on quota share reinsurance.
+\end{frame}
+
+\begin{frame}{Surplus Reinsurance}
+\protect\phantomsection\label{surplus-reinsurance}
+Another form of proportional reinsurance is \textbf{surplus
+reinsurance}.
+
+Under surplus reinsurance, the proportion ceded to the reinsurer can
+vary from one risk to another.
+
+Thus, unlike quota share reinsurance,
+
+\[
+\frac{Y}{X}
+\]
+
+does not have to be the same for every risk.
+
+The common feature is that, for a given risk, the claim is divided
+between the insurer and reinsurer in a fixed proportion.
+\end{frame}
+
+\begin{frame}{Excess-of-Loss Reinsurance}
+\protect\phantomsection\label{excess-of-loss-reinsurance-1}
+Under \textbf{excess-of-loss reinsurance}, the reinsurer does not pay a
+fixed proportion of every claim.
+
+Instead, the reinsurer pays the amount of a claim above a specified
+\textbf{retention level}.
+
+Let \(M\) denote the retention.
+
+The insurer's payment is
+
+\[
+\boxed{Y=\min(X,M)}
+\]
+
+and the reinsurer's recovery is
+
+\[
+\boxed{Z=(X-M)_+},
+\]
+
+where
+
+\[
+(x)_+=\max(x,0).
+\]
+
+Again,
+
+\[
+X=Y+Z.
+\]
+\end{frame}
+
+\begin{frame}{Excess-of-Loss: Two Cases}
+\protect\phantomsection\label{excess-of-loss-two-cases}
+If \(X\leq M\),
+
+\[
+Y=X,
+\qquad
+Z=0.
+\]
+
+The insurer pays the claim in full.
+
+If \(X>M\),
+
+\[
+Y=M,
+\qquad
+Z=X-M.
+\]
+
+The insurer pays the retention, and the reinsurer pays the excess.
+
+Thus, the insurer's payment is capped at \(M\).
+\end{frame}
+
+\begin{frame}{Excess-of-Loss: Example}
+\protect\phantomsection\label{excess-of-loss-example-1}
+Suppose the retention is
+
+\[
+M=50{,}000.
+\]
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+Gross claim \(X\) & Insurer \(Y\) & Reinsurer \(Z\) \\
+\midrule\noalign{}
+\endhead
+\(30{,}000\) & \(30{,}000\) & \(0\) \\
+\(50{,}000\) & \(50{,}000\) & \(0\) \\
+\(80{,}000\) & \(50{,}000\) & \(30{,}000\) \\
+\(500{,}000\) & \(50{,}000\) & \(450{,}000\) \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+For claims above \(50{,}000\), the insurer's payment does not increase.
+\end{frame}
+
+\begin{frame}{Reinsurance Layers}
+\protect\phantomsection\label{reinsurance-layers}
+An excess-of-loss contract may also specify a maximum amount that the
+reinsurer will pay.
+
+Suppose:
+
+\begin{itemize}
+\tightlist
+\item
+  \(M\) is the insurer's retention;
+\item
+  \(L\) is the maximum amount paid by the reinsurer.
+\end{itemize}
+
+The reinsurer's payment is
+
+\[
+\boxed{
+Z=\min\{(X-M)_+,L\}.
+}
+\]
+
+The cover therefore applies to the layer from
+
+\[
+M
+\quad\text{to}\quad
+M+L.
+\]
+\end{frame}
+
+\begin{frame}{A Layer of Reinsurance}
+\protect\phantomsection\label{a-layer-of-reinsurance}
+Consider a layer of \(30{,}000\) excess of \(20{,}000\).
+
+Then
+
+\[
+M=20{,}000,
+\qquad
+L=30{,}000,
+\]
+
+and
+
+\[
+Z=\min\{(X-20{,}000)_+,30{,}000\}.
+\]
+
+The reinsurer covers the part of the claim between
+
+\[
+20{,}000
+\quad\text{and}\quad
+50{,}000.
+\]
+\end{frame}
+
+\begin{frame}{Reinsurance Layer: Example}
+\protect\phantomsection\label{reinsurance-layer-example}
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+Gross claim \(X\) & Insurer \(Y\) & Reinsurer \(Z\) \\
+\midrule\noalign{}
+\endhead
+\(15{,}000\) & \(15{,}000\) & \(0\) \\
+\(30{,}000\) & \(20{,}000\) & \(10{,}000\) \\
+\(50{,}000\) & \(20{,}000\) & \(30{,}000\) \\
+\(80{,}000\) & \(50{,}000\) & \(30{,}000\) \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+The reinsurer pays:
+
+\begin{itemize}
+\tightlist
+\item
+  nothing below the retention;
+\item
+  the excess above the retention within the layer;
+\item
+  the maximum \(L\) once the claim exceeds the layer.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Retention, Limit, and Layer}
+\protect\phantomsection\label{retention-limit-and-layer}
+For a reinsurance layer:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Retention \(M\)}: the amount retained by the insurer before
+  reinsurance begins.
+\item
+  \textbf{Limit \(L\)}: the maximum amount paid by the reinsurer.
+\item
+  \textbf{Layer}: the range of claim amounts covered by the reinsurer,
+  from \(M\) to \(M+L\).
+\end{itemize}
+
+Thus,
+
+\[
+\boxed{
+Z=\min\{(X-M)_+,L\}.
+}
+\]
+
+If there is no upper limit, the cover is \textbf{unlimited}:
+
+\[
+Z=(X-M)_+.
+\]
+\end{frame}
+
+\begin{frame}{Proportional versus Excess-of-Loss}
+\protect\phantomsection\label{proportional-versus-excess-of-loss}
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Proportional
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Excess-of-loss
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+Basis of payment & Fixed proportion of claim & Amount above retention \\
+Insurer payment & \(Y=\alpha X\) & \(Y=\min(X,M)\) \\
+Reinsurer payment & \(Z=(1-\alpha)X\) & \(Z=(X-M)_+\) \\
+Small claims & Shared & Usually retained \\
+Large claims & Shared in the same proportion & Substantial part
+transferred \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+The main difference is how the reinsurer's payment responds to the size
+of the claim.
+\end{frame}
+
+\begin{frame}{What Is the Main Difference?}
+\protect\phantomsection\label{what-is-the-main-difference}
+Under proportional reinsurance,
+
+\[
+Z=(1-\alpha)X.
+\]
+
+The reinsurer shares \textbf{every claim} in a fixed proportion.
+
+Under excess-of-loss reinsurance,
+
+\[
+Z=(X-M)_+.
+\]
+
+The reinsurer primarily protects the insurer against \textbf{larger
+claims}.
+
+This distinction affects both:
+\(E(Y) \quad\text{and}\quad \operatorname{Var}(Y).\)
+
+The payment functions allow these quantities to be analysed
+mathematically.
+\end{frame}
+
+\begin{frame}
+\end{frame}
+
+\section{Deductible and Policy}\label{deductible-and-policy}
+
+\begin{frame}{From Reinsurance to Deductibles}
+\protect\phantomsection\label{from-reinsurance-to-deductibles}
+Reinsurance transfers part of the insurer's risk to the
+\textbf{reinsurer}.
+
+A deductible transfers part of the risk to the \textbf{policyholder}.
+
+Both can be described using the same risk-sharing framework.
+
+Without reinsurance,
+
+\[
+X=V+Y.
+\]
+
+With reinsurance,
+
+\[
+\boxed{X=V+Y+Z}.
+\]
+
+We now focus on the relationship between: \(X,\qquad V,\qquad Y.\)
+\end{frame}
+
+\begin{frame}{Deductibles}
+\protect\phantomsection\label{deductibles}
+A \textbf{deductible} is an amount of a claim borne by the policyholder
+before the insurer makes a payment.
+
+Suppose the deductible is \(d\).
+
+The policyholder pays
+
+\[
+\boxed{V=\min(X,d)}
+\]
+
+and the insurer pays
+
+\[
+\boxed{Y=(X-d)_+}.
+\]
+
+Therefore,
+
+\[
+\boxed{X=V+Y}.
+\]
+\end{frame}
+
+\begin{frame}{Ordinary Deductible: Two Cases}
+\protect\phantomsection\label{ordinary-deductible-two-cases}
+If \(X\leq d\),
+
+\[
+V=X,
+\qquad
+Y=0.
+\]
+
+The policyholder pays the claim in full.
+
+If \(X>d\),
+
+\[
+V=d,
+\qquad
+Y=X-d.
+\]
+
+The policyholder pays the deductible and the insurer pays the remainder.
+\end{frame}
+
+\begin{frame}{Ordinary Deductible: Example}
+\protect\phantomsection\label{ordinary-deductible-example}
+Suppose
+
+\[
+d=10{,}000.
+\]
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+Gross claim \(X\) & Policyholder \(V\) & Insurer \(Y\) \\
+\midrule\noalign{}
+\endhead
+\(5{,}000\) & \(5{,}000\) & \(0\) \\
+\(10{,}000\) & \(10{,}000\) & \(0\) \\
+\(25{,}000\) & \(10{,}000\) & \(15{,}000\) \\
+\(80{,}000\) & \(10{,}000\) & \(70{,}000\) \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+The deductible eliminates insurer payments for claims below \(d\).
+
+For larger claims, the policyholder's payment is capped at \(d\).
+\end{frame}
+
+\begin{frame}{Policy Limits}
+\protect\phantomsection\label{policy-limits}
+A \textbf{policy limit} is the maximum amount that the insurer will pay
+for a claim.
+
+Suppose the policy limit is \(u\) and there is no deductible.
+
+The insurer pays
+
+\[
+\boxed{Y=\min(X,u)}.
+\]
+
+The policyholder pays the amount above the limit:
+
+\[
+\boxed{V=(X-u)_+}.
+\]
+
+Hence,
+
+\[
+X=V+Y.
+\]
+\end{frame}
+
+\begin{frame}{Policy Limit: Example}
+\protect\phantomsection\label{policy-limit-example}
+Suppose
+
+\[
+u=100{,}000.
+\]
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+Gross claim \(X\) & Policyholder \(V\) & Insurer \(Y\) \\
+\midrule\noalign{}
+\endhead
+\(50{,}000\) & \(0\) & \(50{,}000\) \\
+\(100{,}000\) & \(0\) & \(100{,}000\) \\
+\(150{,}000\) & \(50{,}000\) & \(100{,}000\) \\
+\(300{,}000\) & \(200{,}000\) & \(100{,}000\) \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+The insurer's payment is capped at \(u\).
+\end{frame}
+
+\begin{frame}{Deductible and Policy Limit}
+\protect\phantomsection\label{deductible-and-policy-limit}
+Suppose a policy has:
+
+\begin{itemize}
+\tightlist
+\item
+  deductible \(d\);
+\item
+  policy limit \(u\), where \(u>d\).
+\end{itemize}
+
+The insurer pays the part of the claim between \(d\) and \(u\):
+
+\[
+\boxed{
+Y=\min\{(X-d)_+,u-d\}.
+}
+\]
+
+Equivalently,
+
+\[
+Y=
+\begin{cases}
+0, & X\leq d,\\
+X-d, & d<X\leq u,\\
+u-d, & X>u.
+\end{cases}
+\]
+
+The maximum insurer payment is
+
+\[
+\boxed{u-d}.
+\]
+\end{frame}
+
+\begin{frame}{Deductible and Policy Limit: Example}
+\protect\phantomsection\label{deductible-and-policy-limit-example}
+Suppose
+
+\[
+d=10{,}000,
+\qquad
+u=100{,}000.
+\]
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+Gross claim \(X\) & Policyholder \(V\) & Insurer \(Y\) \\
+\midrule\noalign{}
+\endhead
+\(5{,}000\) & \(5{,}000\) & \(0\) \\
+\(25{,}000\) & \(10{,}000\) & \(15{,}000\) \\
+\(100{,}000\) & \(10{,}000\) & \(90{,}000\) \\
+\(150{,}000\) & \(60{,}000\) & \(90{,}000\) \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+The deductible determines where the insurer's payment begins.
+
+The policy limit determines where the insurer's payment stops
+increasing.
+\end{frame}
+
+\begin{frame}{A Unified Risk-Sharing View}
+\protect\phantomsection\label{a-unified-risk-sharing-view}
+The arrangements considered so far can all be described through payment
+functions.
+
+\textbf{Deductible}
+
+\[
+Y=(X-d)_+.
+\]
+
+\textbf{Policy limit}
+
+\[
+Y=\min(X,u).
+\]
+
+\textbf{Deductible and policy limit}
+
+\[
+Y=\min\{(X-d)_+,u-d\}.
+\]
+
+\textbf{Excess-of-loss reinsurance}
+
+\[
+Z=(X-M)_+.
+\]
+
+The same mathematical structure appears repeatedly.
+\end{frame}
+
+\begin{frame}{Policyholder, Insurer, and Reinsurer}
+\protect\phantomsection\label{policyholder-insurer-and-reinsurer}
+The full risk-sharing relationship is
+
+\[
+\boxed{X=V+Y+Z}.
+\]
+
+Each contract determines a payment function:
+
+\[
+X
+\longrightarrow
+\begin{cases}
+V & \text{policyholder},\\
+Y & \text{direct insurer},\\
+Z & \text{reinsurer}.
+\end{cases}
+\]
+
+This gives a common framework for analysing different insurance and
+reinsurance arrangements.
+\end{frame}
+
+\begin{frame}{Payment Functions and Distributions}
+\protect\phantomsection\label{payment-functions-and-distributions}
+The payment functions determine the distributions of the amounts
+actually paid.
+
+For example, under excess-of-loss reinsurance,
+
+\[
+Y=\min(X,M),
+\qquad
+Z=(X-M)_+.
+\]
+
+Even if \(X\) has a continuous distribution, \(Y\) and \(Z\) need not be
+purely continuous.
+
+Why?
+
+Because the payment functions can map a range of values of \(X\) to the
+same payment amount.
+
+This produces \textbf{point masses} in the payment distributions.
+\end{frame}
+
+\begin{frame}{Insurer's Payment under Excess-of-Loss}
+\protect\phantomsection\label{insurers-payment-under-excess-of-loss}
+Suppose \(X\) is continuous with distribution function \(F_X\).
+
+Under unlimited excess-of-loss reinsurance,
+
+\[
+Y=\min(X,M).
+\]
+
+The insurer pays the full claim when \(X\leq M\) and exactly \(M\) when
+\(X>M\).
+
+For \(y<M\),
+
+\[
+F_Y(y)=F_X(y).
+\]
+
+For \(y\geq M\),
+
+\[
+F_Y(y)=1.
+\]
+
+Thus,
+
+\[
+\boxed{
+F_Y(y)=
+\begin{cases}
+F_X(y), & y<M,\\
+1, & y\geq M.
+\end{cases}
+}
+\]
+\end{frame}
+
+\begin{frame}{A Point Mass at the Retention}
+\protect\phantomsection\label{a-point-mass-at-the-retention}
+All claims satisfying \(X>M\) result in
+
+\[
+Y=M.
+\]
+
+Therefore,
+
+\[
+\boxed{
+\Pr(Y=M)=\Pr(X>M)=1-F_X(M).
+}
+\]
+
+Thus, even if \(X\) is continuous, \(Y\) has a positive probability mass
+at \(M\).
+
+The distribution of \(Y\) consists of:
+
+\[
+\text{continuous component on }(0,M)
+\]
+
+and
+
+\[
+\text{point mass at }M.
+\]
+\end{frame}
+
+\begin{frame}
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Key idea}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+
+A payment limit can create a \textbf{point mass}.
+
+Under excess-of-loss reinsurance,
+
+\[
+Y=\min(X,M)
+\]
+
+maps all claims exceeding \(M\) to the single payment \(M\).
+
+Hence,
+
+\[
+\Pr(Y=M)>0.
+\]
+
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}{Example: Distribution of the Insurer's Payment}
+\protect\phantomsection\label{example-distribution-of-the-insurers-payment}
+Let
+
+\[
+X\sim\operatorname{Exponential}(\lambda)
+\]
+
+and suppose the insurer has unlimited excess-of-loss reinsurance with
+retention \(M\).
+
+The insurer's payment is
+
+\[
+Y=\min(X,M).
+\]
+
+Find:
+
+\begin{enumerate}
+\tightlist
+\item
+  the distribution function \(F_Y(y)\);
+\item
+  the continuous component of the distribution;
+\item
+  the probability mass at \(M\);
+\item
+  \(\Pr(Y=M)\).
+\end{enumerate}
+
+This example illustrates how a risk-sharing arrangement changes the
+distribution of a claim payment.
+\end{frame}
+
+\begin{frame}{Reinsurer's Payment under Excess-of-Loss}
+\protect\phantomsection\label{reinsurers-payment-under-excess-of-loss}
+The reinsurer pays
+
+\[
+Z=(X-M)_+.
+\]
+
+Thus,
+
+\begin{itemize}
+\tightlist
+\item
+  if \(X\leq M\), then \(Z=0\);
+\item
+  if \(X>M\), then \(Z=X-M\).
+\end{itemize}
+
+The reinsurer therefore has a positive probability of making \textbf{no
+payment}.
+
+At zero,
+
+\[
+\boxed{
+\Pr(Z=0)=\Pr(X\leq M)=F_X(M).
+}
+\]
+\end{frame}
+
+\begin{frame}{Distribution of the Reinsurer's Payment}
+\protect\phantomsection\label{distribution-of-the-reinsurers-payment}
+For \(z>0\),
+
+\[
+\begin{aligned}
+F_Z(z)
+&=\Pr(Z\leq z)\\
+&=\Pr((X-M)_+\leq z)\\
+&=\Pr(X\leq M+z)\\
+&=F_X(M+z).
+\end{aligned}
+\]
+
+Hence,
+
+\[
+\boxed{
+F_Z(z)=
+\begin{cases}
+0, & z<0,\\
+F_X(M), & z=0,\\
+F_X(M+z), & z>0.
+\end{cases}
+}
+\]
+
+The distribution has a point mass at zero.
+\end{frame}
+
+\begin{frame}{Two Different Point Masses}
+\protect\phantomsection\label{two-different-point-masses}
+Under excess-of-loss reinsurance,
+
+\[
+Y=\min(X,M)
+\]
+
+has a point mass at the \textbf{retention \(M\)}:
+
+\[
+\Pr(Y=M)=1-F_X(M).
+\]
+
+Meanwhile,
+
+\[
+Z=(X-M)_+
+\]
+
+has a point mass at \textbf{zero}:
+
+\[
+\Pr(Z=0)=F_X(M).
+\]
+
+The two point masses arise from the same reinsurance arrangement.
+\end{frame}
+
+\begin{frame}{Mixed Distributions}
+\protect\phantomsection\label{mixed-distributions}
+A random variable can have both:
+
+\begin{itemize}
+\tightlist
+\item
+  a continuous component; and
+\item
+  one or more point masses.
+\end{itemize}
+
+Such a random variable is called a \textbf{mixed distribution}.
+
+For example, \(Y=\min(X,M)\) has:
+
+\[
+\text{continuous component on }(0,M)
+\]
+
+and
+
+\[
+\Pr(Y=M)=1-F_X(M).
+\]
+
+Similarly, \(Z=(X-M)_+\) has:
+
+\[
+\Pr(Z=0)=F_X(M)
+\]
+
+and a continuous component for \(z>0\).
+\end{frame}
+
+\begin{frame}{Reinsurance Claims}
+\protect\phantomsection\label{reinsurance-claims}
+The reinsurer's payment
+
+\[
+Z=(X-M)_+
+\]
+
+includes all claims, including claims for which the reinsurer pays zero.
+
+In practice, we may instead consider only claims that actually involve
+the reinsurance contract:
+
+\[
+X>M.
+\]
+
+These are \textbf{reinsurance claims}.
+
+It is therefore useful to distinguish between:
+
+\[
+Z
+\quad\text{and}\quad
+W=Z\mid Z>0.
+\]
+\end{frame}
+
+\begin{frame}{Payment Conditional on a Reinsurance Claim}
+\protect\phantomsection\label{payment-conditional-on-a-reinsurance-claim}
+Since
+
+\[
+Z>0
+\iff
+X>M,
+\]
+
+we have
+
+\[
+W=X-M\mid X>M.
+\]
+
+For \(w>0\),
+
+\[
+\begin{aligned}
+F_W(w)
+&=\Pr(X-M\leq w\mid X>M)\\
+&=\frac{\Pr(M<X\leq M+w)}
+{\Pr(X>M)}\\
+&=\frac{F_X(M+w)-F_X(M)}
+{1-F_X(M)}.
+\end{aligned}
+\]
+
+Thus, \(W\) describes the size of a \textbf{positive reinsurance
+payment}.
+\end{frame}
+
+\begin{frame}{Three Claim Amounts to Distinguish}
+\protect\phantomsection\label{three-claim-amounts-to-distinguish}
+It is useful to keep the following random variables separate:
+
+\[
+\begin{aligned}
+X &: \text{gross claim amount},\\
+Z &: \text{reinsurer's payment on a randomly selected claim},\\
+W &: \text{reinsurer's payment given that the claim involves reinsurance}.
+\end{aligned}
+\]
+
+The distinction between \(Z\) and \(W\) is important.
+
+\(Z\) has a point mass at zero.
+
+\(W\) describes only positive reinsurance payments.
+\end{frame}
+
+\begin{frame}{Expected Payments}
+\protect\phantomsection\label{expected-payments}
+The payment functions can be used to calculate expected payments.
+
+For the insurer,
+
+\[
+Y=\min(X,M).
+\]
+
+Therefore,
+
+\[
+E[Y]
+=
+\int_0^M x f_X(x)\,dx
++
+M\{1-F_X(M)\}.
+\]
+
+The second term accounts for the point mass at \(M\).
+
+For the reinsurer,
+
+\[
+Z=(X-M)_+,
+\]
+
+so
+
+\[
+\boxed{
+E[Z]
+=
+\int_M^\infty (x-M)f_X(x)\,dx.
+}
+\]
+\end{frame}
+
+\begin{frame}{Expected Payments: Risk-Sharing Identity}
+\protect\phantomsection\label{expected-payments-risk-sharing-identity}
+Since
+
+\[
+X=Y+Z,
+\]
+
+taking expectations gives
+
+\[
+\boxed{
+E[X]=E[Y]+E[Z].
+}
+\]
+
+Equivalently,
+
+\[
+E[Y]=E[X]-E[Z].
+\]
+
+Thus, the expected gross claim is divided between:
+
+\begin{itemize}
+\tightlist
+\item
+  the expected amount retained by the insurer; and
+\item
+  the expected amount transferred to the reinsurer.
+\end{itemize}
+
+Reinsurance changes \textbf{who bears the loss}.
+\end{frame}
+
+\begin{frame}{Exponential Claims}
+\protect\phantomsection\label{exponential-claims}
+Suppose
+
+\[
+X\sim\operatorname{Exponential}(\lambda).
+\]
+
+Then
+
+\[
+E[X]=\frac{1}{\lambda}.
+\]
+
+Under excess-of-loss reinsurance with retention \(M\),
+
+\[
+\Pr(X>M)=e^{-\lambda M}.
+\]
+
+Thus, the proportion of claims involving the reinsurer is
+
+\[
+\boxed{e^{-\lambda M}}.
+\]
+\end{frame}
+
+\begin{frame}{Exponential Claims: Expected Payments}
+\protect\phantomsection\label{exponential-claims-expected-payments}
+For the reinsurer,
+
+\[
+E[Z]
+=
+\int_M^\infty (x-M)\lambda e^{-\lambda x}\,dx.
+\]
+
+This gives
+
+\[
+\boxed{
+E[Z]=\frac{e^{-\lambda M}}{\lambda}.
+}
+\]
+
+Since
+
+\[
+E[X]=\frac{1}{\lambda},
+\]
+
+we can write
+
+\[
+\boxed{
+E[Z]=e^{-\lambda M}E[X].
+}
+\]
+
+Therefore,
+
+\[
+\boxed{
+E[Y]=\frac{1-e^{-\lambda M}}{\lambda}.
+}
+\]
+\end{frame}
+
+\begin{frame}{Effect of the Retention}
+\protect\phantomsection\label{effect-of-the-retention}
+For excess-of-loss reinsurance,
+
+\[
+Y=\min(X,M).
+\]
+
+As the retention \(M\) increases:
+
+\begin{itemize}
+\tightlist
+\item
+  fewer claims involve the reinsurer;
+\item
+  the insurer retains more of the expected claim;
+\item
+  the reinsurer pays less on average.
+\end{itemize}
+
+For exponential claims,
+
+\[
+\Pr(X>M)=e^{-\lambda M}
+\]
+
+and
+
+\[
+E[Z]=\frac{e^{-\lambda M}}{\lambda}.
+\]
+
+Thus, the retention directly controls the extent of risk transferred to
+the reinsurer.
+\end{frame}
+
+\begin{frame}{Deductibles and Policy Limits}
+\protect\phantomsection\label{deductibles-and-policy-limits}
+Reinsurance transfers part of the insurer's risk to a reinsurer.
+
+A \textbf{deductible} transfers part of the risk to the policyholder.
+
+A \textbf{policy limit} restricts the maximum amount that the insurer
+will pay.
+
+Using the same notation,
+
+\[
+X=V+Y+Z.
+\]
+
+In the absence of reinsurance,
+
+\[
+\boxed{X=V+Y}.
+\]
+
+In this section, we focus on the relationship between:
+
+\[
+X,\qquad V,\qquad Y.
+\]
+\end{frame}
+
+\begin{frame}{Ordinary Deductible}
+\protect\phantomsection\label{ordinary-deductible}
+Suppose a policy has an ordinary deductible of amount \(d\).
+
+The policyholder pays the first \(d\) of the claim, while the insurer
+pays the amount exceeding \(d\).
+
+Therefore,
+
+\[
+\boxed{V=\min(X,d)}
+\]
+
+and
+
+\[
+\boxed{Y=(X-d)_+}.
+\]
+
+Since
+
+\[
+\min(X,d)+(X-d)_+=X,
+\]
+
+we have
+
+\[
+\boxed{X=V+Y}.
+\]
+\end{frame}
+
+\begin{frame}{Ordinary Deductible: How Does It Work?}
+\protect\phantomsection\label{ordinary-deductible-how-does-it-work}
+There are two cases.
+
+If \(X\leq d\),
+
+\[
+V=X,
+\qquad
+Y=0.
+\]
+
+The claim is entirely below the deductible.
+
+If \(X>d\),
+
+\[
+V=d,
+\qquad
+Y=X-d.
+\]
+
+The policyholder pays the deductible and the insurer pays the remainder.
+\end{frame}
+
+\begin{frame}{Ordinary Deductible: Example}
+\protect\phantomsection\label{ordinary-deductible-example-1}
+Suppose
+
+\[
+d=10{,}000.
+\]
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+Gross claim \(X\) & Policyholder \(V\) & Insurer \(Y\) \\
+\midrule\noalign{}
+\endhead
+\(5{,}000\) & \(5{,}000\) & \(0\) \\
+\(10{,}000\) & \(10{,}000\) & \(0\) \\
+\(25{,}000\) & \(10{,}000\) & \(15{,}000\) \\
+\(80{,}000\) & \(10{,}000\) & \(70{,}000\) \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+The deductible has two effects:
+
+\begin{itemize}
+\tightlist
+\item
+  it completely eliminates insurer payments for claims below \(d\);
+\item
+  for larger claims, it reduces the insurer's payment by \(d\).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Policy Limit}
+\protect\phantomsection\label{policy-limit}
+A \textbf{policy limit} is the maximum amount that the insurer will pay
+for a claim.
+
+Suppose there is a policy limit of \(u\) and no deductible.
+
+The insurer pays the claim in full when
+
+\[
+X\leq u,
+\]
+
+but pays only \(u\) when
+
+\[
+X>u.
+\]
+
+Thus,
+
+\[
+\boxed{Y=\min(X,u)}.
+\]
+
+The amount above the policy limit is borne by the policyholder:
+
+\[
+\boxed{V=(X-u)_+}.
+\]
+
+Hence,
+
+\[
+X=V+Y.
+\]
+\end{frame}
+
+\begin{frame}{Policy Limit: Example}
+\protect\phantomsection\label{policy-limit-example-1}
+Suppose
+
+\[
+u=100{,}000.
+\]
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+Gross claim \(X\) & Policyholder \(V\) & Insurer \(Y\) \\
+\midrule\noalign{}
+\endhead
+\(50{,}000\) & \(0\) & \(50{,}000\) \\
+\(100{,}000\) & \(0\) & \(100{,}000\) \\
+\(150{,}000\) & \(50{,}000\) & \(100{,}000\) \\
+\(300{,}000\) & \(200{,}000\) & \(100{,}000\) \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+The insurer's payment is capped at \(u\).
+
+This protects the insurer against very large claims.
+\end{frame}
+
+\begin{frame}{Deductible and Policy Limit Together}
+\protect\phantomsection\label{deductible-and-policy-limit-together}
+Suppose a policy has:
+
+\begin{itemize}
+\tightlist
+\item
+  deductible \(d\);
+\item
+  policy limit \(u\), where \(u>d\).
+\end{itemize}
+
+The insurer pays the part of the claim between \(d\) and \(u\).
+
+Therefore,
+
+\[
+\boxed{
+Y=\min\{(X-d)_+,u-d\}.
+}
+\]
+
+Equivalently,
+
+\[
+Y=\min(X,u)-\min(X,d).
+\]
+
+The policyholder pays the remainder:
+
+\[
+\boxed{V=X-Y}.
+\]
+\end{frame}
+
+\begin{frame}{Deductible and Policy Limit: Payment Function}
+\protect\phantomsection\label{deductible-and-policy-limit-payment-function}
+The insurer's payment can be written as
+
+\[
+Y=
+\begin{cases}
+0, & X\leq d,\\
+X-d, & d<X\leq u,\\
+u-d, & X>u.
+\end{cases}
+\]
+
+The payment therefore has three regions:
+
+\[
+\begin{array}{ccl}
+X\leq d
+&\longrightarrow&
+Y=0,\\[4pt]
+d<X\leq u
+&\longrightarrow&
+Y=X-d,\\[4pt]
+X>u
+&\longrightarrow&
+Y=u-d.
+\end{array}
+\]
+
+The insurer's maximum payment is
+
+\[
+\boxed{u-d}.
+\]
+\end{frame}
+
+\begin{frame}{Deductible and Policy Limit: Example}
+\protect\phantomsection\label{deductible-and-policy-limit-example-1}
+Suppose
+
+\[
+d=10{,}000,
+\qquad
+u=100{,}000.
+\]
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+Gross claim \(X\) & Policyholder \(V\) & Insurer \(Y\) \\
+\midrule\noalign{}
+\endhead
+\(5{,}000\) & \(5{,}000\) & \(0\) \\
+\(25{,}000\) & \(10{,}000\) & \(15{,}000\) \\
+\(100{,}000\) & \(10{,}000\) & \(90{,}000\) \\
+\(150{,}000\) & \(60{,}000\) & \(90{,}000\) \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+For claims above the policy limit, the insurer continues to pay only
+\(90{,}000\).
+
+The policyholder bears both:
+
+\begin{itemize}
+\tightlist
+\item
+  the deductible; and
+\item
+  the amount above the policy limit.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Interpreting the Deductible and Policy Limit}
+\protect\phantomsection\label{interpreting-the-deductible-and-policy-limit}
+The two parameters control different parts of the insurer's payment.
+
+\textbf{Deductible \(d\)}
+
+determines where the insurer's payment begins.
+
+\textbf{Policy limit \(u\)}
+
+determines where the insurer's payment stops increasing.
+
+Thus,
+
+\[
+\boxed{
+\text{Insurer's payment}
+=
+\text{claim amount within the layer }(d,u).
+}
+\]
+
+The maximum insurer payment is
+
+\[
+u-d.
+\]
+\end{frame}
+
+\begin{frame}{Risk-Sharing Interpretation}
+\protect\phantomsection\label{risk-sharing-interpretation}
+The deductible and policy limit can be viewed as a \textbf{layer of
+insurance}.
+
+For a claim \(X\):
+
+\[
+\boxed{
+Y=\min\{(X-d)_+,u-d\}.
+}
+\]
+
+The insurer covers the layer
+
+\[
+\boxed{(d,u]}.
+\]
+
+The policyholder bears:
+
+\begin{itemize}
+\tightlist
+\item
+  the layer below \(d\); and
+\item
+  the amount above \(u\).
+\end{itemize}
+
+This is the same layer structure that appears in excess-of-loss
+reinsurance.
+\end{frame}
+
+\begin{frame}{Insurance and Reinsurance Layers}
+\protect\phantomsection\label{insurance-and-reinsurance-layers}
+The same mathematical form appears in both insurance and reinsurance.
+
+For a policy with deductible \(d\) and limit \(u\),
+
+\[
+Y=\min\{(X-d)_+,u-d\}.
+\]
+
+For a reinsurance layer with retention \(M\) and limit \(L\),
+
+\[
+Z=\min\{(X-M)_+,L\}.
+\]
+
+The difference is mainly the \textbf{party receiving the payment}.
+
+In the insurance contract:
+
+\[
+Y=\text{insurer's payment}.
+\]
+
+In the reinsurance contract:
+
+\[
+Z=\text{reinsurer's payment}.
+\]
+\end{frame}
+
+\begin{frame}{Comparing Risk-Sharing Arrangements}
+\protect\phantomsection\label{comparing-risk-sharing-arrangements}
+The main payment functions introduced so far are:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Arrangement & Payment \\
+\midrule\noalign{}
+\endhead
+Proportional reinsurance & \(Y=\alpha X\) \\
+Excess-of-loss reinsurance & \(Z=(X-M)_+\) \\
+Ordinary deductible & \(Y=(X-d)_+\) \\
+Policy limit & \(Y=\min(X,u)\) \\
+Deductible and limit & \(Y=\min\{(X-d)_+,u-d\}\) \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+Each arrangement can therefore be analysed by specifying a payment
+function.
+\end{frame}
+
+\begin{frame}{The Common Mathematical Structure}
+\protect\phantomsection\label{the-common-mathematical-structure}
+The central quantity is always the gross claim \(X\).
+
+A contract transforms \(X\) into the amount paid by a particular party.
+
+For example,
+
+\[
+X
+\longrightarrow
+Y=\min\{(X-d)_+,u-d\}
+\]
+
+for an insurance layer, while
+
+\[
+X
+\longrightarrow
+Z=\min\{(X-M)_+,L\}
+\]
+
+for a reinsurance layer.
+
+Once the payment function is known, we can study its distribution and
+moments.
+\end{frame}
+
+\begin{frame}
+\end{frame}
+
+\section{Payment Distributions under Risk
+Sharing}\label{payment-distributions-under-risk-sharing}
+
+\begin{frame}{How Risk Sharing Changes the Claim Distribution}
+\protect\phantomsection\label{how-risk-sharing-changes-the-claim-distribution}
+Risk-sharing arrangements change the distribution of the amount paid by
+each party.
+
+Suppose \(X\) is the gross claim amount.
+
+After applying a payment function,
+
+\[
+Y=g(X),
+\]
+
+the random variable \(Y\) may have a distribution that is quite
+different from that of \(X\).
+
+In particular, payment limits can create \textbf{point masses}.
+\end{frame}
+
+\begin{frame}{Insurer's Payment under Excess-of-Loss}
+\protect\phantomsection\label{insurers-payment-under-excess-of-loss-1}
+Consider unlimited excess-of-loss reinsurance with retention \(M\).
+
+The insurer's payment is
+
+\[
+\boxed{Y=\min(X,M)}.
+\]
+
+There are two cases:
+
+\[
+Y=
+\begin{cases}
+X, & X\leq M,\\
+M, & X>M.
+\end{cases}
+\]
+
+Thus, every claim exceeding \(M\) produces exactly the same insurer
+payment: \(Y=M.\)
+
+This has an important consequence for the distribution of \(Y\).
+\end{frame}
+
+\begin{frame}{Why Is \(Y\) a Mixed Distribution?}
+\protect\phantomsection\label{why-is-y-a-mixed-distribution}
+Suppose \(X\) has a continuous distribution.
+
+For \(X<M\), different values of \(X\) produce different values of
+\(Y\).
+
+However, all values
+
+\[
+X>M
+\]
+
+are mapped to the single value \(Y = M.\)
+
+Therefore, \(\quad \quad \Pr(Y=M)=\Pr(X>M).\)
+
+If \(\Pr(X>M)>0\), then \(Y\) has a positive probability mass at \(M\).
+
+Hence, \(Y\) is a \textbf{mixed distribution}:
+
+\[
+\boxed{
+\text{continuous part}
++
+\text{point mass at }M.
+}
+\]
+\end{frame}
+
+\begin{frame}{Distribution Function of \(Y\)}
+\protect\phantomsection\label{distribution-function-of-y}
+For
+
+\[
+Y=\min(X,M),
+\]
+
+the distribution function is
+
+\[
+F_Y(y)=\Pr(Y\leq y).
+\]
+
+We consider two cases according to the value of \(y\) relative to \(M\).
+\end{frame}
+
+\begin{frame}{Distribution Function of \(Y\)}
+\protect\phantomsection\label{distribution-function-of-y-1}
+For \(y<M\),
+
+\[
+Y\leq y
+\iff
+X\leq y.
+\]
+
+Therefore,
+
+\[
+\boxed{
+F_Y(y)=F_X(y),
+\qquad y<M.
+}
+\]
+\end{frame}
+
+\begin{frame}{Distribution Function of \(Y\)}
+\protect\phantomsection\label{distribution-function-of-y-2}
+For \(y\geq M\),
+
+\[
+Y=\min(X,M)\leq M\leq y,
+\]
+
+so
+
+\[
+F_Y(y)=1.
+\]
+
+Combining the two cases,
+
+\[
+\boxed{
+F_Y(y)=
+\begin{cases}
+F_X(y), & y<M,\\
+1, & y\geq M.
+\end{cases}
+}
+\]
+\end{frame}
+
+\begin{frame}{Point Mass at the Retention}
+\protect\phantomsection\label{point-mass-at-the-retention}
+The insurer's payment under excess-of-loss reinsurance is
+
+\[
+Y=\min(X,M).
+\]
+
+All claims satisfying
+
+\[
+X\geq M
+\]
+
+produce the payment
+
+\[
+Y=M.
+\]
+
+Therefore,
+
+\[
+\Pr(Y=M)=\Pr(X\geq M).
+\]
+\end{frame}
+
+\begin{frame}{Point Mass at the Retention}
+\protect\phantomsection\label{point-mass-at-the-retention-1}
+If \(X\) is continuous, then
+
+\[
+\Pr(X=M)=0.
+\]
+
+Hence,
+
+\[
+\boxed{
+\Pr(Y=M)
+=
+\Pr(X>M)
+=
+1-F_X(M).
+}
+\]
+
+Thus, the payment limit creates a \textbf{point mass at the retention
+\(M\)}.
+\end{frame}
+
+\begin{frame}
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Key idea}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+
+A continuous gross claim does not necessarily produce a continuous
+payment distribution.
+
+If
+
+\[
+Y=\min(X,M),
+\]
+
+all claims above \(M\) produce the same payment \(Y=M\).
+
+Therefore,
+
+\[
+\Pr(Y=M)>0
+\]
+
+whenever \(\Pr(X>M)>0\).
+
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}{Example: Distribution of the Insurer's Payment}
+\protect\phantomsection\label{example-distribution-of-the-insurers-payment-1}
+Let
+
+\[
+X\sim\operatorname{Exponential}(\lambda),
+\]
+
+and suppose the insurer has excess-of-loss reinsurance with retention
+\(M\).
+
+The insurer's payment is
+
+\[
+Y=\min(X,M).
+\]
+
+Find:
+
+\begin{enumerate}
+\tightlist
+\item
+  the distribution function \(F_Y(y)\);
+\item
+  the continuous part of the distribution;
+\item
+  the probability mass at \(M\).
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Distribution of the Insurer's Payment}
+\protect\phantomsection\label{distribution-of-the-insurers-payment}
+For \(y<M\),
+
+\[
+\begin{aligned}
+F_Y(y)
+&=\Pr(Y\leq y)\\
+&=\Pr(X\leq y).
+\end{aligned}
+\]
+
+Hence,
+
+\[
+F_Y(y)=F_X(y).
+\]
+
+For \(y\geq M\),
+
+\[
+F_Y(y)=1.
+\]
+\end{frame}
+
+\begin{frame}{Distribution of the Insurer's Payment}
+\protect\phantomsection\label{distribution-of-the-insurers-payment-1}
+Therefore,
+
+\[
+\boxed{
+F_Y(y)=
+\begin{cases}
+F_X(y), & y<M,\\
+1, & y\geq M.
+\end{cases}
+}
+\]
+
+For the exponential distribution,
+
+\[
+F_X(y)=1-e^{-\lambda y},
+\qquad y\geq0.
+\]
+
+Thus,
+
+\[
+F_Y(y)=
+\begin{cases}
+1-e^{-\lambda y}, & 0\leq y<M,\\
+1, & y\geq M.
+\end{cases}
+\]
+\end{frame}
+
+\begin{frame}{The Point Mass at \(M\)}
+\protect\phantomsection\label{the-point-mass-at-m}
+All claims satisfying
+
+\[
+X>M
+\]
+
+produce the same insurer payment:
+
+\[
+Y=M.
+\]
+
+Therefore,
+
+\[
+\begin{aligned}
+\Pr(Y=M)
+&=\Pr(X>M) =1-F_X(M).
+\end{aligned}
+\]
+
+For exponential claims,
+
+\[
+\boxed{
+\Pr(Y=M)=e^{-\lambda M}.
+}
+\]
+\end{frame}
+
+\begin{frame}{Distribution of the Insurer's Payment}
+\protect\phantomsection\label{distribution-of-the-insurers-payment-2}
+The distribution of \(Y\) therefore has two components:
+
+\[
+\boxed{
+\begin{aligned}
+&\text{continuous part on }0\leq y<M,\\
+&\text{point mass at }M.
+\end{aligned}
+}
+\]
+
+The point mass is
+
+\[
+\Pr(Y=M)=1-F_X(M).
+\]
+
+This is an example of a \textbf{mixed distribution}.
+\end{frame}
+
+\begin{frame}{Reinsurer's Payment}
+\protect\phantomsection\label{reinsurers-payment}
+Under the same excess-of-loss arrangement,
+
+\[
+\boxed{
+Z=(X-M)_+.
+}
+\]
+
+Equivalently,
+
+\[
+Z=
+\begin{cases}
+0, & X\leq M,\\
+X-M, & X>M.
+\end{cases}
+\]
+
+The reinsurer pays nothing when the claim does not exceed the retention.
+\end{frame}
+
+\begin{frame}{Point Mass at Zero}
+\protect\phantomsection\label{point-mass-at-zero}
+Since
+
+\[
+Z=0
+\iff
+X\leq M,
+\]
+
+we have
+
+\[
+\boxed{
+\Pr(Z=0)
+=
+\Pr(X\leq M)
+=
+F_X(M).
+}
+\]
+
+Thus, the reinsurer's payment has a point mass at zero.
+\end{frame}
+
+\begin{frame}{Distribution of the Reinsurer's Payment}
+\protect\phantomsection\label{distribution-of-the-reinsurers-payment-1}
+For \(z>0\),
+
+\[
+\begin{aligned}
+F_Z(z)
+&=\Pr(Z\leq z)\\
+&=\Pr((X-M)_+\leq z)\\
+&=\Pr(X\leq M+z)\\
+&=F_X(M+z).
+\end{aligned}
+\]
+
+Therefore,
+
+\[
+\boxed{
+F_Z(z)=
+\begin{cases}
+0, & z<0,\\
+F_X(M), & z=0,\\
+F_X(M+z), & z>0.
+\end{cases}
+}
+\]
+\end{frame}
+
+\begin{frame}{Continuous Part of the Reinsurer's Payment}
+\protect\phantomsection\label{continuous-part-of-the-reinsurers-payment}
+For \(z>0\), differentiating gives
+
+\[
+\boxed{
+f_Z(z)=f_X(M+z).
+}
+\]
+
+Thus, the distribution of \(Z\) consists of
+
+\[
+\boxed{
+\text{point mass at }0
++
+\text{continuous part for }z>0.
+}
+\]
+
+The point mass is
+
+\[
+\Pr(Z=0)=F_X(M).
+\]
+\end{frame}
+
+\begin{frame}{Two Different Point Masses}
+\protect\phantomsection\label{two-different-point-masses-1}
+Under excess-of-loss reinsurance,
+
+\[
+Y=\min(X,M)
+\]
+
+has a point mass at the retention:
+
+\[
+\boxed{
+\Pr(Y=M)=1-F_X(M).
+}
+\]
+
+The reinsurer's payment
+
+\[
+Z=(X-M)_+
+\]
+
+has a point mass at zero:
+
+\[
+\boxed{
+\Pr(Z=0)=F_X(M).
+}
+\]
+\end{frame}
+
+\begin{frame}{Interpreting the Point Masses}
+\protect\phantomsection\label{interpreting-the-point-masses}
+The two point masses have different actuarial interpretations.
+
+\[
+Y=M
+\]
+
+means that the insurer has reached its retention.
+
+By contrast,
+
+\[
+Z=0
+\]
+
+means that the claim has not reached the retention.
+
+Both arise from the same excess-of-loss contract.
+\end{frame}
+
+\begin{frame}{Example: Distribution of the Reinsurer's Payment}
+\protect\phantomsection\label{example-distribution-of-the-reinsurers-payment}
+Let
+
+\[
+X\sim\operatorname{Exponential}(\lambda)
+\]
+
+and
+
+\[
+Z=(X-M)_+.
+\]
+
+Find:
+
+\begin{enumerate}
+\tightlist
+\item
+  \(F_Z(z)\);
+\item
+  \(\Pr(Z=0)\);
+\item
+  the density of the continuous part.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Example: Distribution of the Reinsurer's Payment}
+\protect\phantomsection\label{example-distribution-of-the-reinsurers-payment-1}
+For \(z>0\),
+
+\[
+F_Z(z)
+=
+F_X(M+z)
+=
+1-e^{-\lambda(M+z)}.
+\]
+
+At zero,
+
+\[
+\boxed{
+\Pr(Z=0)
+=
+F_X(M)
+=
+1-e^{-\lambda M}.
+}
+\]
+
+For \(z>0\),
+
+\[
+\boxed{
+f_Z(z)
+=
+\lambda e^{-\lambda(M+z)}.
+}
+\]
+\end{frame}
+
+\begin{frame}{Mixed Distributions}
+\protect\phantomsection\label{mixed-distributions-1}
+A random variable can have both:
+
+\begin{itemize}
+\tightlist
+\item
+  a continuous component; and
+\item
+  one or more point masses.
+\end{itemize}
+
+Such a random variable is called a \textbf{mixed distribution}.
+
+For example,
+
+\[
+Y=\min(X,M)
+\]
+
+has a continuous component below \(M\) and a point mass at \(M\).
+
+Similarly,
+
+\[
+Z=(X-M)_+
+\]
+
+has a point mass at zero and a continuous component above zero.
+\end{frame}
+
+\begin{frame}{Expectations for a Mixed Distribution}
+\protect\phantomsection\label{expectations-for-a-mixed-distribution}
+Suppose \(U\) has density \(f_U\) for its continuous component and point
+masses at \(u_1,u_2,\ldots\).
+
+Then
+
+\[
+\boxed{
+E[g(U)]
+=
+\int g(u)f_U(u)\,du
++
+\sum_i g(u_i)\Pr(U=u_i).
+}
+\]
+
+Both the continuous component and the point masses must be included.
+\end{frame}
+
+\begin{frame}{Expected Insurer Payment}
+\protect\phantomsection\label{expected-insurer-payment}
+For
+
+\[
+Y=\min(X,M),
+\]
+
+the expected payment is
+
+\[
+\boxed{
+E[Y]
+=
+\int_0^M x f_X(x)\,dx
++
+M\{1-F_X(M)\}.
+}
+\]
+
+The second term accounts for the point mass at \(M\).
+\end{frame}
+
+\begin{frame}
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Do not ignore the point mass}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+
+It is incorrect to calculate
+
+\[
+E[Y]
+=
+\int_0^M x f_Y(x)\,dx
+\]
+
+without accounting for the point mass at \(M\).
+
+The correct expression is
+
+\[
+E[Y]
+=
+\int_0^M x f_X(x)\,dx
++
+M\{1-F_X(M)\}.
+\]
+
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}{Reinsurance Claims}
+\protect\phantomsection\label{reinsurance-claims-1}
+The reinsurer's payment
+
+\[
+Z=(X-M)_+
+\]
+
+is defined for every gross claim.
+
+For claims satisfying \(X\leq M,\) the reinsurer pays zero.
+
+In many actuarial calculations, we are interested specifically in claims
+that involve the reinsurer:
+
+\[
+\boxed{X>M}.
+\]
+
+These are referred to as \textbf{reinsurance claims}.
+\end{frame}
+
+\begin{frame}{Reinsurance Payment versus Reinsurance Claim}
+\protect\phantomsection\label{reinsurance-payment-versus-reinsurance-claim}
+The reinsurer's payment on a randomly selected claim is \(Z=(X-M)_+.\)
+
+This includes the possibility \(Z=0.\)
+
+If we consider only claims for which the reinsurer makes a positive
+payment, define
+
+\[
+W=Z\mid Z>0.
+\]
+
+Since
+
+\[
+Z>0
+\iff
+X>M,
+\]
+
+we have
+
+\[
+\boxed{
+W=X-M\mid X>M.
+}
+\]
+\end{frame}
+
+\begin{frame}{Distribution of a Reinsurance Claim}
+\protect\phantomsection\label{distribution-of-a-reinsurance-claim}
+For \(w>0\),
+
+\[
+\begin{aligned}
+F_W(w)
+&=\Pr(W\leq w)\\
+&=\Pr(X-M\leq w\mid X>M)\\
+&=\frac{\Pr(M<X\leq M+w)}
+        {\Pr(X>M)}.
+\end{aligned}
+\]
+
+Therefore,
+
+\[
+\boxed{
+F_W(w)
+=
+\frac{F_X(M+w)-F_X(M)}
+{1-F_X(M)},
+\qquad w>0.
+}
+\]
+
+This is the distribution of the \textbf{positive excess loss}.
+\end{frame}
+
+\begin{frame}{Density of a Reinsurance Claim}
+\protect\phantomsection\label{density-of-a-reinsurance-claim}
+If \(X\) has density \(f_X\), differentiating gives
+
+\[
+\boxed{
+f_W(w)
+=
+\frac{f_X(M+w)}
+{1-F_X(M)},
+\qquad w>0.
+}
+\]
+
+Unlike \(Z\), the conditional payment \(W\) has no point mass at zero.
+
+Thus,
+
+\[
+\begin{aligned}
+Z &: \text{payment on every claim},\\
+W &: \text{payment given that the reinsurer is involved}.
+\end{aligned}
+\]
+\end{frame}
+
+\begin{frame}
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Three quantities to distinguish}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+
+\[
+\begin{aligned}
+X &: \text{gross claim amount},\\
+Z &: \text{reinsurer's payment on every claim},\\
+W &: \text{reinsurer's payment given }X>M.
+\end{aligned}
+\]
+
+\(Z\) has a point mass at zero, whereas \(W\) describes only positive
+reinsurance payments.
+
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}{Example: Distribution of a Reinsurance Claim}
+\protect\phantomsection\label{example-distribution-of-a-reinsurance-claim}
+Suppose \(X\) has distribution function \(F_X\) and density \(f_X\). The
+insurer purchases excess-of-loss reinsurance with retention \(M\).
+
+Let \(W=Z\mid Z>0.\)
+
+Show that
+
+\[
+F_W(w)
+=
+\frac{F_X(M+w)-F_X(M)}
+{1-F_X(M)},
+\qquad w>0,
+\]
+
+and
+
+\[
+f_W(w)
+=
+\frac{f_X(M+w)}
+{1-F_X(M)},
+\qquad w>0.
+\]
+
+Interpret \(W\) as the amount by which a claim exceeds the insurer's
+retention, given that the retention has been exceeded.
+\end{frame}
+
+\begin{frame}{Expected Payments}
+\protect\phantomsection\label{expected-payments-1}
+Under excess-of-loss reinsurance,
+
+\[
+Y=\min(X,M)  \quad \text{ and } \quad   Z=(X-M)_+.
+\]
+
+Since \(X=Y+Z,\) taking expectations gives
+
+\[
+\boxed{
+E[X]=E[Y]+E[Z].
+}
+\]
+
+Hence, \(\quad \quad \boxed{E[Y]=E[X]-E[Z].}\)
+\end{frame}
+
+\begin{frame}{Expected Reinsurer Payment}
+\protect\phantomsection\label{expected-reinsurer-payment}
+The reinsurer pays
+
+\[
+Z=(X-M)_+.
+\]
+
+Therefore,
+
+\[
+\boxed{
+E[Z]
+=
+\int_M^\infty
+(x-M)f_X(x)\,dx.
+}
+\]
+
+Using the substitution \(w=x-M\),
+
+\[
+\boxed{
+E[Z]
+=
+\int_0^\infty
+w f_X(M+w)\,dw.
+}
+\]
+
+This is the expected excess loss above the retention \(M\).
+\end{frame}
+
+\begin{frame}{Expected Insurer Payment}
+\protect\phantomsection\label{expected-insurer-payment-1}
+The insurer pays \(Y=\min(X,M).\)
+
+Hence,
+
+\[
+\boxed{
+E[Y]
+=
+\int_0^M x f_X(x)\,dx
++
+M\{1-F_X(M)\}.
+}
+\]
+
+Alternatively, since \(Y=X-Z,\) we have
+
+\[
+\boxed{
+E[Y]=E[X]-E[Z].
+}
+\]
+\end{frame}
+
+\begin{frame}
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Interpretation of the expected payments}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+
+Under excess-of-loss reinsurance,
+
+\[
+E[Z]
+\]
+
+is the expected amount transferred to the reinsurer per gross claim.
+
+Similarly,
+
+\[
+E[Y]
+\]
+
+is the expected amount retained by the direct insurer.
+
+Therefore,
+
+\[
+\boxed{
+E[X]=E[Y]+E[Z].
+}
+\]
+
+Reinsurance changes how the loss is shared between the insurer and
+reinsurer.
+
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}{Example: Expected Insurer and Reinsurer Payments}
+\protect\phantomsection\label{example-expected-insurer-and-reinsurer-payments}
+Let \(X\) have density \(f_X\), and suppose the insurer purchases
+unlimited excess-of-loss reinsurance with retention \(M\).
+
+Show that
+
+\[
+E[Z]
+=
+\int_M^\infty
+(x-M)f_X(x)\,dx
+\]
+
+and
+
+\[
+E[Y]
+=
+E[X]-E[Z].
+\]
+
+Then verify that \(E[X]=E[Y]+E[Z].\)
+\end{frame}
+
+\begin{frame}{Exponential Claims}
+\protect\phantomsection\label{exponential-claims-1}
+Suppose
+
+\[
+X\sim\operatorname{Exponential}(\lambda).
+\]
+
+Then
+
+\[
+\boxed{
+E[X]=\frac{1}{\lambda}
+}
+ \quad \text{ and } \quad 
+\boxed{
+\Pr(X>M)=e^{-\lambda M}.
+}
+\]
+
+Thus, the probability that a claim involves the reinsurer is
+
+\[
+\boxed{
+\Pr(X>M)=e^{-\lambda M}.
+}
+\]
+\end{frame}
+
+\begin{frame}{Expected Reinsurer Payment}
+\protect\phantomsection\label{expected-reinsurer-payment-1}
+For exponential claims,
+
+\[
+E[Z]
+=
+\int_M^\infty
+(x-M)\lambda e^{-\lambda x}\,dx.
+\]
+
+This gives
+
+\[
+\boxed{
+E[Z]
+=
+\frac{e^{-\lambda M}}{\lambda}.
+}
+\]
+
+Since \(E[X]=\frac{1}{\lambda},\)
+
+we can write
+
+\[
+\boxed{
+E[Z]=e^{-\lambda M}E[X].
+}
+\]
+\end{frame}
+
+\begin{frame}{Expected Insurer Payment}
+\protect\phantomsection\label{expected-insurer-payment-2}
+Using
+
+\[
+E[Y]=E[X]-E[Z],
+\]
+
+we obtain
+
+\[
+\boxed{
+E[Y]
+=
+\frac{1-e^{-\lambda M}}{\lambda}.
+}
+\]
+
+Thus,
+
+\[
+\boxed{
+E[X]
+=
+\frac{1-e^{-\lambda M}}{\lambda}
++
+\frac{e^{-\lambda M}}{\lambda}.
+}
+\]
+
+The expected gross claim is divided between the insurer and reinsurer.
+\end{frame}
+
+\begin{frame}{Interpreting the Retention Level}
+\protect\phantomsection\label{interpreting-the-retention-level}
+As \(M\) increases, \(\Pr(X>M)=e^{-\lambda M}\) decreases.
+
+Therefore:
+
+\begin{itemize}
+\tightlist
+\item
+  fewer claims involve the reinsurer; the expected reinsurer payment
+  decreases; and
+\item
+  the expected insurer payment increases.
+\end{itemize}
+
+The retention \(M\) controls the amount of risk transferred to the
+reinsurer.
+
+For exponential claims,
+
+\[
+E[Z]
+=
+\frac{e^{-\lambda M}}{\lambda}.
+\]
+
+The simple form follows from the memoryless property of the exponential
+distribution.
+\end{frame}
+
+
+
+
+\end{document}
