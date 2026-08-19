@@ -1,0 +1,2493 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Chapter 2: Risk Sharing — Reinsurance and Deductibles – Risk Analysis</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/01_Loss_Distributions.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-87aed0b8589e23e45aa8556edf37a91b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/02_Risk_Sharing.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2: Risk Sharing — Reinsurance and Deductibles</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Risk Analysis</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01_Loss_Distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Chapter 1: Loss Distributions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02_Risk_Sharing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2: Risk Sharing — Reinsurance and Deductibles</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction-to-risk-sharing" id="toc-introduction-to-risk-sharing" class="nav-link active" data-scroll-target="#introduction-to-risk-sharing"><span class="header-section-number">2.1</span> Introduction to Risk Sharing</a>
+  <ul class="collapse">
+  <li><a href="#basic-notation" id="toc-basic-notation" class="nav-link" data-scroll-target="#basic-notation"><span class="header-section-number">2.1.1</span> Basic notation</a></li>
+  <li><a href="#insurance-and-reinsurance-as-risk-sharing-arrangements" id="toc-insurance-and-reinsurance-as-risk-sharing-arrangements" class="nav-link" data-scroll-target="#insurance-and-reinsurance-as-risk-sharing-arrangements"><span class="header-section-number">2.1.2</span> Insurance and reinsurance as risk-sharing arrangements</a></li>
+  <li><a href="#why-does-an-insurer-reinsure" id="toc-why-does-an-insurer-reinsure" class="nav-link" data-scroll-target="#why-does-an-insurer-reinsure"><span class="header-section-number">2.1.3</span> Why does an insurer reinsure?</a></li>
+  <li><a href="#gross-and-net-claims" id="toc-gross-and-net-claims" class="nav-link" data-scroll-target="#gross-and-net-claims"><span class="header-section-number">2.1.4</span> Gross and net claims</a></li>
+  <li><a href="#proportional-and-non-proportional-risk-sharing" id="toc-proportional-and-non-proportional-risk-sharing" class="nav-link" data-scroll-target="#proportional-and-non-proportional-risk-sharing"><span class="header-section-number">2.1.5</span> Proportional and non-proportional risk sharing</a></li>
+  <li><a href="#a-useful-way-to-view-risk-sharing" id="toc-a-useful-way-to-view-risk-sharing" class="nav-link" data-scroll-target="#a-useful-way-to-view-risk-sharing"><span class="header-section-number">2.1.6</span> A useful way to view risk sharing</a></li>
+  </ul></li>
+  <li><a href="#reinsurance" id="toc-reinsurance" class="nav-link" data-scroll-target="#reinsurance"><span class="header-section-number">2.2</span> Reinsurance</a>
+  <ul class="collapse">
+  <li><a href="#proportional-reinsurance" id="toc-proportional-reinsurance" class="nav-link" data-scroll-target="#proportional-reinsurance"><span class="header-section-number">2.2.1</span> Proportional Reinsurance</a></li>
+  <li><a href="#excess-of-loss-reinsurance" id="toc-excess-of-loss-reinsurance" class="nav-link" data-scroll-target="#excess-of-loss-reinsurance"><span class="header-section-number">2.2.2</span> Excess-of-Loss Reinsurance</a></li>
+  <li><a href="#limits-and-layers" id="toc-limits-and-layers" class="nav-link" data-scroll-target="#limits-and-layers"><span class="header-section-number">2.2.3</span> Limits and Layers</a></li>
+  <li><a href="#comparing-proportional-and-excess-of-loss-reinsurance" id="toc-comparing-proportional-and-excess-of-loss-reinsurance" class="nav-link" data-scroll-target="#comparing-proportional-and-excess-of-loss-reinsurance"><span class="header-section-number">2.2.4</span> Comparing Proportional and Excess-of-Loss Reinsurance</a></li>
+  </ul></li>
+  <li><a href="#deductibles-and-policy-limits" id="toc-deductibles-and-policy-limits" class="nav-link" data-scroll-target="#deductibles-and-policy-limits"><span class="header-section-number">2.3</span> Deductibles and Policy Limits</a>
+  <ul class="collapse">
+  <li><a href="#deductibles" id="toc-deductibles" class="nav-link" data-scroll-target="#deductibles"><span class="header-section-number">2.3.1</span> Deductibles</a></li>
+  <li><a href="#policy-limits" id="toc-policy-limits" class="nav-link" data-scroll-target="#policy-limits"><span class="header-section-number">2.3.2</span> Policy Limits</a></li>
+  <li><a href="#deductible-and-policy-limit-together" id="toc-deductible-and-policy-limit-together" class="nav-link" data-scroll-target="#deductible-and-policy-limit-together"><span class="header-section-number">2.3.3</span> Deductible and Policy Limit Together</a></li>
+  <li><a href="#risk-sharing-interpretation" id="toc-risk-sharing-interpretation" class="nav-link" data-scroll-target="#risk-sharing-interpretation"><span class="header-section-number">2.3.4</span> Risk-Sharing Interpretation</a></li>
+  </ul></li>
+  <li><a href="#payment-distributions-under-risk-sharing" id="toc-payment-distributions-under-risk-sharing" class="nav-link" data-scroll-target="#payment-distributions-under-risk-sharing"><span class="header-section-number">2.4</span> Payment Distributions under Risk Sharing</a>
+  <ul class="collapse">
+  <li><a href="#insurers-payment-under-excess-of-loss-reinsurance" id="toc-insurers-payment-under-excess-of-loss-reinsurance" class="nav-link" data-scroll-target="#insurers-payment-under-excess-of-loss-reinsurance"><span class="header-section-number">2.4.1</span> Insurer’s Payment under Excess-of-Loss Reinsurance</a></li>
+  <li><a href="#reinsurers-payment-under-excess-of-loss-reinsurance" id="toc-reinsurers-payment-under-excess-of-loss-reinsurance" class="nav-link" data-scroll-target="#reinsurers-payment-under-excess-of-loss-reinsurance"><span class="header-section-number">2.4.2</span> Reinsurer’s Payment under Excess-of-Loss Reinsurance</a></li>
+  <li><a href="#mixed-distributions" id="toc-mixed-distributions" class="nav-link" data-scroll-target="#mixed-distributions"><span class="header-section-number">2.4.3</span> Mixed Distributions</a></li>
+  <li><a href="#reinsurance-claims" id="toc-reinsurance-claims" class="nav-link" data-scroll-target="#reinsurance-claims"><span class="header-section-number">2.4.4</span> Reinsurance Claims</a></li>
+  <li><a href="#expected-payments" id="toc-expected-payments" class="nav-link" data-scroll-target="#expected-payments"><span class="header-section-number">2.4.5</span> Expected Payments</a></li>
+  <li><a href="#example-exponential-claims" id="toc-example-exponential-claims" class="nav-link" data-scroll-target="#example-exponential-claims"><span class="header-section-number">2.4.6</span> Example: Exponential Claims</a></li>
+  <li><a href="#variability-of-risk-sharing-payments" id="toc-variability-of-risk-sharing-payments" class="nav-link" data-scroll-target="#variability-of-risk-sharing-payments"><span class="header-section-number">2.4.7</span> Variability of Risk-Sharing Payments</a></li>
+  <li><a href="#connecting-the-distribution-to-the-actuarial-interpretation" id="toc-connecting-the-distribution-to-the-actuarial-interpretation" class="nav-link" data-scroll-target="#connecting-the-distribution-to-the-actuarial-interpretation"><span class="header-section-number">2.4.8</span> Connecting the Distribution to the Actuarial Interpretation</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2: Risk Sharing — Reinsurance and Deductibles</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- # Chapter 2: Risk Sharing — Reinsurance and Deductibles -->
+<section id="introduction-to-risk-sharing" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="introduction-to-risk-sharing"><span class="header-section-number">2.1</span> Introduction to Risk Sharing</h2>
+<p>Insurance is a form of <strong>risk sharing</strong>. When a loss occurs, the financial burden does not necessarily fall entirely on one party. Depending on the insurance and reinsurance arrangements in place, a claim may be shared among the <strong>policyholder</strong>, the <strong>direct insurer</strong>, and the <strong>reinsurer</strong>.</p>
+<p>The purpose of this chapter is to describe how a gross claim is divided among these parties and to develop the mathematical framework needed to analyse common risk-sharing arrangements.</p>
+<section id="basic-notation" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="basic-notation"><span class="header-section-number">2.1.1</span> Basic notation</h3>
+<p>Let <span class="math inline">\(X\)</span> denote the <strong>gross claim amount</strong>, that is, the amount of the loss before considering any insurance or reinsurance arrangements.</p>
+<p>When a claim occurs, different parties may be responsible for different portions of this amount. We use the following notation:</p>
+<ul>
+<li><span class="math inline">\(V\)</span> is the amount of the claim paid by the <strong>policyholder</strong>;</li>
+<li><span class="math inline">\(Y\)</span> is the amount of the claim paid by the <strong>direct insurer</strong>, after receiving any reinsurance recovery;</li>
+<li><span class="math inline">\(Z\)</span> is the amount of the claim paid by the <strong>reinsurer</strong>.</li>
+</ul>
+<p>The three amounts must add up to the original claim:</p>
+<p><span class="math display">\[
+X=V+Y+Z.
+\]</span></p>
+<p>This equation provides the basic accounting identity for risk sharing.</p>
+<div id="fig-basic-risk-sharing" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-basic-risk-sharing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/Basic_Risk_Sharing_Three-Party_Framework.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-basic-risk-sharing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: Basic Risk-Sharing Three-Party Framework
+</figcaption>
+</figure>
+</div>
+<p>In many of the examples in this chapter, we will initially assume that there is <strong>no deductible</strong>. In this case, the policyholder does not contribute to the claim payment, so that</p>
+<p><span class="math display">\[
+V=0.
+\]</span></p>
+<p>The basic relationship then becomes</p>
+<p><span class="math display">\[
+X=Y+Z.
+\]</span></p>
+<p>Thus, once the gross claim <span class="math inline">\(X\)</span> is known, the risk-sharing arrangement determines how much is retained by the insurer, <span class="math inline">\(Y\)</span>, and how much is transferred to the reinsurer, <span class="math inline">\(Z\)</span>.</p>
+</section>
+<section id="insurance-and-reinsurance-as-risk-sharing-arrangements" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="insurance-and-reinsurance-as-risk-sharing-arrangements"><span class="header-section-number">2.1.2</span> Insurance and reinsurance as risk-sharing arrangements</h3>
+<p>It is useful to distinguish between two stages of risk sharing.</p>
+<p>First, the <strong>insurance contract</strong> determines how much of the loss is borne by the policyholder and how much is covered by the direct insurer. A deductible is one example of such an arrangement.</p>
+<p>Second, the direct insurer may transfer part of its risk to a <strong>reinsurer</strong>. The reinsurer then pays part of the claim according to the terms of the reinsurance contract.</p>
+<p>Consequently, the original loss <span class="math inline">\(X\)</span> can be viewed as being divided into three components:</p>
+<p><span class="math display">\[
+\boxed{X=V+Y+Z}.
+\]</span></p>
+<p>The interpretation is straightforward:</p>
+<ul>
+<li><span class="math inline">\(V\)</span> represents the portion retained by the policyholder;</li>
+<li><span class="math inline">\(Y\)</span> represents the portion ultimately retained by the direct insurer;</li>
+<li><span class="math inline">\(Z\)</span> represents the portion transferred to the reinsurer.</li>
+</ul>
+<p>This decomposition will be used throughout the chapter.</p>
+</section>
+<section id="why-does-an-insurer-reinsure" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="why-does-an-insurer-reinsure"><span class="header-section-number">2.1.3</span> Why does an insurer reinsure?</h3>
+<p>An insurer may receive many claims of different sizes. Although most claims may be relatively small, an individual claim can occasionally be very large. If the insurer were required to pay every claim in full, a few large claims could have a substantial effect on its financial position.</p>
+<p>Reinsurance allows the insurer to <strong>transfer part of this risk</strong> to another insurer, the reinsurer.</p>
+<p>For example, suppose an insurer agrees to cover claims arising from a portfolio of motor policies. If the insurer retains every claim in full, then for a claim of amount <span class="math inline">\(X\)</span>,</p>
+<p><span class="math display">\[
+Y=X
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+Z=0.
+\]</span></p>
+<p>If the insurer purchases reinsurance, part of the claim may instead be recovered from the reinsurer. In that case,</p>
+<p><span class="math display">\[
+Y&lt;X
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+Z&gt;0.
+\]</span></p>
+<p>The reinsurance arrangement therefore changes the distribution of the amount ultimately paid by the insurer.</p>
+<p>This is an important distinction. The <strong>gross claim distribution</strong> describes the losses generated by the underlying insurance portfolio, whereas the <strong>net claim distribution</strong> describes the amounts that remain with the insurer after risk sharing.</p>
+</section>
+<section id="gross-and-net-claims" class="level3" data-number="2.1.4">
+<h3 data-number="2.1.4" class="anchored" data-anchor-id="gross-and-net-claims"><span class="header-section-number">2.1.4</span> Gross and net claims</h3>
+<p>The random variable <span class="math inline">\(X\)</span> represents the gross claim amount. It describes the loss before considering reinsurance recoveries.</p>
+<p>The random variable <span class="math inline">\(Y\)</span> represents the <strong>net claim amount for the insurer</strong>. It is the amount that the insurer ultimately pays after accounting for the recovery from the reinsurer.</p>
+<p>The random variable <span class="math inline">\(Z\)</span> represents the <strong>reinsurance recovery</strong>, or the amount paid by the reinsurer.</p>
+<p>Under the assumption of no deductible,</p>
+<p><span class="math display">\[
+X=Y+Z.
+\]</span></p>
+<p>Taking expectations gives</p>
+<p><span class="math display">\[
+E(X)=E(Y)+E(Z).
+\]</span></p>
+<p>Thus, the expected gross claim is divided between the expected amount retained by the insurer and the expected amount recovered from the reinsurer.</p>
+<p>The same decomposition applies to other quantities of interest. For example,</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+\]</span></p>
+<p>describes the variability of the gross claim, whereas</p>
+<p><span class="math display">\[
+\operatorname{Var}(Y)
+\]</span></p>
+<p>describes the variability of the amount retained by the insurer.</p>
+<p>An important purpose of reinsurance is therefore to reduce the insurer’s exposure to large claims and, consequently, to reduce the variability of its claim payments.</p>
+</section>
+<section id="proportional-and-non-proportional-risk-sharing" class="level3" data-number="2.1.5">
+<h3 data-number="2.1.5" class="anchored" data-anchor-id="proportional-and-non-proportional-risk-sharing"><span class="header-section-number">2.1.5</span> Proportional and non-proportional risk sharing</h3>
+<p>Reinsurance arrangements can be broadly classified into <strong>proportional</strong> and <strong>non-proportional</strong> reinsurance.</p>
+<p>Under <strong>proportional reinsurance</strong>, the reinsurer takes a fixed proportion of the claim. If <span class="math inline">\(\alpha\)</span> denotes the retained proportion, then</p>
+<p><span class="math display">\[
+Y=\alpha X
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+Z=(1-\alpha)X.
+\]</span></p>
+<p>The parameter <span class="math inline">\(\alpha\)</span> is known as the <strong>retained proportion</strong> or <strong>retention level</strong>.</p>
+<p>For example, if <span class="math inline">\(\alpha=0.75\)</span>, the insurer retains <span class="math inline">\(75\%\)</span> of every claim and the reinsurer pays the remaining <span class="math inline">\(25\%\)</span>:</p>
+<p><span class="math display">\[
+Y=0.75X,
+\qquad
+Z=0.25X.
+\]</span></p>
+<p>The key feature is that the proportions are the same regardless of the size of the claim.</p>
+<p>Under <strong>non-proportional reinsurance</strong>, the amount paid by the reinsurer depends on the size of the claim. A common example is <strong>excess-of-loss reinsurance</strong>.</p>
+<p>Suppose the insurer retains claims up to an amount <span class="math inline">\(M\)</span>. The insurer pays any individual claim in full up to <span class="math inline">\(M\)</span>, while the reinsurer pays the amount above <span class="math inline">\(M\)</span>. Thus,</p>
+<p><span class="math display">\[
+Y=\min(X,M)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+Z=(X-M)_+,
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+(x)_+=\max(x,0).
+\]</span></p>
+<p>The relationship</p>
+<p><span class="math display">\[
+X=Y+Z
+\]</span></p>
+<p>continues to hold.</p>
+<p>For a claim below the retention level, <span class="math inline">\(X\leq M\)</span>,</p>
+<p><span class="math display">\[
+Y=X,
+\qquad
+Z=0.
+\]</span></p>
+<p>For a claim above the retention level, <span class="math inline">\(X&gt;M\)</span>,</p>
+<p><span class="math display">\[
+Y=M,
+\qquad
+Z=X-M.
+\]</span></p>
+<p>Thus, unlike proportional reinsurance, the insurer’s retained proportion is <strong>not constant</strong> under excess-of-loss reinsurance.</p>
+</section>
+<section id="a-useful-way-to-view-risk-sharing" class="level3" data-number="2.1.6">
+<h3 data-number="2.1.6" class="anchored" data-anchor-id="a-useful-way-to-view-risk-sharing"><span class="header-section-number">2.1.6</span> A useful way to view risk sharing</h3>
+<p>The different arrangements can be understood by asking a simple question:</p>
+<blockquote class="blockquote">
+<p><strong>Given a gross claim <span class="math inline">\(X\)</span>, how much does each party pay?</strong></p>
+</blockquote>
+<p>For example, under proportional reinsurance,</p>
+<p><span class="math display">\[
+\begin{aligned}
+V&amp;=0,\\
+Y&amp;=\alpha X,\\
+Z&amp;=(1-\alpha)X.
+\end{aligned}
+\]</span></p>
+<p>Under excess-of-loss reinsurance with retention <span class="math inline">\(M\)</span>,</p>
+<p><span class="math display">\[
+\begin{aligned}
+V&amp;=0,\\
+Y&amp;=\min(X,M),\\
+Z&amp;=(X-M)_+.
+\end{aligned}
+\]</span></p>
+<p>These payment functions provide the foundation for the mathematical analysis in the remainder of the chapter. Once the payment functions have been specified, quantities such as expected insurer payments, expected reinsurance recoveries, and variances can be calculated from the distribution of the gross claim <span class="math inline">\(X\)</span>.</p>
+<p>The key idea is therefore simple:</p>
+<p><span class="math display">\[
+\boxed{\text{Gross claim}
+\longrightarrow
+\text{risk-sharing arrangement}
+\longrightarrow
+\text{payments by each party}.}
+\]</span></p>
+</section>
+</section>
+<section id="reinsurance" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="reinsurance"><span class="header-section-number">2.2</span> Reinsurance</h2>
+<p>Reinsurance is an arrangement under which an insurer transfers part of the risk arising from its insurance portfolio to another insurer, known as the <strong>reinsurer</strong>. The original insurer is referred to as the <strong>direct insurer</strong> or <strong>cedant</strong>.</p>
+<p>Suppose <span class="math inline">\(X\)</span> is the gross claim amount and there is no deductible. The insurer’s claim payment and the reinsurer’s recovery satisfy</p>
+<p><span class="math display">\[
+X=Y+Z,
+\]</span></p>
+<p>where <span class="math inline">\(Y\)</span> is the amount ultimately paid by the direct insurer and <span class="math inline">\(Z\)</span> is the amount paid by the reinsurer.</p>
+<p>The reinsurance contract determines how <span class="math inline">\(X\)</span> is divided between <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span>. Two important forms of reinsurance are <strong>proportional reinsurance</strong> and <strong>excess-of-loss reinsurance</strong>.</p>
+<div id="fig-reinsurance-comp" class="lightbox quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reinsurance-comp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="../figures/Proportional_vs_Non-Proportional_Reinsurance.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;2.2: Proportional vs.&nbsp;Non-Proportional Reinsurance"><img src="../figures/Proportional_vs_Non-Proportional_Reinsurance.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reinsurance-comp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: Proportional vs.&nbsp;Non-Proportional Reinsurance
+</figcaption>
+</figure>
+</div>
+<section id="proportional-reinsurance" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="proportional-reinsurance"><span class="header-section-number">2.2.1</span> Proportional Reinsurance</h3>
+<p>Under proportional reinsurance, the direct insurer and the reinsurer share each claim according to an agreed proportion.</p>
+<p>Let <span class="math inline">\(\alpha\)</span> denote the <strong>retained proportion</strong> or <strong>retention level</strong>. The insurer retains the proportion <span class="math inline">\(\alpha\)</span> of each claim, while the reinsurer pays the remaining proportion <span class="math inline">\(1-\alpha\)</span>. Thus,</p>
+<p><span class="math display">\[
+Y=\alpha X
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+Z=(1-\alpha)X.
+\]</span></p>
+<p>The relationship</p>
+<p><span class="math display">\[
+X=Y+Z
+\]</span></p>
+<p>is therefore satisfied for every value of <span class="math inline">\(X\)</span>.</p>
+<p>For example, suppose the insurer retains <span class="math inline">\(75\%\)</span> of each claim, so that <span class="math inline">\(\alpha=0.75\)</span>. For a claim of <span class="math inline">\(100{,}000\)</span>,</p>
+<p><span class="math display">\[
+Y=0.75(100{,}000)=75{,}000
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+Z=0.25(100{,}000)=25{,}000.
+\]</span></p>
+<p>The insurer and reinsurer therefore share every claim in the same proportion, regardless of its size.</p>
+<p>A common form of proportional reinsurance is <strong>quota share reinsurance</strong>, under which the retained proportion is the same for all risks in the portfolio. For example, a <span class="math inline">\(75\%\)</span> retained quota share means that the direct insurer retains <span class="math inline">\(75\%\)</span> of every claim and the reinsurer pays <span class="math inline">\(25\%\)</span>.</p>
+<p>Another form is <strong>surplus reinsurance</strong>, under which the proportion can vary from one risk to another. In this course, we focus on quota share reinsurance.</p>
+<p>The main characteristic of proportional reinsurance is therefore</p>
+<p><span class="math display">\[
+\frac{Y}{X}=\alpha,
+\]</span></p>
+<p>whenever <span class="math inline">\(X&gt;0\)</span>. The proportion of each claim retained by the insurer is constant.</p>
+</section>
+<section id="excess-of-loss-reinsurance" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="excess-of-loss-reinsurance"><span class="header-section-number">2.2.2</span> Excess-of-Loss Reinsurance</h3>
+<p>Under <strong>excess-of-loss reinsurance</strong>, the reinsurer does not pay a fixed proportion of every claim. Instead, the reinsurer pays claims, or parts of claims, above a specified retention level.</p>
+<p>Let <span class="math inline">\(M\)</span> denote the amount retained by the insurer. The insurer pays any individual claim in full up to the amount <span class="math inline">\(M\)</span>. The reinsurer then pays the amount of the claim above <span class="math inline">\(M\)</span>.</p>
+<p>The insurer’s payment is therefore</p>
+<p><span class="math display">\[
+Y=\min(X,M),
+\]</span></p>
+<p>while the reinsurer’s recovery is</p>
+<p><span class="math display">\[
+Z=(X-M)_+,
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+(x)_+=\max(x,0).
+\]</span></p>
+<p>It follows immediately that</p>
+<p><span class="math display">\[
+X=Y+Z.
+\]</span></p>
+<p>The payment functions can be illustrated by considering two cases.</p>
+<p>If the claim does not exceed the retention, <span class="math inline">\(X\leq M\)</span>, then</p>
+<p><span class="math display">\[
+Y=X,
+\qquad
+Z=0.
+\]</span></p>
+<p>The insurer pays the claim in full.</p>
+<p>If the claim exceeds the retention, <span class="math inline">\(X&gt;M\)</span>, then</p>
+<p><span class="math display">\[
+Y=M,
+\qquad
+Z=X-M.
+\]</span></p>
+<p>The insurer pays only the retention amount <span class="math inline">\(M\)</span>, and the reinsurer pays the excess.</p>
+<p>For example, suppose the retention is <span class="math inline">\(M=50{,}000\)</span>. For a claim of <span class="math inline">\(30{,}000\)</span>,</p>
+<p><span class="math display">\[
+Y=30{,}000,
+\qquad
+Z=0.
+\]</span></p>
+<p>For a claim of <span class="math inline">\(80{,}000\)</span>,</p>
+<p><span class="math display">\[
+Y=50{,}000,
+\qquad
+Z=30{,}000.
+\]</span></p>
+<p>For a claim of <span class="math inline">\(500{,}000\)</span>,</p>
+<p><span class="math display">\[
+Y=50{,}000,
+\qquad
+Z=450{,}000.
+\]</span></p>
+<p>Unlike proportional reinsurance, the insurer does not retain a constant proportion of the claim. Instead, the insurer’s payment is capped at the retention level <span class="math inline">\(M\)</span>.</p>
+</section>
+<section id="limits-and-layers" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="limits-and-layers"><span class="header-section-number">2.2.3</span> Limits and Layers</h3>
+<p>An excess-of-loss contract may specify not only a retention but also a maximum amount that the reinsurer will pay. This creates a <strong>reinsurance layer</strong>.</p>
+<p>Suppose the insurer retains the first <span class="math inline">\(M\)</span> of each claim and the reinsurer provides cover of <span class="math inline">\(L\)</span> above this retention. The reinsurer’s payment is</p>
+<p><span class="math display">\[
+Z=\min\{(X-M)_+,L\}.
+\]</span></p>
+<p>The insurer’s payment is then</p>
+<p><span class="math display">\[
+Y=X-Z.
+\]</span></p>
+<p>Equivalently,</p>
+<p><span class="math display">\[
+Y=
+\begin{cases}
+X, &amp; X\leq M,\\
+M, &amp; M&lt;X\leq M+L,\\
+X-L, &amp; X&gt;M+L.
+\end{cases}
+\]</span></p>
+<p>The reinsurer pays nothing when <span class="math inline">\(X\leq M\)</span>, pays the amount between <span class="math inline">\(M\)</span> and <span class="math inline">\(X\)</span> when <span class="math inline">\(M&lt;X\leq M+L\)</span>, and pays the maximum amount <span class="math inline">\(L\)</span> when <span class="math inline">\(X&gt;M+L\)</span>.</p>
+<p>For example, consider a layer of <span class="math inline">\(30{,}000\)</span> excess of <span class="math inline">\(20{,}000\)</span>. The reinsurer covers losses between <span class="math inline">\(20{,}000\)</span> and <span class="math inline">\(50{,}000\)</span>. Thus,</p>
+<p><span class="math display">\[
+Z=\min\{(X-20{,}000)_+,30{,}000\}.
+\]</span></p>
+<p>The payments for several claim amounts are:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Gross claim <span class="math inline">\(X\)</span></th>
+<th style="text-align: right;">Insurer payment <span class="math inline">\(Y\)</span></th>
+<th style="text-align: right;">Reinsurer payment <span class="math inline">\(Z\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(15{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(15{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(30{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(20{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(10{,}000\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(50{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(20{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(30{,}000\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(80{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(50{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(30{,}000\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The terminology <strong>retention</strong>, <strong>limit</strong>, and <strong>layer</strong> is useful for describing such contracts.</p>
+<ul>
+<li>The <strong>retention</strong> <span class="math inline">\(M\)</span> is the amount of each claim retained by the insurer before the reinsurance begins.</li>
+<li>The <strong>limit</strong> <span class="math inline">\(L\)</span> is the maximum amount that the reinsurer will pay under the layer.</li>
+<li>The <strong>layer</strong> describes the range of claim amounts covered by the reinsurer, from <span class="math inline">\(M\)</span> to <span class="math inline">\(M+L\)</span>.</li>
+</ul>
+<p>If there is no upper limit, the cover is <strong>unlimited</strong>, and the reinsurer’s payment reduces to</p>
+<p><span class="math display">\[
+Z=(X-M)_+.
+\]</span></p>
+<p>Thus, an unlimited excess-of-loss contract can be viewed as a special case of a reinsurance layer.</p>
+</section>
+<section id="comparing-proportional-and-excess-of-loss-reinsurance" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="comparing-proportional-and-excess-of-loss-reinsurance"><span class="header-section-number">2.2.4</span> Comparing Proportional and Excess-of-Loss Reinsurance</h3>
+<p>The two arrangements differ mainly in how the reinsurer’s payment responds to the size of the claim.</p>
+<p>Under proportional reinsurance,</p>
+<p><span class="math display">\[
+Z=(1-\alpha)X.
+\]</span></p>
+<p>The reinsurer pays a fixed proportion of every claim.</p>
+<p>Under excess-of-loss reinsurance with retention <span class="math inline">\(M\)</span>,</p>
+<p><span class="math display">\[
+Z=(X-M)_+
+\]</span></p>
+<p>for unlimited cover, or</p>
+<p><span class="math display">\[
+Z=\min\{(X-M)_+,L\}
+\]</span></p>
+<p>for a limited layer.</p>
+<p>The distinction can be summarized as follows:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 30%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Proportional reinsurance</th>
+<th>Excess-of-loss reinsurance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Basis of payment</td>
+<td>Fixed proportion of claim</td>
+<td>Amount above retention</td>
+</tr>
+<tr class="even">
+<td>Insurer payment</td>
+<td><span class="math inline">\(Y=\alpha X\)</span></td>
+<td><span class="math inline">\(Y=\min(X,M)\)</span> for unlimited cover</td>
+</tr>
+<tr class="odd">
+<td>Reinsurer payment</td>
+<td><span class="math inline">\(Z=(1-\alpha)X\)</span></td>
+<td><span class="math inline">\(Z=(X-M)_+\)</span> for unlimited cover</td>
+</tr>
+<tr class="even">
+<td>Treatment of small claims</td>
+<td>Shared</td>
+<td>Usually retained by insurer</td>
+</tr>
+<tr class="odd">
+<td>Treatment of large claims</td>
+<td>Shared in the same proportion</td>
+<td>Substantial part transferred to reinsurer</td>
+</tr>
+</tbody>
+</table>
+<p>This difference is important from the insurer’s perspective. Proportional reinsurance shares the cost of <strong>all claims</strong>, whereas excess-of-loss reinsurance is primarily designed to protect the insurer against <strong>larger claims</strong>.</p>
+<p>The payment functions developed in this section will be used to calculate expected insurer payments, expected reinsurance recoveries, and other quantities of actuarial interest in the remainder of the chapter.</p>
+</section>
+</section>
+<section id="deductibles-and-policy-limits" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="deductibles-and-policy-limits"><span class="header-section-number">2.3</span> Deductibles and Policy Limits</h2>
+<p>Reinsurance transfers part of the insurer’s risk to a reinsurer. A <strong>deductible</strong>, in contrast, transfers part of the risk to the policyholder. A <strong>policy limit</strong> restricts the maximum amount that the insurer will pay.</p>
+<p>These arrangements can therefore be described using the same risk-sharing framework introduced earlier. Let <span class="math inline">\(X\)</span> denote the gross claim amount, <span class="math inline">\(V\)</span> the amount paid by the policyholder, <span class="math inline">\(Y\)</span> the amount paid by the insurer, and <span class="math inline">\(Z\)</span> the amount paid by the reinsurer. In the absence of reinsurance,</p>
+<p><span class="math display">\[
+X=V+Y.
+\]</span></p>
+<p>If reinsurance is also present, the full decomposition is</p>
+<p><span class="math display">\[
+X=V+Y+Z.
+\]</span></p>
+<p>In this section, we focus on the relationship between the gross claim <span class="math inline">\(X\)</span>, the policyholder payment <span class="math inline">\(V\)</span>, and the insurer payment <span class="math inline">\(Y\)</span>.</p>
+<section id="deductibles" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="deductibles"><span class="header-section-number">2.3.1</span> Deductibles</h3>
+<p>A <strong>deductible</strong> is an amount of a claim that must be borne by the policyholder before the insurer makes a payment.</p>
+<p>Suppose the policy has an ordinary deductible of amount <span class="math inline">\(d\)</span>. The policyholder pays the first <span class="math inline">\(d\)</span> of the claim, while the insurer pays the amount exceeding <span class="math inline">\(d\)</span>.</p>
+<p>The policyholder’s payment is therefore</p>
+<p><span class="math display">\[
+V=\min(X,d),
+\]</span></p>
+<p>and the insurer’s payment is</p>
+<p><span class="math display">\[
+Y=(X-d)_+.
+\]</span></p>
+<p>Since</p>
+<p><span class="math display">\[
+\min(X,d)+(X-d)_+=X,
+\]</span></p>
+<p>we have</p>
+<p><span class="math display">\[
+X=V+Y.
+\]</span></p>
+<p>The payment functions can be understood by considering two cases.</p>
+<p>If <span class="math inline">\(X\leq d\)</span>, the claim is entirely below the deductible. The policyholder pays the claim in full:</p>
+<p><span class="math display">\[
+V=X,
+\qquad
+Y=0.
+\]</span></p>
+<p>If <span class="math inline">\(X&gt;d\)</span>, the policyholder pays the deductible and the insurer pays the remainder:</p>
+<p><span class="math display">\[
+V=d,
+\qquad
+Y=X-d.
+\]</span></p>
+<p>For example, suppose the deductible is <span class="math inline">\(d=10{,}000\)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Gross claim <span class="math inline">\(X\)</span></th>
+<th style="text-align: right;">Policyholder payment <span class="math inline">\(V\)</span></th>
+<th style="text-align: right;">Insurer payment <span class="math inline">\(Y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(5{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(5{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(10{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(10{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(25{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(10{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(15{,}000\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(80{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(10{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(70{,}000\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Thus, an ordinary deductible reduces the insurer’s payment for every claim and completely eliminates insurer payments for claims below the deductible.</p>
+</section>
+<section id="policy-limits" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="policy-limits"><span class="header-section-number">2.3.2</span> Policy Limits</h3>
+<p>A <strong>policy limit</strong> is the maximum amount that the insurer will pay for a claim.</p>
+<p>Suppose there is a policy limit of <span class="math inline">\(u\)</span> and no deductible. The insurer pays the claim in full when <span class="math inline">\(X\leq u\)</span>, but pays only <span class="math inline">\(u\)</span> when the claim exceeds the limit.</p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+Y=\min(X,u).
+\]</span></p>
+<p>The amount above the policy limit is borne by the policyholder:</p>
+<p><span class="math display">\[
+V=(X-u)_+.
+\]</span></p>
+<p>Hence,</p>
+<p><span class="math display">\[
+X=V+Y.
+\]</span></p>
+<p>For example, suppose the policy limit is <span class="math inline">\(u=100{,}000\)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Gross claim <span class="math inline">\(X\)</span></th>
+<th style="text-align: right;">Policyholder payment <span class="math inline">\(V\)</span></th>
+<th style="text-align: right;">Insurer payment <span class="math inline">\(Y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(50{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(50{,}000\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(100{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(100{,}000\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(150{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(50{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(100{,}000\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(300{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(200{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(100{,}000\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>A policy limit therefore protects the insurer against very large claims by placing an upper bound on its payment per claim.</p>
+</section>
+<section id="deductible-and-policy-limit-together" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="deductible-and-policy-limit-together"><span class="header-section-number">2.3.3</span> Deductible and Policy Limit Together</h3>
+<p>A policy may have both a deductible and a policy limit. Suppose the deductible is <span class="math inline">\(d\)</span> and the policy limit is <span class="math inline">\(u\)</span>, where <span class="math inline">\(u&gt;d\)</span>.</p>
+<p>The insurer pays the part of the claim between <span class="math inline">\(d\)</span> and <span class="math inline">\(u\)</span>. Thus,</p>
+<p><span class="math display">\[
+Y=\min\{(X-d)_+,u-d\}.
+\]</span></p>
+<p>An equivalent expression is</p>
+<p><span class="math display">\[
+Y=\min(X,u)-(d\wedge X),
+\]</span></p>
+<p>where <span class="math inline">\(d\wedge X=\min(d,X)\)</span>.</p>
+<p>The policyholder pays the portion below the deductible and any amount above the policy limit. Therefore,</p>
+<p><span class="math display">\[
+V=X-Y.
+\]</span></p>
+<p>More explicitly,</p>
+<p><span class="math display">\[
+V=
+\begin{cases}
+X, &amp; X\leq d,\\
+d, &amp; d&lt;X\leq u,\\
+d+(X-u), &amp; X&gt;u.
+\end{cases}
+\]</span></p>
+<p>The insurer’s payment is</p>
+<p><span class="math display">\[
+Y=
+\begin{cases}
+0, &amp; X\leq d,\\
+X-d, &amp; d&lt;X\leq u,\\
+u-d, &amp; X&gt;u.
+\end{cases}
+\]</span></p>
+<p>For example, suppose <span class="math inline">\(d=10{,}000\)</span> and <span class="math inline">\(u=100{,}000\)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Gross claim <span class="math inline">\(X\)</span></th>
+<th style="text-align: right;">Policyholder payment <span class="math inline">\(V\)</span></th>
+<th style="text-align: right;">Insurer payment <span class="math inline">\(Y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(5{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(5{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(25{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(10{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(15{,}000\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(100{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(10{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(90{,}000\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(150{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(60{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(90{,}000\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The insurer’s maximum payment is therefore</p>
+<p><span class="math display">\[
+u-d.
+\]</span></p>
+<p>The deductible determines where the insurer’s payment begins, while the policy limit determines where the insurer’s payment stops increasing.</p>
+</section>
+<section id="risk-sharing-interpretation" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="risk-sharing-interpretation"><span class="header-section-number">2.3.4</span> Risk-Sharing Interpretation</h3>
+<p>Deductibles and policy limits can be viewed as mechanisms for sharing the claim between the policyholder and the insurer.</p>
+<p>With an ordinary deductible,</p>
+<p><span class="math display">\[
+Y=(X-d)_+.
+\]</span></p>
+<p>The insurer therefore bears the <strong>excess of the claim over the deductible</strong>.</p>
+<p>With a policy limit,</p>
+<p><span class="math display">\[
+Y=\min(X,u).
+\]</span></p>
+<p>The insurer bears the claim up to the policy limit.</p>
+<p>With both a deductible and a policy limit,</p>
+<p><span class="math display">\[
+Y=\min\{(X-d)_+,u-d\}.
+\]</span></p>
+<p>These payment functions are closely related to the excess-of-loss reinsurance functions introduced earlier. The main difference is the party bearing the payment. Under a deductible, the amount below the deductible is borne by the <strong>policyholder</strong>. Under excess-of-loss reinsurance, the amount above the insurer’s retention is transferred to the <strong>reinsurer</strong>.</p>
+<p>This gives a useful unified view of the arrangements considered so far:</p>
+<p><span class="math display">\[
+\boxed{X=V+Y+Z}.
+\]</span></p>
+<p>The gross claim <span class="math inline">\(X\)</span> is divided among the policyholder, insurer, and reinsurer according to the terms of the contracts in place.</p>
+</section>
+</section>
+<section id="payment-distributions-under-risk-sharing" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="payment-distributions-under-risk-sharing"><span class="header-section-number">2.4</span> Payment Distributions under Risk Sharing</h2>
+<p>The previous sections described how a gross claim is divided among the policyholder, the direct insurer, and the reinsurer. We now turn to the probability distributions of the amounts actually paid by each party.</p>
+<p>This distinction is important because the gross claim amount <span class="math inline">\(X\)</span> may have a continuous distribution, while the amounts paid under a risk-sharing arrangement need not be continuous. Deductibles, retention levels, and policy limits can create <strong>point masses</strong> in the resulting distributions.</p>
+<p>We begin with excess-of-loss reinsurance, since it provides a useful illustration of this phenomenon.</p>
+<section id="insurers-payment-under-excess-of-loss-reinsurance" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="insurers-payment-under-excess-of-loss-reinsurance"><span class="header-section-number">2.4.1</span> Insurer’s Payment under Excess-of-Loss Reinsurance</h3>
+<p>Suppose the gross claim amount <span class="math inline">\(X\)</span> is continuous with distribution function <span class="math inline">\(F_X\)</span> and density <span class="math inline">\(f_X\)</span>. Under unlimited excess-of-loss reinsurance with retention <span class="math inline">\(M\)</span>,</p>
+<p><span class="math display">\[
+Y=\min(X,M)
+\]</span></p>
+<p>is the amount paid by the direct insurer.</p>
+<p>The insurer pays the full claim when <span class="math inline">\(X\leq M\)</span> and pays exactly <span class="math inline">\(M\)</span> when <span class="math inline">\(X&gt;M\)</span>.</p>
+<p>Therefore, for <span class="math inline">\(y&lt;M\)</span>,</p>
+<p><span class="math display">\[
+\Pr(Y\leq y)
+=\Pr(X\leq y)
+=
+F_X(y).
+\]</span></p>
+<p>For <span class="math inline">\(y\geq M\)</span>,</p>
+<p><span class="math display">\[
+\Pr(Y\leq y)=1,
+\]</span></p>
+<p>because <span class="math inline">\(Y\)</span> can never exceed <span class="math inline">\(M\)</span>.</p>
+<p>Hence,</p>
+<p><span class="math display">\[
+F_Y(y)=
+\begin{cases}
+F_X(y), &amp; y&lt;M,\\
+1, &amp; y\geq M.
+\end{cases}
+\]</span></p>
+<p>The important feature of this distribution is the probability mass at <span class="math inline">\(M\)</span>. Since</p>
+<p><span class="math display">\[
+Y=M
+\]</span></p>
+<p>whenever <span class="math inline">\(X&gt;M\)</span>,</p>
+<p><span class="math display">\[
+\Pr(Y=M)
+=\Pr(X&gt;M)
+=
+1-F_X(M).
+\]</span></p>
+<p>Thus, even when <span class="math inline">\(X\)</span> is continuous, <span class="math inline">\(Y\)</span> is not a purely continuous random variable.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key idea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A payment limit can create a <strong>point mass</strong>.</p>
+<p>Under unlimited excess-of-loss reinsurance, all claims exceeding <span class="math inline">\(M\)</span> are converted</p>
+</div>
+</div>
+<p>The insurer’s payment therefore has two components:</p>
+<p><span class="math display">\[
+\text{continuous component on }(0,M)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\text{point mass at }M.
+\]</span></p>
+<p>This is the first example of a <strong>mixed distribution</strong> arising from a risk-sharing arrangement.</p>
+<p>For example, if <span class="math inline">\(X\)</span> has a continuous distribution, there is no positive probability that <span class="math inline">\(X\)</span> takes any particular value. However, after applying the payment function <span class="math inline">\(Y=\min(X,M)\)</span>, all claims exceeding <span class="math inline">\(M\)</span> are mapped to the single value <span class="math inline">\(M\)</span>. Consequently,</p>
+<p><span class="math display">\[
+\Pr(Y=M)&gt;0.
+\]</span></p>
+<p>This observation will be useful when calculating probabilities, expectations, and variances of insurer payments.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Why is <span class="math inline">\(Y\)</span> a mixed distribution?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The random variable <span class="math inline">\(X\)</span> is continuous, but the transformation</p>
+<p><span class="math display">\[
+Y=\min(X,M)
+\]</span></p>
+<p>puts all values of <span class="math inline">\(X&gt;M\)</span> at the single point <span class="math inline">\(M\)</span>. Therefore, <span class="math inline">\(Y\)</span> has both a continuous part and a discrete probability mass.</p>
+</div>
+</div>
+<div id="exm-dist-insurer-payment" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.1 (Example: Distribution of the Insurer’s Payment under Excess-of-Loss Reinsurance)</strong></span> Let <span class="math inline">\(X\)</span> be an exponential random variable with parameter <span class="math inline">\(\lambda\)</span>, and suppose that the insurer has excess-of-loss reinsurance with retention <span class="math inline">\(M\)</span>.</p>
+<ol type="1">
+<li>Derive the distribution function <span class="math inline">\(F_Y(y)\)</span> of the insurer’s payment <span class="math inline">\(Y=\min(X,M)\)</span>.</li>
+<li>Identify the continuous part of the distribution and the probability mass at <span class="math inline">\(M\)</span>.</li>
+<li>Find <span class="math inline">\(\Pr(Y=M)\)</span>.</li>
+</ol>
+</div>
+<p><strong>Solution</strong></p>
+<ol type="1">
+<li><p>Since the insurer’s payment is <span class="math display">\[
+Y=\min(X,M),
+\]</span> we consider the distribution function <span class="math display">\[
+F_Y(y)=\Pr(Y\leq y).
+\]</span></p>
+<p>For <span class="math inline">\(y&lt;0\)</span>, since <span class="math inline">\(Y\geq 0\)</span>, <span class="math display">\[
+F_Y(y)=0.
+\]</span></p>
+<p>For <span class="math inline">\(0\leq y&lt;M\)</span>, the condition <span class="math inline">\(Y\leq y\)</span> is equivalent to <span class="math inline">\(X\leq y\)</span>. Therefore, <span class="math display">\[
+F_Y(y)=\Pr(X\leq y)=F_X(y).
+\]</span></p>
+<p>Since <span class="math inline">\(X\sim\operatorname{Exp}(\lambda)\)</span>, <span class="math display">\[
+F_X(y)=1-e^{-\lambda y}.
+\]</span></p>
+<p>Hence, <span class="math display">\[
+F_Y(y)=1-e^{-\lambda y},\qquad 0\leq y&lt;M.
+\]</span></p>
+<p>For <span class="math inline">\(y\geq M\)</span>, we always have <span class="math inline">\(Y\leq M\leq y\)</span>, so <span class="math display">\[
+F_Y(y)=1.
+\]</span></p>
+<p>Thus, the distribution function of <span class="math inline">\(Y\)</span> is</p>
+<p><span class="math display">\[
+F_Y(y)=
+\begin{cases}
+0, &amp; y&lt;0,\\
+1-e^{-\lambda y}, &amp; 0\leq y&lt;M,\\
+1, &amp; y\geq M.
+\end{cases}
+\]</span></p></li>
+<li><p>The distribution of <span class="math inline">\(Y\)</span> has both a <strong>continuous part</strong> and a <strong>discrete point mass</strong>.</p>
+<p>For <span class="math inline">\(0&lt;y&lt;M\)</span>, the density is obtained by differentiating the continuous part of the CDF: <span class="math display">\[
+f_Y(y)=\frac{d}{dy}F_Y(y)
+=\lambda e^{-\lambda y},
+\qquad 0&lt;y&lt;M.
+\]</span></p>
+<p>Thus, <span class="math inline">\(Y\)</span> has the continuous density <span class="math display">\[
+f_Y(y)=\lambda e^{-\lambda y},\qquad 0&lt;y&lt;M.
+\]</span></p>
+<p>However, when <span class="math inline">\(X&gt;M\)</span>, the insurer’s payment is capped at <span class="math inline">\(M\)</span>: <span class="math display">\[
+Y=\min(X,M)=M.
+\]</span></p>
+<p>Therefore, <span class="math inline">\(Y\)</span> has a probability mass at <span class="math inline">\(M\)</span>. The size of this mass is the jump in the CDF at <span class="math inline">\(M\)</span>: <span class="math display">\[
+\Pr(Y=M)
+=F_Y(M)-F_Y(M^-).
+\]</span></p>
+<p>Since <span class="math inline">\(F_Y(M)=1\)</span> and <span class="math display">\[
+F_Y(M^-)=1-e^{-\lambda M},
+\]</span> we obtain <span class="math display">\[
+\Pr(Y=M)=e^{-\lambda M}.
+\]</span></p>
+<p>Hence, <span class="math inline">\(Y\)</span> is a <strong>mixed distribution</strong>: it has a continuous component on <span class="math inline">\([0,M)\)</span> and a discrete probability mass at <span class="math inline">\(M\)</span>.</p></li>
+<li><p>The event <span class="math inline">\(Y=M\)</span> occurs exactly when the original claim exceeds the retention limit: <span class="math display">\[
+Y=M
+\iff \min(X,M)=M
+\iff X\geq M.
+\]</span></p>
+<p>Since <span class="math inline">\(X\)</span> is continuous, <span class="math inline">\(\Pr(X=M)=0\)</span>, so <span class="math display">\[
+\Pr(Y=M)=\Pr(X&gt;M).
+\]</span></p>
+<p>For an exponential random variable, <span class="math display">\[
+\Pr(X&gt;M)=1-F_X(M)=e^{-\lambda M}.
+\]</span></p>
+<p>Therefore, <span class="math display">\[
+\boxed{\Pr(Y=M)=e^{-\lambda M}}.
+\]</span></p></li>
+</ol>
+<p>This example illustrates that the distribution of the insurer’s payment is not simply the original distribution truncated at <span class="math inline">\(M\)</span>. The probability that would have been assigned to all claims above <span class="math inline">\(M\)</span> is accumulated at the single point <span class="math inline">\(M\)</span>.</p>
+</section>
+<section id="reinsurers-payment-under-excess-of-loss-reinsurance" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="reinsurers-payment-under-excess-of-loss-reinsurance"><span class="header-section-number">2.4.2</span> Reinsurer’s Payment under Excess-of-Loss Reinsurance</h3>
+<p>Under the same excess-of-loss arrangement, the reinsurer pays</p>
+<p><span class="math display">\[
+Z=(X-M)_+,
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+(x)_+=\max(x,0).
+\]</span></p>
+<p>The reinsurer pays nothing when <span class="math inline">\(X\leq M\)</span> and pays <span class="math inline">\(X-M\)</span> when <span class="math inline">\(X&gt;M\)</span>.</p>
+<p>The distribution of <span class="math inline">\(Z\)</span> therefore has a particularly important feature: there is a positive probability that the reinsurer pays <strong>zero</strong>.</p>
+<p>For <span class="math inline">\(z=0\)</span>,</p>
+<p><span class="math display">\[
+\Pr(Z=0)
+=\Pr(X\leq M)
+=
+F_X(M).
+\]</span></p>
+<p>For <span class="math inline">\(z&gt;0\)</span>,</p>
+<p><span class="math display">\[
+\begin{aligned}
+F_Z(z)
+&amp;=\Pr(Z\leq z)\\
+&amp;=\Pr((X-M)_+\leq z)\\
+&amp;=\Pr(X-M\leq z)\\
+&amp;=\Pr(X\leq M+z)\\
+&amp;=F_X(M+z).
+\end{aligned}
+\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[
+F_Z(z)=
+\begin{cases}
+0, &amp; z&lt;0,\\
+F_X(M), &amp; z=0,\\
+F_X(M+z), &amp; z&gt;0.
+\end{cases}
+\]</span></p>
+<p>The distribution has a point mass at zero:</p>
+<p><span class="math display">\[
+\Pr(Z=0)=F_X(M).
+\]</span></p>
+<p>For <span class="math inline">\(z&gt;0\)</span>, its continuous density is</p>
+<p><span class="math display">\[
+f_Z(z)=f_X(M+z).
+\]</span></p>
+<p>Notice the contrast between <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span>:</p>
+<p><span class="math display">\[
+\Pr(Y=M)=1-F_X(M),
+\]</span></p>
+<p>whereas</p>
+<p><span class="math display">\[
+\Pr(Z=0)=F_X(M).
+\]</span></p>
+<p>The insurer’s payment is capped at <span class="math inline">\(M\)</span>, while the reinsurer’s payment is zero whenever the claim does not reach the retention.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Two different point masses
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Under excess-of-loss reinsurance,</p>
+<p><span class="math display">\[
+Y=\min(X,M)
+\]</span></p>
+<p>has a point mass at the <strong>retention level <span class="math inline">\(M\)</span></strong>, while</p>
+<p><span class="math display">\[
+Z=(X-M)_+
+\]</span></p>
+<p>has a point mass at <strong>zero</strong>.</p>
+<p>These point masses arise from the same payment arrangement but have different interpretations.</p>
+</div>
+</div>
+<div id="exm-dist-reinsurer-payment" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.2 (Example: Distribution of the Reinsurer’s Payment under Excess-of-Loss Reinsurance)</strong></span> Let <span class="math inline">\(X\)</span> have an exponential distribution with parameter <span class="math inline">\(\lambda\)</span>, and let</p>
+<p><span class="math display">\[
+Z=(X-M)_+.
+\]</span></p>
+<ol type="1">
+<li>Derive the distribution function <span class="math inline">\(F_Z(z)\)</span>.</li>
+<li>Find the probability mass at zero.</li>
+<li>Derive the density of the continuous part of the distribution.</li>
+<li>Sketch the distribution function for specified values of <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(M\)</span>.</li>
+</ol>
+</div>
+<p><strong>Solution</strong></p>
+<ol type="1">
+<li><p>Since <span class="math display">\[
+Z=(X-M)_+=\max(X-M,0),
+\]</span> we have <span class="math display">\[
+Z=
+\begin{cases}
+0, &amp; X\leq M,\\
+X-M, &amp; X&gt;M.
+\end{cases}
+\]</span></p>
+<p>We derive the distribution function <span class="math display">\[
+F_Z(z)=\Pr(Z\leq z).
+\]</span></p>
+<p>For <span class="math inline">\(z&lt;0\)</span>, <span class="math inline">\(Z\)</span> cannot take negative values. Therefore, <span class="math display">\[
+F_Z(z)=0.
+\]</span></p>
+<p>For <span class="math inline">\(z\geq0\)</span>, <span class="math display">\[
+\begin{aligned}
+F_Z(z)
+&amp;=\Pr((X-M)_+\leq z)\
+&amp;=\Pr(X-M\leq z)\
+&amp;=\Pr(X\leq M+z).
+\end{aligned}
+\]</span></p>
+<p>Since <span class="math inline">\(X\sim\operatorname{Exponential}(\lambda)\)</span>, <span class="math display">\[
+F_X(x)=1-e^{-\lambda x},\qquad x\geq0.
+\]</span></p>
+<p>Hence, <span class="math display">\[
+F_Z(z)=1-e^{-\lambda(M+z)},\qquad z\geq0.
+\]</span></p>
+<p>Therefore, the distribution function of <span class="math inline">\(Z\)</span> is <span class="math display">\[
+F_Z(z)=
+\begin{cases}
+0, &amp; z&lt;0,\\
+1-e^{-\lambda(M+z)}, &amp; z\geq0.
+\end{cases}
+\]</span></p>
+<p>Notice that <span class="math inline">\(F_Z(z)\)</span> has a jump at <span class="math inline">\(z=0\)</span>. This confirms that <span class="math inline">\(Z\)</span> has a mixed distribution.</p></li>
+<li><p>The reinsurer makes no payment when the original claim does not exceed the retention <span class="math inline">\(M\)</span>: <span class="math display">\[
+Z=0
+\iff X\leq M.
+\]</span></p>
+<p>Therefore, <span class="math display">\[
+\Pr(Z=0)=\Pr(X\leq M)=F_X(M).
+\]</span></p>
+<p>For the exponential distribution, <span class="math display">\[
+F_X(M)=1-e^{-\lambda M}.
+\]</span></p>
+<p>Hence, <span class="math display">\[
+\boxed{\Pr(Z=0)=1-e^{-\lambda M}}.
+\]</span></p>
+<p>This is the probability that the reinsurer makes no payment.</p></li>
+<li><p>For <span class="math inline">\(z&gt;0\)</span>, the density of the continuous part is obtained by differentiating the distribution function: <span class="math display">\[
+\begin{aligned}
+f_Z(z)
+&amp;=\frac{d}{dz}\left[1-e^{-\lambda(M+z)}\right]\
+&amp;=\lambda e^{-\lambda(M+z)}.
+\end{aligned}
+\]</span></p>
+<p>Thus, the density of the continuous part is <span class="math display">\[
+\boxed{
+f_Z(z)=\lambda e^{-\lambda(M+z)},\qquad z&gt;0.
+}
+\]</span></p>
+<p>It is important to note that this density integrates to less than <span class="math inline">\(1\)</span>: <span class="math display">\[
+\begin{aligned}
+\int_0^\infty f_Z(z),dz
+&amp;=\int_0^\infty \lambda e^{-\lambda(M+z)},dz\
+&amp;=e^{-\lambda M}.
+\end{aligned}
+\]</span></p>
+<p>This is exactly the probability that the reinsurer makes a positive payment: <span class="math display">\[
+\Pr(Z&gt;0)=\Pr(X&gt;M)=e^{-\lambda M}.
+\]</span></p>
+<p>Consequently, the total probability is <span class="math display">\[
+\Pr(Z=0)+\Pr(Z&gt;0)
+=(1-e^{-\lambda M})+e^{-\lambda M}=1.
+\]</span></p>
+<p>This provides a useful check that the mixed distribution is correctly specified.</p></li>
+<li><p>To sketch the distribution function, choose specific values of <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(M\)</span>. For example, let <span class="math display">\[
+\lambda=0.5,\qquad M=2.
+\]</span></p>
+<p>The distribution function becomes <span class="math display">\[
+F_Z(z)=
+\begin{cases}
+0, &amp; z&lt;0,\\
+1-e^{-0.5(2+z)}, &amp; z\geq0.
+\end{cases}
+\]</span></p>
+<p>At <span class="math inline">\(z=0\)</span>, the CDF jumps from <span class="math display">\[
+F_Z(0^-)=0
+\]</span> to <span class="math display">\[
+F_Z(0)=1-e^{-1}\approx0.632.
+\]</span></p>
+<p>Thus, approximately <span class="math inline">\(63.2%\)</span> of the probability is concentrated at zero. After this jump, the CDF increases continuously toward <span class="math inline">\(1\)</span> as <span class="math inline">\(z\)</span> increases.</p>
+<p>The following R code can be used to visualize the distribution function:</p></li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Values of z</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">10</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution function</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>F_Z <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>z <span class="sc">&lt;</span> <span class="dv">0</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span>lambda <span class="sc">*</span> (M <span class="sc">+</span> z))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>z, F_Z,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">type =</span> <span class="st">"l"</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="at">xlab =</span> <span class="st">"Reinsurer's payment z"</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span> <span class="fu">expression</span>(F[Z](z)),</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="at">main =</span> <span class="st">"Distribution Function of the Reinsurer's Payment"</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the jump at zero</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span>lambda <span class="sc">*</span> M),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="at">pch =</span> <span class="dv">16</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02_Risk_Sharing_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The graph illustrates the key feature of the distribution: a <strong>jump at <span class="math inline">\(z=0\)</span></strong>, representing the probability that the reinsurer makes no payment, followed by a continuous increase toward <span class="math inline">\(1\)</span>.</p>
+<section id="a-useful-interpretation" class="level4">
+<h4 class="anchored" data-anchor-id="a-useful-interpretation">A useful interpretation</h4>
+<p>The result can also be written in terms of the original claim <span class="math inline">\(X\)</span>:</p>
+<p><span class="math display">\[
+\Pr(Z=0)=\Pr(X\leq M)=1-e^{-\lambda M},
+\]</span></p>
+<p>while</p>
+<p><span class="math display">\[
+\Pr(Z&gt;0)=\Pr(X&gt;M)=e^{-\lambda M}.
+\]</span></p>
+<p>Thus, the retention <span class="math inline">\(M\)</span> determines how frequently the reinsurer is involved. A larger <span class="math inline">\(M\)</span> produces a larger probability mass at zero and a smaller probability of a positive reinsurance payment.</p>
+</section>
+</section>
+<section id="mixed-distributions" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="mixed-distributions"><span class="header-section-number">2.4.3</span> Mixed Distributions</h3>
+<p>The examples above illustrate a general phenomenon. A random variable can have both a continuous component and one or more point masses. Such a random variable is called a <strong>mixed distribution</strong>.</p>
+<p>Suppose a random variable <span class="math inline">\(U\)</span> has a continuous component with density <span class="math inline">\(f_U\)</span> and point masses at values <span class="math inline">\(u_1,u_2,\ldots\)</span>. Its distribution function can be represented as</p>
+<p><span class="math display">\[
+F_U(u)
+=\int_{-\infty}^{u}f_U(x)\,dx
++
+\sum_{u_i\leq u}\Pr(U=u_i).
+\]</span></p>
+<p>The function <span class="math inline">\(f_U\)</span> describes only the continuous component. It is therefore not, by itself, a probability density function for the entire distribution.</p>
+<p>For a function <span class="math inline">\(g\)</span>, the expectation is obtained by combining the continuous and discrete components:</p>
+<p><span class="math display">\[
+E[g(U)]
+=\int_{-\infty}^{\infty}g(x)f_U(x)\,dx
++
+\sum_i g(u_i)\Pr(U=u_i).
+\]</span></p>
+<p>For the insurer’s payment under excess-of-loss reinsurance, this gives</p>
+<p><span class="math display">\[
+E[Y]
+=\int_0^M x f_X(x)\,dx
++
+M\{1-F_X(M)\}.
+\]</span></p>
+<p>The first term represents the contribution from claims below the retention, while the second represents the contribution from claims exceeding the retention, all of which result in an insurer payment of <span class="math inline">\(M\)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Do not treat <span class="math inline">\(Y\)</span> as an ordinary continuous random variable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is tempting to write</p>
+<p><span class="math display">\[
+E[Y]=\int_0^M x f_Y(x)\,dx.
+\]</span></p>
+<p>This misses the probability mass at <span class="math inline">\(M\)</span>.</p>
+<p>The correct expression is</p>
+<p><span class="math display">\[
+E[Y]
+=\int_0^M x f_X(x)\,dx
++
+M\{1-F_X(M)\}.
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="reinsurance-claims" class="level3" data-number="2.4.4">
+<h3 data-number="2.4.4" class="anchored" data-anchor-id="reinsurance-claims"><span class="header-section-number">2.4.4</span> Reinsurance Claims</h3>
+<p>When considering the reinsurer’s payment</p>
+<p><span class="math display">\[
+Z=(X-M)_+,
+\]</span></p>
+<p>the random variable <span class="math inline">\(Z\)</span> includes all claims, including those for which the reinsurer pays nothing.</p>
+<p>In practice, however, the reinsurer may be interested only in claims that actually involve the reinsurance contract. These are the claims satisfying</p>
+<p><span class="math display">\[
+X&gt;M.
+\]</span></p>
+<p>We refer to these as <strong>reinsurance claims</strong>.</p>
+<p>There is therefore an important distinction between:</p>
+<p><span class="math display">\[
+Z=(X-M)_+,
+\]</span></p>
+<p>the reinsurer’s payment on a randomly selected claim, and the payment conditional on the claim involving the reinsurer.</p>
+<p>Define</p>
+<p><span class="math display">\[
+W=Z\mid Z&gt;0.
+\]</span></p>
+<p>Since <span class="math inline">\(Z&gt;0\)</span> if and only if <span class="math inline">\(X&gt;M\)</span>,</p>
+<p><span class="math display">\[
+W=X-M\mid X&gt;M.
+\]</span></p>
+<p>For <span class="math inline">\(w&gt;0\)</span>,</p>
+<p><span class="math display">\[
+\begin{aligned}
+F_W(w)
+&amp;=\Pr(W\leq w)\\
+&amp;=\Pr(X-M\leq w\mid X&gt;M)\\
+&amp;=\frac{\Pr(M&lt;X\leq M+w)}
+{\Pr(X&gt;M)}\\
+&amp;=\frac{F_X(M+w)-F_X(M)}
+{1-F_X(M)}.
+\end{aligned}
+\]</span></p>
+<p>Differentiating gives</p>
+<p><span class="math display">\[
+f_W(w)
+=\frac{f_X(M+w)}
+{1-F_X(M)},
+\qquad w&gt;0.
+\]</span></p>
+<p>Thus, <span class="math inline">\(W\)</span> is a purely continuous random variable when <span class="math inline">\(X\)</span> is continuous.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Three different claim amounts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is useful to keep the following three random variables distinct:</p>
+<p><span class="math display">\[
+\begin{aligned}
+X &amp;: \text{gross claim amount},\\
+Z &amp;: \text{reinsurer's payment on every claim},\\
+W &amp;: \text{reinsurer's payment conditional on a reinsurance claim}.
+\end{aligned}
+\]</span></p>
+<p>The distinction between <span class="math inline">\(Z\)</span> and <span class="math inline">\(W\)</span> is particularly important. The distribution of <span class="math inline">\(Z\)</span> includes a probability mass at zero, whereas <span class="math inline">\(W\)</span> describes only positive reinsurance payments.</p>
+</div>
+</div>
+<div id="exm-dist-reinsurance-claim" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.3 (Example: Distribution of a reinsurance claim)</strong></span> Suppose <span class="math inline">\(X\)</span> has distribution function <span class="math inline">\(F_X\)</span> and density <span class="math inline">\(f_X\)</span>, and the insurer has an excess-of-loss retention <span class="math inline">\(M\)</span>.</p>
+<p>Let</p>
+<p><span class="math display">\[
+W=Z\mid Z&gt;0.
+\]</span></p>
+<ol type="1">
+<li>Derive the distribution function <span class="math inline">\(F_W(w)\)</span> for <span class="math inline">\(w&gt;0\)</span>.</li>
+<li>Derive the density function <span class="math inline">\(f_W(w)\)</span>.</li>
+<li>Explain why <span class="math inline">\(W\)</span> is continuous even though <span class="math inline">\(Z\)</span> is a mixed distribution.</li>
+</ol>
+</div>
+<p><strong>Solution</strong></p>
+<ol type="1">
+<li><p>From the derivation above, <span class="math display">\[
+F_W(w)
+=\frac{F_X(M+w)-F_X(M)}
+{1-F_X(M)},
+\qquad w&gt;0.
+\]</span></p></li>
+<li><p>Differentiating the distribution function gives <span class="math display">\[
+f_W(w)
+=\frac{f_X(M+w)}
+{1-F_X(M)},
+\qquad w&gt;0.
+\]</span></p></li>
+<li><p>Although <span class="math inline">\(Z=(X-M)_+\)</span> is a mixed distribution because it includes the probability <span class="math display">\[
+\Pr(Z=0)=\Pr(X\leq M),
+\]</span> the random variable <span class="math inline">\(W\)</span> is defined conditional on <span class="math inline">\(Z&gt;0\)</span>. Thus, only claims satisfying <span class="math inline">\(X&gt;M\)</span> are considered.</p>
+<p>Since <span class="math inline">\(X\)</span> is continuous, the conditional distribution of <span class="math inline">\(X-M\)</span> given <span class="math inline">\(X&gt;M\)</span> is also continuous. Therefore, <span class="math inline">\(W\)</span> has no probability mass at zero and is a purely continuous random variable with density <span class="math display">\[
+f_W(w)
+=\frac{f_X(M+w)}
+{1-F_X(M)},
+\qquad w&gt;0.
+\]</span></p>
+<p>Hence, <strong><span class="math inline">\(Z\)</span> describes the reinsurer’s payment on every claim, whereas <span class="math inline">\(W\)</span> describes the payment only when the reinsurer is actually involved.</strong></p></li>
+</ol>
+</section>
+<section id="expected-payments" class="level3" data-number="2.4.5">
+<h3 data-number="2.4.5" class="anchored" data-anchor-id="expected-payments"><span class="header-section-number">2.4.5</span> Expected Payments</h3>
+<p>The payment functions also provide a convenient way to calculate expected payments.</p>
+<p>For the insurer,</p>
+<p><span class="math display">\[
+Y=\min(X,M),
+\]</span></p>
+<p>so</p>
+<p><span class="math display">\[
+E[Y]
+=\int_0^M x f_X(x)\,dx
++
+M\{1-F_X(M)\}.
+\]</span></p>
+<p>An alternative expression is obtained by comparing the insurer’s payment with the original claim:</p>
+<p><span class="math display">\[
+X-Y=(X-M)_+.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+Y=X-(X-M)_+,
+\]</span></p>
+<p>and hence</p>
+<p><span class="math display">\[
+E[Y]
+=E[X]-E[(X-M)_+].
+\]</span></p>
+<p>Since</p>
+<p><span class="math display">\[
+Z=(X-M)_+,
+\]</span></p>
+<p>we obtain the particularly useful identity</p>
+<p><span class="math display">\[
+E[Y]=E[X]-E[Z].
+\]</span></p>
+<p>Consequently,</p>
+<p><span class="math display">\[
+\boxed{E[X]=E[Y]+E[Z]}.
+\]</span></p>
+<p>This is the expected-value version of the basic risk-sharing identity</p>
+<p><span class="math display">\[
+X=Y+Z.
+\]</span></p>
+<p>The expected gross claim is divided exactly between the direct insurer and the reinsurer.</p>
+<p>For the reinsurer,</p>
+<p><span class="math display">\[
+E[Z]
+=\int_M^\infty (x-M)f_X(x)\,dx.
+\]</span></p>
+<p>Using the transformation <span class="math inline">\(w=x-M\)</span>, this can also be written as</p>
+<p><span class="math display">\[
+E[Z]
+=\int_0^\infty w f_X(w+M),dw.
+\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Interpretation of the expected payments
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Under excess-of-loss reinsurance,</p>
+<p><span class="math display">\[
+E[Z]
+\]</span></p>
+<p>is the expected amount transferred to the reinsurer per gross claim, while</p>
+<p><span class="math display">\[
+E[Y]
+\]</span></p>
+<p>is the expected amount retained by the insurer.</p>
+<p>Thus,</p>
+<p><span class="math display">\[
+E[X]=E[Y]+E[Z].
+\]</span></p>
+<p>Reinsurance does not eliminate the underlying loss. It changes <strong>who bears the loss</strong>.</p>
+</div>
+</div>
+<div id="exm-expected-insurer-reinsuer-payment" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.4 (Example: Expected insurer and reinsurer payments)</strong></span> Let <span class="math inline">\(X\)</span> have density <span class="math inline">\(f_X\)</span> and suppose that the insurer purchases unlimited excess-of-loss reinsurance with retention <span class="math inline">\(M\)</span>.</p>
+<ol type="1">
+<li>Show that <span class="math display">\[
+E[Y]
+=E[X]
+- \int_0^\infty w f_X(w+M),dw.
+\]</span></li>
+<li>Show that <span class="math display">\[
+E[Z]
+=\int_0^\infty w f_X(w+M),dw.
+\]</span></li>
+<li>Verify that <span class="math display">\[
+E[X]=E[Y]+E[Z].
+\]</span></li>
+</ol>
+</div>
+<p><strong>Solution</strong></p>
+<ol type="1">
+<li><p>The insurer’s payment under unlimited excess-of-loss reinsurance with retention <span class="math inline">\(M\)</span> is <span class="math display">\[
+Y=\min(X,M).
+\]</span></p>
+<p>Since <span class="math inline">\(Y\)</span> is bounded above by <span class="math inline">\(M\)</span>, its expectation can be written as <span class="math display">\[
+E[Y]
+=\int_0^\infty y f_Y(y),dy
++M\Pr(Y=M).
+\]</span></p>
+<p>However, it is more convenient to express <span class="math inline">\(Y\)</span> directly in terms of <span class="math inline">\(X\)</span>. We have <span class="math display">\[
+Y=
+\begin{cases}
+X, &amp; X\leq M,\\
+M, &amp; X&gt;M.
+\end{cases}
+\]</span></p>
+<p>Therefore, <span class="math display">\[
+E[Y]
+=
+E[X\mid X\leq M]\Pr(X\leq M)
++
+M\Pr(X&gt;M).
+\]</span></p>
+<p>Using the density of <span class="math inline">\(X\)</span>, <span class="math display">\[
+E[Y]
+=\int_0^M x f_X(x),dx
++M\int_M^\infty f_X(x),dx.
+\]</span></p>
+<p>We now rewrite the second term: <span class="math display">\[
+M\int_M^\infty f_X(x),dx
+=\int_M^\infty M f_X(x),dx.
+\]</span></p>
+<p>Hence, <span class="math display">\[
+E[Y]
+=\int_0^M x f_X(x),dx
++\int_M^\infty M f_X(x),dx.
+\]</span></p>
+<p>Since <span class="math display">\[
+E[X]=\int_0^\infty x f_X(x),dx,
+\]</span> we can write <span class="math display">\[
+\begin{aligned}
+E[X]-E[Y]
+&amp;=\int_M^\infty x f_X(x),dx
+-\int_M^\infty M f_X(x),dx\\
+&amp;=\int_M^\infty (x-M)f_X(x),dx.
+\end{aligned}
+\]</span></p>
+<p>Make the change of variable <span class="math display">\[
+w=x-M,
+\qquad x=w+M,
+\qquad dx=dw.
+\]</span></p>
+<p>When <span class="math inline">\(x=M\)</span>, <span class="math inline">\(w=0\)</span>, and when <span class="math inline">\(x\to\infty\)</span>, <span class="math inline">\(w\to\infty\)</span>. Therefore, <span class="math display">\[
+E[X]-E[Y]
+=\int_0^\infty w f_X(w+M),dw.
+\]</span></p>
+<p>Rearranging gives <span class="math display">\[
+\boxed{
+E[Y]
+=E[X]
+-\int_0^\infty w f_X(w+M),dw
+}.
+\]</span></p></li>
+<li><p>The reinsurer’s payment is <span class="math display">\[
+Z=(X-M)_+.
+\]</span></p>
+<p>From the previous development, the expected reinsurer payment is <span class="math display">\[
+E[Z]
+=\int_0^\infty w f_X(w+M),dw.
+\]</span></p>
+<p>Thus, <span class="math display">\[
+\boxed{
+E[Z]
+=\int_0^\infty w f_X(w+M),dw
+}.
+\]</span></p></li>
+<li><p>From Questions 1 and 2, <span class="math display">\[
+E[Y]
+=E[X]
+-\int_0^\infty w f_X(w+M),dw
+\]</span> and <span class="math display">\[
+E[Z]
+=\int_0^\infty w f_X(w+M),dw.
+\]</span></p>
+<p>Adding the two expressions, <span class="math display">\[
+\begin{aligned}
+E[Y]+E[Z]
+&amp;=E[X]
+-\int_0^\infty w f_X(w+M),dw
++\int_0^\infty w f_X(w+M),dw\\
+&amp;=E[X].
+\end{aligned}
+\]</span></p>
+<p>Hence, <span class="math display">\[
+\boxed{E[X]=E[Y]+E[Z]}.
+\]</span></p>
+<p>This is also consistent with the claim-level decomposition <span class="math display">\[
+X=Y+Z,
+\]</span> because under unlimited excess-of-loss reinsurance, <span class="math display">\[
+Y=\min(X,M),
+\qquad
+Z=(X-M)_+.
+\]</span> Taking expectations on both sides gives the same result.</p></li>
+</ol>
+</section>
+<section id="example-exponential-claims" class="level3" data-number="2.4.6">
+<h3 data-number="2.4.6" class="anchored" data-anchor-id="example-exponential-claims"><span class="header-section-number">2.4.6</span> Example: Exponential Claims</h3>
+<p>The exponential distribution provides a particularly simple illustration because of its memoryless property.</p>
+<p>Suppose</p>
+<p><span class="math display">\[
+X\sim\operatorname{Exp}(\lambda),
+\]</span></p>
+<p>so that</p>
+<p><span class="math display">\[
+E[X]=\frac{1}{\lambda}.
+\]</span></p>
+<p>Under excess-of-loss reinsurance with retention <span class="math inline">\(M\)</span>,</p>
+<p><span class="math display">\[
+\Pr(X&gt;M)=e^{-\lambda M}.
+\]</span></p>
+<p>Thus, the probability that a claim involves the reinsurer is</p>
+<p><span class="math display">\[
+\Pr(X&gt;M)=e^{-\lambda M}.
+\]</span></p>
+<p>The expected reinsurer payment can be obtained from</p>
+<p><span class="math display">\[
+E[Z]
+=\int_M^\infty (x-M)\lambda e^{-\lambda x}\,dx.
+\]</span></p>
+<p>The resulting expression is</p>
+<p><span class="math display">\[
+E[Z]
+=\frac{e^{-\lambda M}}{\lambda}
+=
+e^{-\lambda M}E[X].
+\]</span></p>
+<p>Consequently,</p>
+<p><span class="math display">\[
+E[Y]
+=\frac{1-e^{-\lambda M}}{\lambda}.
+\]</span></p>
+<p>This example gives a useful interpretation of the retention level. As <span class="math inline">\(M\)</span> increases, fewer claims involve the reinsurer and the insurer retains more of the expected claim.</p>
+<div id="exm-exp-excess-of-loss-reinsuance" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.5 (Example: Exponential excess-of-loss reinsurance)</strong></span> Let the claim amount <span class="math inline">\(X\)</span> have an exponential distribution with mean <span class="math inline">\(\mu=1/\lambda\)</span>. An insurer purchases unlimited excess-of-loss reinsurance with retention <span class="math inline">\(M\)</span>.</p>
+<ol type="1">
+<li>Find the proportion of claims that involve the reinsurer.</li>
+<li>Find the expected payment by the insurer.</li>
+<li>Find the expected payment by the reinsurer.</li>
+<li>Verify that the expected insurer payment and expected reinsurer payment sum to <span class="math inline">\(E[X]\)</span>.</li>
+<li>Discuss how the retention level <span class="math inline">\(M\)</span> affects the results.</li>
+</ol>
+</div>
+<p><strong>Solution</strong></p>
+<ol type="1">
+<li><p>A claim involves the reinsurer when the claim amount exceeds the retention <span class="math inline">\(M\)</span>. Therefore, <span class="math display">\[
+\Pr(Z&gt;0)=\Pr(X&gt;M).
+\]</span></p>
+<p>Since <span class="math inline">\(X\)</span> has an exponential distribution with parameter <span class="math inline">\(\lambda\)</span>, <span class="math display">\[
+\Pr(X&gt;M)=e^{-\lambda M}.
+\]</span></p>
+<p>Since <span class="math inline">\(\mu=1/\lambda\)</span>, we can also write <span class="math display">\[
+\boxed{
+\Pr(Z&gt;0)=e^{-M/\mu}
+}.
+\]</span></p>
+<p>Thus, the proportion of claims involving the reinsurer is <span class="math inline">\(e^{-M/\mu}\)</span>.</p></li>
+<li><p>The insurer’s payment is <span class="math display">\[
+Y=\min(X,M).
+\]</span></p>
+<p>From the result derived previously, <span class="math display">\[
+E[Y]
+=E[X] - \int_0^\infty w f_X(w+M),dw.
+\]</span></p>
+<p>For an exponential distribution, <span class="math display">\[
+E[X]=\mu
+\]</span> and <span class="math display">\[
+f_X(x)=\lambda e^{-\lambda x}.
+\]</span></p>
+<p>Therefore, <span class="math display">\[
+\begin{aligned}
+\int_0^\infty w f_X(w+M),dw
+&amp;=\int_0^\infty w\lambda e^{-\lambda(w+M)},dw\\
+&amp;=e^{-\lambda M}\int_0^\infty w\lambda e^{-\lambda w},dw.
+\end{aligned}
+\]</span></p>
+<p>The integral is the expected value of an exponential random variable with parameter <span class="math inline">\(\lambda\)</span>, which is <span class="math inline">\(1/\lambda=\mu\)</span>. Hence, <span class="math display">\[
+\int_0^\infty w f_X(w+M),dw
+=\mu e^{-\lambda M}.
+\]</span></p>
+<p>Therefore, <span class="math display">\[
+E[Y]
+=\mu-\mu e^{-\lambda M}
+=\mu(1-e^{-\lambda M}).
+\]</span></p>
+<p>Using <span class="math inline">\(\lambda=1/\mu\)</span>, <span class="math display">\[
+\boxed{
+E[Y]=\mu\left(1-e^{-M/\mu}\right)
+}.
+\]</span></p></li>
+<li><p>The reinsurer’s payment is <span class="math display">\[
+Z=(X-M)_+.
+\]</span></p>
+<p>From the previous result, <span class="math display">\[
+E[Z]
+=\int_0^\infty w f_X(w+M),dw.
+\]</span></p>
+<p>For the exponential distribution, <span class="math display">\[
+\begin{aligned}
+E[Z]
+&amp;=\int_0^\infty w\lambda e^{-\lambda(w+M)},dw\\
+&amp;=e^{-\lambda M}
+\int_0^\infty w\lambda e^{-\lambda w},dw\\
+&amp;=\mu e^{-\lambda M}.
+\end{aligned}
+\]</span></p>
+<p>Thus, <span class="math display">\[
+\boxed{
+E[Z]=\mu e^{-M/\mu}
+}.
+\]</span></p></li>
+<li><p>From Questions 2 and 3, <span class="math display">\[
+E[Y]=\mu(1-e^{-M/\mu})
+\]</span> and <span class="math display">\[
+E[Z]=\mu e^{-M/\mu}.
+\]</span></p>
+<p>Therefore, <span class="math display">\[
+\begin{aligned}
+E[Y]+E[Z]
+&amp;=\mu(1-e^{-M/\mu})+\mu e^{-M/\mu}\\
+&amp;=\mu.
+\end{aligned}
+\]</span></p>
+<p>Since <span class="math inline">\(E[X]=\mu\)</span>, <span class="math display">\[
+\boxed{
+E[Y]+E[Z]=E[X]=\mu
+}.
+\]</span></p>
+<p>Thus, the expected claim cost is completely allocated between the insurer and the reinsurer.</p></li>
+<li><p>The retention level <span class="math inline">\(M\)</span> determines how much of each claim is retained by the insurer and how often the reinsurer becomes involved.</p>
+<p>The proportion of claims involving the reinsurer is <span class="math display">\[
+\Pr(Z&gt;0)=e^{-M/\mu}.
+\]</span> As <span class="math inline">\(M\)</span> increases, <span class="math inline">\(e^{-M/\mu}\)</span> decreases. Therefore, <strong>a higher retention means fewer claims involve the reinsurer</strong>.</p>
+<p>The expected insurer payment is <span class="math display">\[
+E[Y]=\mu(1-e^{-M/\mu}),
+\]</span> which increases with <span class="math inline">\(M\)</span>. Thus, <strong>a higher retention increases the insurer’s expected payment</strong>.</p>
+<p>In contrast, the expected reinsurer payment is <span class="math display">\[
+E[Z]=\mu e^{-M/\mu},
+\]</span> which decreases with <span class="math inline">\(M\)</span>. Thus, <strong>a higher retention decreases the reinsurer’s expected payment</strong>.</p>
+<p>The limiting cases provide useful intuition:</p>
+<ul>
+<li><p>If <span class="math inline">\(M\to0\)</span>, then <span class="math display">\[
+E[Y]\to0,\qquad E[Z]\to\mu.
+\]</span> Almost the entire expected claim cost is transferred to the reinsurer.</p></li>
+<li><p>If <span class="math inline">\(M\to\infty\)</span>, then <span class="math display">\[
+E[Y]\to\mu,\qquad E[Z]\to0.
+\]</span> The insurer retains essentially the entire expected claim cost.</p></li>
+</ul>
+<p>In all cases, <span class="math display">\[
+E[Y]+E[Z]=\mu,
+\]</span> so changing <span class="math inline">\(M\)</span> changes the <strong>allocation of risk</strong>, not the total expected claim cost.</p></li>
+</ol>
+</section>
+<section id="variability-of-risk-sharing-payments" class="level3" data-number="2.4.7">
+<h3 data-number="2.4.7" class="anchored" data-anchor-id="variability-of-risk-sharing-payments"><span class="header-section-number">2.4.7</span> Variability of Risk-Sharing Payments</h3>
+<p>Risk sharing affects not only the expected amount paid by the insurer but also the variability of its payments.</p>
+<p>For the insurer,</p>
+<p><span class="math display">\[
+Y=\min(X,M).
+\]</span></p>
+<p>Its second moment is</p>
+<p><span class="math display">\[
+E[Y^2]
+=\int_0^M x^2f_X(x)\,dx
++
+M^2\{1-F_X(M)\}.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\operatorname{Var}(Y)
+=
+\int_0^M x^2 f_X(x)\\,dx
++
+M^2\{1-F_X(M)\}
+-
+\{E[Y]\}^2.
+\]</span></p>
+<p>For the reinsurer,</p>
+<p><span class="math display">\[
+Z=(X-M)_+,
+\]</span></p>
+<p>so</p>
+<p><span class="math display">\[
+E[Z^2]
+=\int_M^\infty (x-M)^2f_X(x)\,dx,
+\]</span></p>
+<p>and therefore</p>
+<p><span class="math display">\[
+\operatorname{Var}(Z)
+=\int_M^\infty (x-M)^2f_X(x)\,dx
+=
+{E[Z]}^2.
+\]</span></p>
+<p>These expressions show how the variability of the original claim is divided between the insurer and reinsurer.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Mean versus variability
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A risk-sharing arrangement changes the distribution of the payment, not merely its mean.</p>
+<p>For an insurer using excess-of-loss reinsurance,</p>
+<p><span class="math display">\[
+Y=\min(X,M)
+\]</span></p>
+<p>places an upper bound on the insurer’s payment per claim. Large values of <span class="math inline">\(X\)</span> therefore have a much smaller effect on <span class="math inline">\(Y\)</span> than they would have on the gross claim <span class="math inline">\(X\)</span>.</p>
+<p>This is one of the principal reasons why insurers use reinsurance.</p>
+</div>
+</div>
+<div id="exm-Variance-of-risk-sharing-payments" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.6 (Example: Variance of risk-sharing payments)</strong></span> Let <span class="math inline">\(X\)</span> have density <span class="math inline">\(f_X\)</span> and let the insurer purchase excess-of-loss reinsurance with retention <span class="math inline">\(M\)</span>.</p>
+<ol type="1">
+<li>Show that <span class="math display">\[
+\operatorname{Var}(Y)
+=\int_0^M x^2f_X(x)\,dx
++
+M^2\{1-F_X(M)\}
+-
+{E[Y]}^2.
+\]</span></li>
+<li>Show that <span class="math display">\[
+\operatorname{Var}(Z)= \int_M^\infty (x-M)^2 f_X(x)\,dx -     \{E[Z]\}^2.
+\]</span></li>
+<li>Explain why the insurer’s payment is less exposed to extreme claims when the retention level is finite.</li>
+</ol>
+</div>
+<p><strong>Solution</strong></p>
+<ol type="1">
+<li><p>Under excess-of-loss reinsurance with retention <span class="math inline">\(M\)</span>, the insurer’s payment is <span class="math display">\[
+Y=\min(X,M).
+\]</span></p>
+<p>From the definition of variance, <span class="math display">\[
+\operatorname{Var}(Y)=E[Y^2]-{E[Y]}^2.
+\]</span></p>
+<p>We first derive <span class="math inline">\(E[Y^2]\)</span>. Since <span class="math display">\[
+Y=
+\begin{cases}
+X, &amp; X\leq M,\\
+M, &amp; X&gt;M,
+\end{cases}
+\]</span> we have <span class="math display">\[
+Y^2=
+\begin{cases}
+X^2, &amp; X\leq M,\\
+M^2, &amp; X&gt;M.
+\end{cases}
+\]</span></p>
+<p>Therefore, <span class="math display">\[
+E[Y^2]
+=\int_0^M x^2f_X(x),dx
++
+M^2\Pr(X&gt;M).
+\]</span></p>
+<p>Since <span class="math display">\[
+\Pr(X&gt;M)=1-F_X(M),
+\]</span> we obtain <span class="math display">\[
+E[Y^2]
+=\int_0^M x^2f_X(x),dx
++
+M^2\{1-F_X(M)\}.
+\]</span></p>
+<p>Substituting this into the variance formula gives <span class="math display">\[
+\boxed{
+\operatorname{Var}(Y)
+=\int_0^M x^2f_X(x),dx
++ M^2{1-F_X(M)}-\{E[Y]\}^2}.
+\]</span></p></li>
+<li><p>The reinsurer’s payment is <span class="math display">\[
+Z=(X-M)_+.
+\]</span></p>
+<p>Thus, <span class="math display">\[
+Z=
+\begin{cases}
+0, &amp; X\leq M,\\
+X-M, &amp; X&gt;M.
+\end{cases}
+\]</span></p>
+<p>Consequently, <span class="math display">\[
+Z^2=
+\begin{cases}
+0, &amp; X\leq M,\\
+(X-M)^2, &amp; X&gt;M.
+\end{cases}
+\]</span></p>
+<p>Hence, <span class="math display">\[
+E[Z^2]
+=\int_M^\infty (x-M)^2f_X(x),dx.
+\]</span></p>
+<p>Using <span class="math display">\[
+\operatorname{Var}(Z)=E[Z^2]-{E[Z]}^2,
+\]</span> we obtain <span class="math display">\[
+\boxed{
+\operatorname{Var}(Z)
+=\int_M^\infty (x-M)^2f_X(x),dx
+-\{E[Z]\}^2}.
+\]</span></p></li>
+<li><p>The insurer’s payment is capped at the retention level: <span class="math display">\[
+Y=\min(X,M)\leq M.
+\]</span></p>
+<p>Therefore, regardless of how large the original claim <span class="math inline">\(X\)</span> becomes, the insurer pays at most <span class="math inline">\(M\)</span>.</p>
+<p>For example, if <span class="math inline">\(X&gt;M\)</span>, an increase in the claim from <span class="math inline">\(M\)</span> to <span class="math inline">\(M+1\)</span> or from <span class="math inline">\(M+1\)</span> to <span class="math inline">\(M+1{,}000{,}000\)</span> does not increase the insurer’s payment: <span class="math display">\[
+Y=M.
+\]</span></p>
+<p>Without reinsurance, the insurer pays the full claim <span class="math inline">\(X\)</span>, so an extremely large claim produces an equally large insurer payment. With excess-of-loss reinsurance, claims above <span class="math inline">\(M\)</span> are transferred to the reinsurer: <span class="math display">\[
+Z=X-M,\qquad X&gt;M.
+\]</span></p>
+<p>Thus, the insurer’s payment is bounded above by <span class="math inline">\(M\)</span>, which limits the effect of extreme claims on both the insurer’s expected payment and its variance.</p>
+<p>In particular, <span class="math display">\[
+Y\leq M,
+\]</span> so <span class="math display">\[
+E[Y^2]\leq M^2
+\]</span> and therefore <span class="math display">\[
+\operatorname{Var}(Y)\leq M^2.
+\]</span></p>
+<p>Hence, a finite retention provides <strong>protection against extreme claim amounts</strong> by transferring the portion of each claim above <span class="math inline">\(M\)</span> to the reinsurer.</p></li>
+</ol>
+</section>
+<section id="connecting-the-distribution-to-the-actuarial-interpretation" class="level3" data-number="2.4.8">
+<h3 data-number="2.4.8" class="anchored" data-anchor-id="connecting-the-distribution-to-the-actuarial-interpretation"><span class="header-section-number">2.4.8</span> Connecting the Distribution to the Actuarial Interpretation</h3>
+<p>The mathematical results can now be interpreted in terms of the roles of the different parties.</p>
+<p>For unlimited excess-of-loss reinsurance,</p>
+<p><span class="math display">\[
+X=Y+Z,
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+Y=\min(X,M)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+Z=(X-M)_+.
+\]</span></p>
+<p>A small claim is retained entirely by the insurer. Once the claim exceeds <span class="math inline">\(M\)</span>, the insurer’s payment remains fixed at <span class="math inline">\(M\)</span>, while additional loss is transferred to the reinsurer.</p>
+<p>Thus,</p>
+<p><span class="math display">\[
+\begin{array}{c|c|c}
+\text{Gross claim} &amp; \text{Insurer} &amp; \text{Reinsurer} \\
+\hline
+X\leq M &amp; X &amp; 0\\
+X&gt;M &amp; M &amp; X-M
+\end{array}
+\]</span></p>
+<p>The distributional analysis makes this risk-sharing mechanism precise. The insurer’s payment has a point mass at <span class="math inline">\(M\)</span>, the reinsurer’s payment has a point mass at zero, and the positive reinsurance claims follow the conditional distribution of the excess loss.</p>
+<p>This framework will be used repeatedly when calculating expected claim payments and variances under different insurance and reinsurance arrangements.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/01_Loss_Distributions.html" class="pagination-link" aria-label="Chapter 1: Loss Distributions">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Chapter 1: Loss Distributions</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>
