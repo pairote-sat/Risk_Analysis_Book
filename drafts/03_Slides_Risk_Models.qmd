@@ -1,0 +1,2027 @@
+---
+title: "Chapter 3: Risk Models"
+
+format:
+  beamer:
+    theme: Boadilla
+    colortheme: default
+    fonttheme: professionalfonts
+    aspectratio: 169
+    pdf-engine: xelatex
+    keep-tex: true
+    toc: false
+    number-sections: false
+    
+# format:
+#   revealjs:
+#     theme: simple
+#     css: styles.css
+#     slide-number: true
+#     scrollable: true
+#     chalkboard:
+#       buttons: false
+#     preview-links: auto
+
+execute:
+  echo: false
+
+---
+
+
+# Risk Models {#risk-models}
+
+## Short-Term Risk Models
+
+Consider an insurance portfolio over a fixed time interval, such as one year.
+
+The total amount paid in claims is uncertain because of two sources of randomness:
+
+1. **Claim frequency:** how many claims occur.
+2. **Claim severity:** how much each claim costs.
+
+For example, a motor portfolio may produce 800 claims in one year and 950 in another. The individual claim amounts can also vary substantially.
+
+The collective risk model combines these two sources of uncertainty into a model for the **aggregate claim amount**.
+
+::: {.callout-note}
+
+## Key idea
+
+**Frequency + severity $\longrightarrow$ aggregate claims**
+
+:::
+
+---
+
+## Frequency and Severity
+
+Define the following random variables:
+
+* $N$: number of claims during the fixed time interval;
+* $X_i$: amount of the $i$th claim;
+* $S$: total amount of claims.
+
+The claim frequency is a discrete random variable,
+
+$$
+N\in\{0,1,2,\ldots\}.
+$$
+
+The claim severities $X_1,X_2,\ldots$ describe the amounts of individual claims.
+
+For example, $N$ may have a Poisson distribution, while $X_i$ may have a Gamma, Lognormal, or Pareto distribution.
+
+---
+
+## Aggregate Claim Amount
+
+If exactly $n$ claims occur, the total claim amount is
+
+$$
+S=X_1+\cdots+X_n=\sum_{i=1}^{n}X_i.
+$$
+
+But the number of claims is itself random. Therefore,
+
+$$
+\boxed{S=\sum_{i=1}^{N}X_i}.
+$$
+
+The random variable $S$ is called the **aggregate loss**, **aggregate claim amount**, or **total claim amount**.
+
+The number of terms in the sum is random because $N$ is random.
+
+<!-- ::: {.callout-important} -->
+<!-- ## Collective risk model -->
+
+<!-- The number of terms in the sum is random because $N$ is random. -->
+<!-- ::: -->
+
+---
+
+## Collective Risk Model Visual Guide
+
+
+
+![](../figures/Collective_Risk_Model_Visual_Guide.png){fig-align="center" width="80%"}
+
+
+
+---
+
+## Why Is $S$ a Random Sum?
+
+The definition
+
+$$
+S=\sum_{i=1}^{N}X_i
+$$
+
+covers different numbers of claims:
+
+$$
+\begin{aligned}
+N=0 &\Rightarrow S=0, &
+N=1 &\Rightarrow S=X_1,\\
+N=2 &\Rightarrow S=X_1+X_2, &
+N=n &\Rightarrow S=\sum_{i=1}^{n}X_i.
+\end{aligned}
+$$
+
+Thus, the collective risk model is a **random sum model**. The aggregate loss depends on both the **number of claims** and their **sizes**.
+
+
+---
+
+## Assumptions of the Collective Risk Model
+
+The standard collective risk model assumes:
+
+1. The claim severities are independent and identically distributed:
+
+   $$
+   X_1,X_2,\ldots \overset{\mathrm{iid}}{\sim} F_X.
+   $$
+
+2. The claim frequency is independent of all claim severities:
+
+   $$
+   N\perp\!\!\!\perp (X_1,X_2,\ldots).
+   $$
+
+The first assumption gives all claims the same distribution and makes different claim amounts independent.
+
+The second assumption means that the number of claims provides no information about their individual sizes.
+
+---
+
+## Interpretation of the Assumptions
+
+These assumptions make the aggregate loss mathematically tractable.
+
+In practice, they may not always hold.
+
+For example:
+
+* claim frequency and severity may be dependent;
+* claims from the same event may be dependent;
+* different types of claims may have different severity distributions.
+
+The assumptions are therefore a **starting model** rather than a statement that all insurance portfolios behave exactly this way.
+
+::: {.callout-warning}
+## Modelling assumptions
+
+$$
+\boxed{
+X_1,X_2,\ldots\text{ are iid},
+\qquad
+N\text{ is independent of }X_1,X_2,\ldots
+}
+$$
+
+Always check whether these assumptions are reasonable for the application.
+:::
+
+---
+
+## From Collective Risk Model to Compound Distribution
+
+Under the standard assumptions, $S=\sum_{i=1}^{N}X_i$
+
+has a **compound distribution**.
+
+The model can be viewed as two probability models combined:
+
+$$
+\boxed{
+\text{Frequency model}
++
+\text{Severity model}
+\longrightarrow
+\text{Aggregate loss model}
+}
+$$
+
+The distribution chosen for $N$ determines the type of compound distribution.
+
+| Frequency distribution | Aggregate distribution     |
+| ---------------------- | -------------------------- |
+| Binomial               | Compound Binomial          |
+| Poisson                | Compound Poisson           |
+| Negative binomial      | Compound Negative Binomial |
+
+---
+
+## Why Study the Collective Risk Model?
+
+The distribution of
+
+$$
+S=\sum_{i=1}^{N}X_i
+$$
+
+can, in principle, be obtained using convolution methods.
+
+However, compound distributions generally do not have simple closed-form distributions.
+
+For this reason, we focus on quantities that can be derived more easily, particularly:
+
+* $E[S]$, the expected aggregate loss;
+* $\operatorname{Var}(S)$, the variance of aggregate loss;
+* important special compound distributions.
+
+These results provide useful measures of the expected cost and variability of an insurance portfolio.
+
+---
+
+## Actuarial Applications
+
+Once the aggregate loss model has been specified, it can be used to study:
+
+* expected total claims; variability of total claims;
+* probabilities such as $\Pr(S>x)$; reinsurance arrangements;
+* premium calculations; capital and risk measures.
+
+The collective risk model provides a common framework for combining claim frequency and claim severity.
+
+::: {.callout-note}
+
+## Key idea
+
+The central model is
+
+$$
+\boxed{S=\sum_{i=1}^{N}X_i}.
+$$
+
+The next step is to determine the **mean and variance of this random sum**.
+:::
+
+
+
+# Conditional Expectation and Variance
+
+## Conditional Expectation and Variance Formulas
+
+Conditional expectation and variance allow us to analyse a random variable by first conditioning on another random variable.
+
+The **law of total expectation** is
+
+$$
+\boxed{E[E[X\mid Y]]=E[X]}.
+$$
+
+The **law of total variance** is
+
+$$
+\boxed{
+\operatorname{Var}(X)
+=
+E[\operatorname{Var}(X\mid Y)]
++
+\operatorname{Var}(E[X\mid Y])
+}.
+$$
+
+These formulas will be used to analyse the aggregate loss
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+---
+
+## Conditional Variance
+
+The conditional variance of $X$ given $Y$ is
+
+$$
+\operatorname{Var}(X\mid Y)
+=
+E\left[(X-E[X\mid Y])^2\mid Y\right].
+$$
+
+An equivalent expression is
+
+$$
+\boxed{
+\operatorname{Var}(X\mid Y)
+=
+E[X^2\mid Y]-(E[X\mid Y])^2
+}.
+$$
+
+The law of total variance then gives
+
+$$
+\operatorname{Var}(X)
+=
+\underbrace{E[\operatorname{Var}(X\mid Y)]}_{\text{variation within groups}}
++
+\underbrace{\operatorname{Var}(E[X\mid Y])}_{\text{variation between groups}}.
+$$
+
+---
+
+## Conditional Expectation and Variance Formulas
+
+![](../figures/The_Collective_Risk_Model_Overview.png){fig-align="center" width="80%"}
+
+
+
+---
+
+## Example: Conditional Claim Amounts
+
+An insurer classifies policyholders into three risk groups:
+
+$$
+Y\in\{L,M,H\},
+\qquad
+P(L)=P(M)=P(H)=\frac13.
+$$
+
+Conditional on the risk group, two claim amounts are equally likely.
+
+| Risk group   | Claim amounts (THB) |
+| ------------ | ------------------: |
+| Low ($L$)    |               $1,2$ |
+| Medium ($M$) |               $1,5$ |
+| High ($H$)   |              $1,10$ |
+
+Let $X$ denote the claim amount of a randomly selected policyholder.
+
+---
+
+## Example: Conditional Claim Amounts
+
+**Questions**
+
+1. Find the distribution of $X$.
+2. Find $E[X]$ and $\operatorname{Var}(X)$.
+3. Verify the results using conditional expectation and variance.
+
+
+---
+
+## Distribution of the Claim Amount
+
+The possible claim amounts are
+
+$$
+X\in\{1,2,5,10\}.
+$$
+
+For example,
+
+$$
+\begin{aligned}
+P(X=1)
+&=\sum_{y\in\{L,M,H\}}P(X=1\mid Y=y)P(Y=y)\\
+&=\frac12\left(\frac13+\frac13+\frac13\right)
+=\frac12.
+\end{aligned}
+$$
+
+Similarly,
+
+$$
+P(X=2)=P(X=5)=P(X=10)=\frac16.
+$$
+
+---
+
+## Distribution of the Claim Amount
+
+Therefore, the probability distribution of $X$ is
+
+| $x$      |       $1$ |       $2$ |       $5$ |      $10$ |
+| -------- | --------: | --------: | --------: | --------: |
+| $P(X=x)$ | $\frac12$ | $\frac16$ | $\frac16$ | $\frac16$ |
+
+
+---
+
+## Direct Calculation of the Mean
+
+Using the distribution of $X$,
+
+$$
+\begin{aligned}
+E[X]
+&=1\left(\frac12\right)
++2\left(\frac16\right)
++5\left(\frac16\right)
++10\left(\frac16\right)\\
+&=\frac{10}{3}.
+\end{aligned}
+$$
+
+Thus,
+
+$$
+\boxed{E[X]=\frac{10}{3}}.
+$$
+
+---
+
+## Direct Calculation of the Variance
+
+First calculate the second moment:
+
+$$
+\begin{aligned}
+E[X^2]
+&=1^2\left(\frac12\right)
++2^2\left(\frac16\right)
++5^2\left(\frac16\right)
++10^2\left(\frac16\right)\\
+&=22.
+\end{aligned}
+$$
+
+Hence,
+
+$$
+\begin{aligned}
+\operatorname{Var}(X)
+&=E[X^2]-(E[X])^2\\
+&=22-\left(\frac{10}{3}\right)^2\\
+&=\frac{98}{9}.
+\end{aligned}
+$$
+
+<!-- Therefore, -->
+
+<!-- $$ -->
+<!-- \boxed{\operatorname{Var}(X)=\frac{98}{9}}. -->
+<!-- $$ -->
+
+---
+
+## Conditional Means
+
+Let $Y$ denote the risk group.
+
+For the three groups,
+
+$$
+\begin{aligned}
+E[X\mid L]&=\frac{1+2}{2}=\frac32,\\
+E[X\mid M]&=\frac{1+5}{2}=3,\\
+E[X\mid H]&=\frac{1+10}{2}=\frac{11}{2}.
+\end{aligned}
+$$
+
+Using the law of total expectation,
+
+$$
+\begin{aligned}
+E[X]
+&=E[E[X\mid Y]]\\
+&=\frac13\left(
+\frac32+3+\frac{11}{2}
+\right)=\frac{10}{3}.
+\end{aligned}
+$$
+
+This agrees with the direct calculation.
+
+---
+
+## Conditional Variances
+
+For two equally likely values $a$ and $b$,
+
+$$
+\operatorname{Var}(X)
+=
+\frac{a^2+b^2}{2}
+-\left(\frac{a+b}{2}\right)^2.
+$$
+
+Therefore,
+
+$$
+\operatorname{Var}(X\mid L)=\frac14,\qquad \operatorname{Var}(X\mid M)=4,\qquad \operatorname{Var}(X\mid H)=\frac{81}{4}.
+$$
+
+The average within-group variation is
+
+$$
+\begin{aligned}
+E[\operatorname{Var}(X\mid Y)]
+&=\frac13\left(
+\frac14+4+\frac{81}{4}
+\right) = \frac{49}{6}.
+\end{aligned}
+$$
+
+---
+
+## Variation Between Risk Groups
+
+The conditional means are
+
+$$
+\frac32,\qquad 3,\qquad \frac{11}{2},
+$$
+
+with overall mean $\frac{10}{3}$.
+
+Hence,
+
+$$
+\begin{aligned}
+\operatorname{Var}(E[X\mid Y])
+&=\frac13\left[
+\left(\frac32-\frac{10}{3}\right)^2
++\left(3-\frac{10}{3}\right)^2
++\left(\frac{11}{2}-\frac{10}{3}\right)^2
+\right]\\
+&=\frac{49}{18}.
+\end{aligned}
+$$
+
+This measures the variation in average claim amounts **between risk groups**.
+
+---
+
+## Verify the Total Variance
+
+The law of total variance gives
+
+$$
+\begin{aligned}
+\operatorname{Var}(X)
+&=E[\operatorname{Var}(X\mid Y)]
++\operatorname{Var}(E[X\mid Y])\\
+&=\frac{49}{6}+\frac{49}{18}=\frac{98}{9}.
+\end{aligned}
+$$
+
+Thus, the conditional calculation agrees with the direct calculation.
+
+::: {.callout-note}
+
+## Interpretation
+
+$$
+\boxed{
+\operatorname{Var}(X)
+=
+\underbrace{E[\operatorname{Var}(X\mid Y)]}_{\text{within-group variation}}
++
+\underbrace{\operatorname{Var}(E[X\mid Y])}_{\text{between-group variation}}
+}
+$$
+
+Total uncertainty consists of variation **within** risk groups and variation **between** their average claim amounts.
+:::
+
+---
+
+## Application to the Collective Risk Model
+
+Consider the aggregate claim amount
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+Conditioning on the number of claims $N=n$ gives
+
+$$
+S\mid(N=n)=\sum_{i=1}^{n}X_i.
+$$
+
+If the claim amounts are iid with
+
+$$
+E[X_i]=\mu_X,
+\qquad
+\operatorname{Var}(X_i)=\sigma_X^2,
+$$
+
+then $\boxed{E[S\mid N=n]=n\mu_X}.$
+
+---
+
+## Application to the Collective Risk Model
+
+Since the claim amounts are independent,
+
+$$
+\boxed{\operatorname{Var}(S\mid N=n)=n\sigma_X^2}.
+$$
+
+Thus, conditional on $N=n$, the aggregate claim amount has
+
+$$
+E[S\mid N=n]=n\mu_X,
+\qquad
+\operatorname{Var}(S\mid N=n)=n\sigma_X^2.
+$$
+
+These results provide the starting point for deriving the moments of the collective risk model.
+
+---
+
+## From Conditional to Unconditional Moments
+
+Using the law of total expectation,
+
+$$
+\begin{aligned}
+E[S]
+&=E[E[S\mid N]]\\
+&=E[N\mu_X]\\
+&=\mu_XE[N].
+\end{aligned}
+$$
+
+Using the law of total variance,
+
+$$
+\begin{aligned}
+\operatorname{Var}(S)
+&=E[\operatorname{Var}(S\mid N)]
++\operatorname{Var}(E[S\mid N])\\
+&=E[N\sigma_X^2]
++\operatorname{Var}(N\mu_X).
+\end{aligned}
+$$
+
+Therefore,
+
+$$
+\boxed{
+\operatorname{Var}(S)
+=
+\sigma_X^2E[N]
++\mu_X^2\operatorname{Var}(N)
+}.
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Moments of the Collective Risk Model {#moments-collective-risk-model}
+
+## General Setup
+
+Recall the collective risk model
+
+$$
+S=\sum_{i=1}^{N}X_i,
+$$
+
+where $N$ is the number of claims and $X_i$ is the amount of the $i$th claim.
+
+Assume
+
+$$
+X_1,X_2,\ldots \overset{\mathrm{iid}}{\sim} F_X,
+\qquad
+N\perp\!\!\!\perp (X_1,X_2,\ldots).
+$$
+
+We derive the moments of $S$ by **conditioning on $N$**.
+
+Let
+
+$$
+\mu_X=E[X_1],
+\qquad
+\sigma_X^2=\operatorname{Var}(X_1).
+$$
+
+---
+
+## Mean of the Aggregate Loss
+
+Conditional on $N=n$, $S=\sum_{i=1}^{n}X_i.$
+
+Therefore,
+
+$$
+E[S\mid N=n]
+=
+\sum_{i=1}^{n}E[X_i]
+=
+n\mu_X.
+$$
+
+Using the law of total expectation,
+
+$$
+\begin{aligned}
+E[S]
+&=E[E[S\mid N]]=E[N\mu_X]=\mu_XE[N].
+\end{aligned}
+$$
+
+Hence,
+
+$$
+\boxed{
+E[S]=E[N]E[X_1]
+}.
+$$
+
+---
+
+## Interpretation of the Mean
+
+The result
+
+$$
+\boxed{E[S]=E[N]E[X_1]}
+$$
+
+has a simple interpretation:
+
+$$
+\text{Expected aggregate claims}
+=
+\text{Expected number of claims}
+\times
+\text{Expected claim amount}.
+$$
+
+For example, if
+
+$$
+E[N]=100
+\qquad\text{and}\qquad
+E[X_1]=5{,}000,
+$$
+
+then
+
+$$
+E[S]=100(5{,}000)=500{,}000.
+$$
+
+---
+
+## Variance of the Aggregate Loss
+
+Let
+
+$$
+m_1=E[X_1],
+\qquad
+m_2=E[X_1^2].
+$$
+
+Then
+
+$$
+\operatorname{Var}(X_1)=m_2-m_1^2.
+$$
+
+Conditional on $N=n$,
+
+$$
+\operatorname{Var}(S\mid N=n)
+=
+n\operatorname{Var}(X_1).
+$$
+
+Also,
+
+$$
+E[S\mid N=n]=nm_1.
+$$
+
+---
+
+## Deriving the Variance
+
+By the law of total variance,
+
+$$
+\begin{aligned}
+\operatorname{Var}(S)
+&=E[\operatorname{Var}(S\mid N)]
++\operatorname{Var}(E[S\mid N])\\
+&=E[N\operatorname{Var}(X_1)]
++\operatorname{Var}(Nm_1).
+\end{aligned}
+$$
+
+Since $m_1$ and $\operatorname{Var}(X_1)$ are constants,
+
+$$
+\boxed{
+\operatorname{Var}(S)
+=
+E[N]\operatorname{Var}(X_1)
++
+\operatorname{Var}(N)(E[X_1])^2
+}.
+$$
+
+---
+
+## Interpretation of the Variance
+
+The variance decomposes into two sources:
+
+$$
+\boxed{
+\operatorname{Var}(S)
+=
+\underbrace{E[N]\operatorname{Var}(X_1)}
+_{\text{claim severity variation}}
++
+\underbrace{\operatorname{Var}(N)(E[X_1])^2}
+_{\text{claim frequency variation}}
+}
+$$
+
+* The first term arises from variation in individual claim amounts.
+* The second term arises because the number of claims is random.
+
+Thus, both **severity uncertainty** and **frequency uncertainty** contribute to aggregate risk.
+
+---
+
+## Third Central Moment
+
+To study skewness, define
+
+$$
+\mu_X=E[X_1],
+\qquad
+\sigma_X^2=\operatorname{Var}(X_1),
+$$
+
+and
+
+$$
+\mu_{3,X}
+=
+E[(X_1-\mu_X)^3].
+$$
+
+For the claim frequency $N$, define
+
+$$
+\mu_N=E[N],
+\qquad
+\sigma_N^2=\operatorname{Var}(N),
+$$
+
+and
+
+$$
+\mu_{3,N}
+=
+E[(N-\mu_N)^3].
+$$
+
+---
+
+## Third Central Moment of $S$
+
+For the random sum
+
+$$
+S=\sum_{i=1}^{N}X_i,
+$$
+
+the third central moment is
+
+$$
+\boxed{
+\mu_{3,S}
+=
+\mu_N\mu_{3,X}
++
+3\sigma_N^2\mu_X\sigma_X^2
++
+\mu_{3,N}\mu_X^3
+}.
+$$
+
+The three terms have distinct sources:
+
+1. individual claim severity;
+2. interaction between frequency and severity variation;
+3. skewness of the claim frequency.
+
+---
+
+## Coefficient of Skewness
+
+For a random variable $X$, the coefficient of skewness is
+
+$$
+\gamma_1
+=
+\frac{E[(X-E[X])^3]}
+{\operatorname{Var}(X)^{3/2}}.
+$$
+
+Therefore,
+
+$$
+\boxed{
+\gamma_{1,S}
+=
+\frac{\mu_{3,S}}
+{\operatorname{Var}(S)^{3/2}}
+}.
+$$
+
+Substituting the collective risk model moments gives
+
+$$
+\boxed{
+\gamma_{1,S}
+=
+\frac{
+\mu_N\mu_{3,X}
++
+3\sigma_N^2\mu_X\sigma_X^2
++
+\mu_{3,N}\mu_X^3
+}{
+\left(
+\mu_N\sigma_X^2+\sigma_N^2\mu_X^2
+\right)^{3/2}
+}
+}.
+$$
+
+---
+
+## Summary of the First Three Moments
+
+For $S=\sum_{i=1}^{N}X_i$, define
+
+$$
+\mu_N=E[N],\qquad
+\sigma_N^2=\operatorname{Var}(N),\qquad
+\mu_{3,N}=E[(N-\mu_N)^3].
+$$
+
+and
+
+$$
+\mu_X=E[X_1],\qquad
+\sigma_X^2=\operatorname{Var}(X_1),\qquad
+\mu_{3,X}=E[(X_1-\mu_X)^3].
+$$
+
+Then the first moment is
+
+$$
+\boxed{E[S]=\mu_N\mu_X}.
+$$
+
+---
+
+## Summary of the First Three Moments
+
+The variance is
+
+$$
+\boxed{
+\operatorname{Var}(S)
+=
+\mu_N\sigma_X^2+\sigma_N^2\mu_X^2
+}.
+$$
+
+The third central moment is
+
+$$
+\boxed{
+\mu_{3,S}
+=
+\mu_N\mu_{3,X}
++
+3\sigma_N^2\mu_X\sigma_X^2
++
+\mu_{3,N}\mu_X^3
+}.
+$$
+
+---
+
+## Reading the Moment Formulas
+
+The collective risk model combines two random quantities:
+
+$$
+\boxed{
+N
+\quad\text{and}\quad
+X_1,X_2,\ldots
+}
+$$
+
+The aggregate moments therefore depend on moments of **both frequency and severity**.
+
+| Aggregate quantity      | Depends on                                                       |
+| ----------------------- | ---------------------------------------------------------------- |
+| $E[S]$                  | $E[N]$, $E[X]$                                                   |
+| $\operatorname{Var}(S)$ | $E[N]$, $\operatorname{Var}(N)$, $\operatorname{Var}(X)$, $E[X]$ |
+| $\mu_{3,S}$             | first three moments of $N$ and $X$                               |
+
+This allows different frequency distributions to be compared while keeping the same severity model.
+
+---
+
+## Moment Generating Function
+
+The random-sum representation also gives a general formula for the MGF.
+
+Let
+
+$$
+M_X(t)=E[e^{tX_1}],
+\qquad
+M_N(t)=E[e^{tN}].
+$$
+
+Conditional on $N=n$,
+
+$$
+\begin{aligned}
+E[e^{tS}\mid N=n]
+&=
+E\left[
+e^{t(X_1+\cdots+X_n)}
+\right]\\
+&=
+\prod_{i=1}^{n}E[e^{tX_i}]\\
+&=
+\left(M_X(t)\right)^n.
+\end{aligned}
+$$
+
+The independence of the claim amounts is used here.
+
+---
+
+## Deriving the Aggregate MGF
+
+Since
+
+$$
+E[e^{tS}\mid N]
+=
+\left(M_X(t)\right)^N,
+$$
+
+the law of total expectation gives
+
+$$
+\begin{aligned}
+M_S(t)
+&=E[e^{tS}]\\
+&=E\left[\left(M_X(t)\right)^N\right]\\
+&=E\left[
+e^{N\log(M_X(t))}
+\right].
+\end{aligned}
+$$
+
+Using the definition of $M_N$,
+
+$$
+\boxed{
+M_S(t)
+=
+M_N\left(\log M_X(t)\right)
+}.
+$$
+
+This is the general MGF formula for the collective risk model.
+
+---
+
+## Using the Aggregate MGF
+
+The formula
+
+$$
+\boxed{
+M_S(t)=M_N\left(\log M_X(t)\right)
+}
+$$
+
+means that the aggregate MGF can be obtained from:
+
+* the MGF of the claim severity, $M_X(t)$; and
+* the MGF of the claim frequency, $M_N(t)$.
+
+Once these two MGFs are known, substitute
+
+$$
+t\longmapsto \log M_X(t)
+$$
+
+into $M_N(t)$.
+
+This provides another route to the moments of $S$.
+
+---
+
+## From General to Special Models
+
+The general results apply to any claim frequency distribution for which the required moments exist.
+
+Important cases include:
+
+$$
+\boxed{
+\begin{array}{ccc}
+N &\longrightarrow& S\\[2pt]
+\text{Binomial}
+&\longrightarrow&
+\text{Compound Binomial}\\
+\text{Poisson}
+&\longrightarrow&
+\text{Compound Poisson}\\
+\text{Negative binomial}
+&\longrightarrow&
+\text{Compound Negative Binomial}
+\end{array}
+}
+$$
+
+The next section considers these **special compound distributions** and their properties.
+
+
+
+
+
+
+
+
+# Special Compound Distributions {#special-compound-distributions}
+
+## Compound Poisson Distribution
+
+Suppose the claim frequency follows a Poisson distribution:
+
+$$
+N\sim\operatorname{Poisson}(\lambda).
+$$
+
+Assume the claim severities are iid and independent of $N$:
+
+$$
+X_1,X_2,\ldots\overset{\mathrm{iid}}{\sim}F_X.
+$$
+
+The aggregate claim amount is
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+Then $S$ has a **compound Poisson distribution**, written as $\boxed{S\sim\mathcal{CP}(\lambda,F_X)}.$
+
+---
+
+## Compound Poisson Model
+
+The compound Poisson model combines:
+
+$$
+\boxed{
+\begin{array}{c}
+N\sim\operatorname{Poisson}(\lambda)\\
+X_i\sim F_X
+\end{array}
+}
+\quad\Longrightarrow\quad
+\boxed{
+S=\sum_{i=1}^{N}X_i
+}
+$$
+
+Here,
+
+* $\lambda$ is the expected number of claims;
+* $F_X$ is the severity distribution;
+* $S$ is the aggregate claim amount.
+
+Thus, the Poisson distribution models **frequency**, while $F_X$ models **severity**.
+
+---
+
+## Moments of the Compound Poisson Model
+
+Let $m_k=E[X_1^k]$ denote the $k$th raw moment of the claim severity.
+
+For
+
+$$
+N\sim\operatorname{Poisson}(\lambda),
+$$
+
+we have
+
+$$
+E[N]=\operatorname{Var}(N)=\lambda,
+$$
+
+$$
+\mu_{3,N}
+=
+E[(N-E[N])^3]
+=
+\lambda.
+$$
+
+These quantities can be substituted into the general collective risk formulas.
+
+---
+
+## Mean
+
+For the collective risk model,
+
+$$
+E[S]=E[N]E[X_1].
+$$
+
+Since
+
+$$
+E[N]=\lambda
+\qquad\text{and}\qquad
+E[X_1]=m_1,
+$$
+
+we obtain
+
+$$
+\boxed{E[S]=\lambda m_1}.
+$$
+
+Thus,
+
+$$
+\boxed{
+\text{Expected aggregate claims}
+=
+\text{expected frequency}
+\times
+\text{expected severity}
+}.
+$$
+
+---
+
+## Variance
+
+The general variance formula is
+
+$$
+\operatorname{Var}(S)
+=
+E[N]\operatorname{Var}(X_1)
++
+\operatorname{Var}(N)(E[X_1])^2.
+$$
+
+For the Poisson frequency model,
+
+$$
+E[N]=\operatorname{Var}(N)=\lambda.
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+\operatorname{Var}(S)
+&=\lambda(m_2-m_1^2)+\lambda m_1^2=\lambda m_2.
+\end{aligned}
+$$
+
+Hence, $\boxed{\operatorname{Var}(S)=\lambda m_2}.$
+
+---
+
+## A Useful Compound Poisson Result
+
+For
+
+$$
+S\sim\mathcal{CP}(\lambda,F_X),
+$$
+
+the first two moments are particularly simple:
+
+$$
+\boxed{
+E[S]=\lambda m_1,
+\qquad
+\operatorname{Var}(S)=\lambda m_2.
+}
+$$
+
+The variance depends on the **second raw moment** of the claim severity, rather than only on its variance.
+
+This property is specific to the Poisson frequency model.
+
+---
+
+## MGF of the Compound Poisson Model
+
+The general random-sum MGF formula is
+
+$$
+M_S(t)
+=
+M_N\left(\log M_X(t)\right).
+$$
+
+For a Poisson random variable,
+
+$$
+M_N(t)=\exp\{\lambda(e^t-1)\}.
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+M_S(t)
+&=
+\exp\left\{
+\lambda\left(
+e^{\log M_X(t)}-1
+\right)
+\right\}=
+\exp\{\lambda(M_X(t)-1)\}.
+\end{aligned}
+$$
+
+Hence,
+
+$$
+\boxed{
+M_S(t)=\exp\{\lambda(M_X(t)-1)\}
+}.
+$$
+
+---
+
+## Third Central Moment
+
+For the collective risk model,
+
+$$
+\mu_{3,S}
+=
+E[N]\mu_{3,X}
++
+3\operatorname{Var}(N)\mu_X\sigma_X^2
++
+\mu_{3,N}\mu_X^3.
+$$
+
+For a Poisson frequency distribution,
+
+$$
+E[N]=\operatorname{Var}(N)=\mu_{3,N}=\lambda.
+$$
+
+Thus,
+
+$$
+\mu_{3,S}
+=
+\lambda
+\left[
+\mu_{3,X}
++3\mu_X\sigma_X^2
++\mu_X^3
+\right].
+$$
+
+Using $\mu_{3,X}=m_3-3m_1m_2+2m_1^3,$ we obtain
+
+$$
+\boxed{\mu_{3,S}=\lambda m_3}.
+$$
+
+---
+
+## Coefficient of Skewness
+
+The coefficient of skewness is
+
+$$
+\operatorname{Sk}(S)
+=
+\frac{\mu_{3,S}}
+{\operatorname{Var}(S)^{3/2}}.
+$$
+
+For the compound Poisson model, $\mu_{3,S}=\lambda m_3\qquad\text{and}\qquad\operatorname{Var}(S)=\lambda m_2.$
+
+Therefore,
+
+$$
+\boxed{
+\operatorname{Sk}(S)
+=
+\frac{\lambda m_3}
+{(\lambda m_2)^{3/2}}
+}
+$$
+
+or equivalently,
+
+$$
+\boxed{
+\operatorname{Sk}(S)
+=
+\frac{m_3}
+{\sqrt{\lambda}\,m_2^{3/2}}
+}.
+$$
+
+---
+
+## First Three Cumulants
+
+The first three cumulants of a compound Poisson random variable have a useful form:
+
+$$
+\boxed{
+\kappa_r(S)=\lambda E[X^r],
+\qquad r=1,2,3.
+}
+$$
+
+Therefore,
+
+$$
+\boxed{
+\kappa_1(S)=\lambda m_1,
+\qquad
+\kappa_2(S)=\lambda m_2,
+\qquad
+\kappa_3(S)=\lambda m_3.
+}
+$$
+
+Since
+
+$$
+\kappa_1=E[S],
+\qquad
+\kappa_2=\operatorname{Var}(S),
+$$
+
+this immediately gives the first two moment results.
+
+---
+
+## Compound Poisson Moments: Summary
+
+For
+
+$$
+S\sim\mathcal{CP}(\lambda,F_X),
+$$
+
+with $m_k=E[X^k]$, the first three moments are
+
+$$
+\boxed{E[S]=\lambda m_1},
+\qquad
+\boxed{\operatorname{Var}(S)=\lambda m_2},
+\qquad
+\boxed{\mu_{3,S}=\lambda m_3}.
+$$
+
+---
+
+## Compound Poisson Moments: Summary
+
+The skewness is
+
+$$
+\boxed{
+\operatorname{Sk}(S)
+=
+\frac{m_3}{\sqrt{\lambda}\,m_2^{3/2}}
+}.
+$$
+
+The MGF is
+
+$$
+\boxed{
+M_S(t)=\exp\{\lambda(M_X(t)-1)\}.
+}
+$$
+
+---
+
+## Worked Example: Compound Poisson-Pareto Model
+
+Suppose
+
+$$
+S\sim\mathcal{CP}(10,F_X),
+$$
+
+where
+
+$$
+X\sim\operatorname{Pa}(4,1).
+$$
+
+Calculate $E[S],\qquad\operatorname{Var}(S),\qquad\operatorname{Sk}(S).$
+
+For a Pareto distribution with shape $\alpha=4$ and scale $\beta=1$,
+
+$$
+E[X^r]
+=
+\frac{\alpha\beta^r}{\alpha-r},
+\qquad r<\alpha.
+$$
+
+---
+
+## Pareto Severity Moments
+
+For $\alpha=4$ and $\beta=1$, the raw moments under the parameterisation
+
+$$
+f_X(x)=\frac{\alpha\beta^\alpha}{x^{\alpha+1}},
+\qquad x\geq\beta,
+$$
+
+are
+
+$$
+\boxed{
+E[X^r]=\frac{\alpha\beta^r}{\alpha-r},
+\qquad r<\alpha.
+}
+$$
+
+Hence,
+
+$$
+\boxed{m_1=E[X]=\frac43}.
+$$
+
+---
+
+## Pareto Severity Moments
+
+For $\alpha=4$ and $\beta=1$,
+
+$$
+\boxed{
+m_1=\frac43,
+\qquad
+m_2=2,
+\qquad
+m_3=4.
+}
+$$
+
+In particular, $m_3$ exists because the condition $r<\alpha$ is satisfied for $r=3$.
+
+---
+
+## Pareto Parameterisation
+
+The values above depend on the Pareto parameterisation.
+
+Under the `actuar` parameterisation,
+
+$$
+X\sim\operatorname{Pa}(4,1),
+$$
+
+with survival function
+
+$$
+P(X>x)=\left(\frac{1}{1+x}\right)^4,
+\qquad x>0,
+$$
+
+the raw moments are
+
+$$
+\boxed{
+m_1=\frac13,
+\qquad
+m_2=\frac13,
+\qquad
+m_3=1.
+}
+$$
+
+---
+
+## Pareto Parameterisation
+
+The numerical example below uses **this parameterisation**, consistent with the original calculation.
+
+Thus, throughout the example,
+
+$$
+\boxed{
+m_1=\frac13,\qquad
+m_2=\frac13,\qquad
+m_3=1.
+}
+$$
+
+
+---
+
+## Compound Poisson-Pareto Example
+
+For the specified parameterisation,
+
+$$
+\lambda=10,
+\qquad
+m_1=\frac13,
+\qquad
+m_2=\frac13,
+\qquad
+m_3=1.
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+E[S]
+&=\lambda m_1
+=10\left(\frac13\right)
+=\frac{10}{3},\\
+\operatorname{Var}(S)
+&=\lambda m_2
+=10\left(\frac13\right)
+=\frac{10}{3}.
+\end{aligned}
+$$
+
+---
+
+## Compound Poisson-Pareto Skewness
+
+Using
+
+$$
+\operatorname{Sk}(S)
+=
+\frac{\lambda m_3}
+{(\lambda m_2)^{3/2}},
+$$
+
+we obtain
+
+$$
+\begin{aligned}
+\operatorname{Sk}(S)
+&=
+\frac{10}
+{(10/3)^{3/2}}\approx1.6432.
+\end{aligned}
+$$
+
+Thus,
+
+$$
+\boxed{
+E[S]=\frac{10}{3},
+\qquad
+\operatorname{Var}(S)=\frac{10}{3},
+\qquad
+\operatorname{Sk}(S)\approx1.6432.
+}
+$$
+
+The positive skewness reflects the right-skewed, heavy-tailed severity distribution.
+
+---
+
+## Simulating a Compound Poisson Model
+
+To simulate one aggregate loss:
+
+1. Simulate the number of claims:
+
+   $$
+   N\sim\operatorname{Poisson}(\lambda).
+   $$
+
+2. Simulate $N$ claim amounts:
+
+   $$
+   X_1,\ldots,X_N\sim F_X.
+   $$
+
+3. Add the claim amounts:
+
+   $$
+   S=X_1+\cdots+X_N.
+   $$
+
+Repeating these steps gives a sample from the aggregate loss distribution.
+
+---
+
+## R Simulation
+
+```r
+library(actuar)
+
+n <- 10000; lambda <- 10; alpha <- 4; beta <- 1
+
+numclaims <- rpois(n, lambda); totalClaims <- numeric(n)
+
+for (i in seq_len(n)) {
+  totalClaims[i] <- sum(
+    rpareto(numclaims[i], shape = alpha, scale = beta
+    )
+  )
+}
+```
+
+
+```{r}
+library(actuar)
+
+n <- 10000
+lambda <- 10
+alpha <- 4
+beta <- 1
+
+numclaims <- rpois(n, lambda)
+
+totalClaims <- numeric(n)
+
+for (i in seq_len(n)) {
+  totalClaims[i] <- sum(
+    rpareto(
+      numclaims[i],
+      shape = alpha,
+      scale = beta
+    )
+  )
+}
+```
+
+Each element of `totalClaims` is one simulated aggregate claim amount.
+
+---
+
+## Simulated Aggregate Claims
+
+```{r}
+hist(
+  totalClaims,
+  breaks = 50,
+  main = "Simulated Compound Poisson Aggregate Claims",
+  xlab = "Aggregate claim amount"
+)
+```
+
+The simulation produces an empirical distribution of
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+With a sufficiently large simulation sample, the empirical moments should be close to their theoretical values.
+
+---
+
+## Simulation versus Theory
+
+The theoretical values are
+
+$$
+E[S]=\frac{10}{3},
+\qquad
+\operatorname{Var}(S)=\frac{10}{3},
+\qquad
+\operatorname{Sk}(S)\approx1.6432.
+$$
+
+The sample estimates will not be exactly equal to these values because the simulation contains only a finite number of observations.
+
+As the number of simulations increases, the sample estimates should generally become closer to the theoretical values.
+
+---
+
+## Additivity of Compound Poisson Risks
+
+Suppose
+
+$$
+S_i\sim\mathcal{CP}(\lambda_i,F_i),
+\qquad i=1,\ldots,n,
+$$
+
+are independent, and let
+
+$$
+S=\sum_{i=1}^{n}S_i.
+$$
+
+Then $S$ is also compound Poisson:
+
+$$
+\boxed{S\sim\mathcal{CP}(\lambda,F)}.
+$$
+
+---
+
+## Additivity of Compound Poisson Risks
+
+The aggregate Poisson parameter is
+
+$$
+\boxed{\lambda=\sum_{i=1}^{n}\lambda_i},
+$$
+
+while the severity distribution is the weighted mixture
+
+$$
+\boxed{
+F(x)=\frac{1}{\lambda}
+\sum_{i=1}^{n}\lambda_iF_i(x).
+}
+$$
+
+Thus, the combined risk has **total claim frequency** $\lambda$ and a **frequency-weighted severity distribution** $F$.
+
+---
+
+## Why Is the Severity Distribution a Mixture?
+
+The aggregate number of claims is Poisson with parameter
+
+$$
+\lambda=\sum_{i=1}^{n}\lambda_i.
+$$
+
+A claim in the combined portfolio comes from component $i$ with probability
+
+$$
+\frac{\lambda_i}{\lambda}.
+$$
+
+Therefore, the severity distribution of a randomly selected claim is the weighted mixture
+
+$$
+F(x)
+=
+\sum_{i=1}^{n}
+\frac{\lambda_i}{\lambda}F_i(x).
+$$
+
+---
+
+## Why Is the Severity Distribution a Mixture?
+
+Hence,
+
+$$
+\boxed{
+F(x)
+=
+\frac{1}{\lambda}
+\sum_{i=1}^{n}\lambda_iF_i(x).
+}
+$$
+
+The weights are proportional to the claim frequencies $\lambda_i$. A component with a higher claim frequency contributes a larger proportion of claims to the combined portfolio.
+
+
+---
+
+## Example: Additivity
+
+Suppose two independent portfolios have aggregate losses
+
+$$
+S_1\sim\mathcal{CP}(100,F_1),
+\qquad
+S_2\sim\mathcal{CP}(50,F_2).
+$$
+
+Then
+
+$$
+S=S_1+S_2
+$$
+
+has a compound Poisson distribution with
+
+$$
+\boxed{\lambda=100+50=150}.
+$$
+
+---
+
+## Example: Additivity
+
+The severity distribution is the frequency-weighted mixture
+
+$$
+\boxed{
+F(x)
+=
+\frac{100}{150}F_1(x)
++
+\frac{50}{150}F_2(x)
+}.
+$$
+
+Thus, independent compound Poisson portfolios can be combined into a single compound Poisson model.
+
+
+---
+
+## Special Compound Distributions
+
+The collective risk model becomes a specific compound distribution when a frequency distribution is chosen.
+
+$$
+\boxed{
+\begin{array}{ccc}
+N & & S\\[2pt]
+\text{Poisson}
+&\longrightarrow&
+\text{Compound Poisson}\\
+\text{Binomial}
+&\longrightarrow&
+\text{Compound Binomial}\\
+\text{Negative binomial}
+&\longrightarrow&
+\text{Compound Negative Binomial}
+\end{array}
+}
+$$
+
+The **compound Poisson model** is particularly useful because it has simple moment and MGF formulas and is closed under addition of independent risks.
+
+---
+
+## Special Compound Distributions
+
+::: {.callout-note}
+
+## Key results
+
+For
+
+$$
+S\sim\mathcal{CP}(\lambda,F_X),
+$$
+
+the main formulas are
+
+$$
+E[S]=\lambda m_1,
+\qquad
+\operatorname{Var}(S)=\lambda m_2,
+$$
+
+$$
+\mu_{3,S}=\lambda m_3,
+\qquad
+M_S(t)=\exp\{\lambda(M_X(t)-1)\}.
+$$
+
+These formulas will be used repeatedly in aggregate risk modelling.
+:::
+

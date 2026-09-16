@@ -1,0 +1,388 @@
+---
+title: "Workbook 2: Loss Distributions Workbook"
+format:
+  pdf:
+    toc: false
+---
+
+**Workbook 2: Exploring the Loss Data**
+
+**Assignment Submission Instructions**
+
+1. **Form a group of 5 students.**
+
+2. **Submit one report per group.**
+   Each group should submit **only one PDF file** containing the group's complete report.
+
+3. **Divide the work among group members.**
+   There are **21 sub-questions** in total. Each group member is responsible for **4 sub-questions**. The remaining **1 sub-question** should be completed collaboratively by the group.
+
+4. **Handwritten work is required.**
+   Your solutions, explanations, calculations, conclusions, summaries, and insights should be **written by hand**.
+
+5. **Results generated using R may be included directly.**
+   For example, you may include:
+
+   * numerical results,
+   * tables,
+   * plots,
+   * statistical output, or
+   * other results generated from R.
+
+   These may be included in the report as rendered output from **R Markdown or Quarto**, rather than being handwritten.
+
+6. **Your interpretation must be handwritten.**
+   Any **conclusion, summary, interpretation, explanation of results, or insights** must be written by hand, even when the corresponding numerical or graphical results are generated using R.
+
+7. **Combine all members' work into one report.**
+   Before submission, make sure that the work of all five members is included and that the report contains responses to **all 21 sub-questions**.
+
+8. **Save the report as a PDF file.**
+
+9. **Name the file using the following format:**
+
+   `id1_id2_id3_id4_id5.pdf`
+
+   where `id1`, `id2`, `id3`, `id4`, and `id5` are the student IDs of the five group members, listed in **ascending order**.
+
+   **Example:**
+
+   `6512345678_6512345689_6512345701_6512345715_6512345730.pdf`
+
+10. **Recheck the filename before submitting.**
+    Make sure that:
+
+    * all five student IDs are included,
+    * the IDs are in ascending order,
+    * the IDs are entered correctly, and
+    * the file has the `.pdf` extension.
+
+11. **Only one file should be submitted per group.**
+    Do not submit separate files for individual group members.
+
+
+
+**Instructions**
+
+1. Complete each question using R and include the relevant R code and output.
+
+2. Use the 2010 observations and the `Claim` variable as the individual loss amounts throughout the analysis.
+
+3. Use the original loss amounts for fitting the probability models. Use a logarithmic scale for the horizontal axis when visualizing the loss distribution.
+
+4. For maximum likelihood estimation, use `MASS::fitdistr()` for the Exponential, Gamma, and Lognormal distributions. For the Pareto distribution, follow the suggested approach in the callout.
+
+5. When comparing fitted distributions graphically, pay particular attention to both the main body of the distribution and the upper tail.
+
+6. For the goodness-of-fit analysis, use the chi-square goodness-of-fit test discussed in the lecture notes. Use a significance level of $\alpha=0.05$.
+
+7. Report the test statistic and p-value for each fitted distribution and state your conclusion clearly.
+
+**Questions**
+
+1. **Import the data.** Import `LossData.csv` into R and store it as `loss_data`. Use appropriate R functions to inspect the data.
+
+2. **Understand the observations.** The dataset contains individual loss records. Each row represents one individual loss associated with a policy. Briefly describe the following variables:
+   - `PolicyNum`: policy identifier.
+   - `ClaimNum`: individual loss identifier.
+   - `Year`: year in which the loss occurred.
+   - `ClaimStatus`: status of the loss record.
+   - `Claim`: monetary amount of the individual loss.
+   - `Deduct`: deductible amount associated with the policy.
+   - `EntityType`: type of geographical or organizational entity.
+   - `Description`: description or classification of the loss.
+   - `CoverageGroup`: broad classification of insurance coverage.
+   - `CoverageCode`: code identifying the coverage.
+   - `Fire5`: fire-related classification code.
+   - `CountyCode`: geographical area code.
+   - `county`: geographical area name.
+
+3. **Select one year.** Create a dataset containing only observations from 2010. How many individual losses are there?
+
+4. **Explore the loss amounts.** For the `Claim` variable, calculate the minimum, first quartile, median, mean, third quartile, and maximum. What do these summary statistics suggest about the distribution of individual losses?
+
+5. **Identify large losses.** There are 1,377 individual losses in the 2010 data. Calculate the number and percentage of losses exceeding \$5,000. Repeat for losses exceeding \$50,000. What do these results tell you about the upper tail of the loss distribution?
+
+6. **Plot the loss amounts.** Construct a histogram of the individual loss amounts. Describe the shape of the distribution.
+
+7. **Consider the effect of large losses.** Why might it be difficult to visualize the distribution of loss amounts using the original scale? What feature of the data contributes to this difficulty?
+
+
+8. **Use a logarithmic x-axis.** Reconstruct the histogram of the individual loss amounts using a logarithmic scale for the horizontal axis. Compare this graph with the histogram using the original x-axis. Why is a logarithmic x-axis useful for visualizing insurance loss amounts?
+
+9. **Interpret the logarithmic scale.** Examine the values shown on the x-axis. Explain how equal distances on a logarithmic scale correspond to multiplicative rather than additive changes in the loss amount. For example, compare the distances between \$100, \$1,000, and \$10,000.
+
+
+10. **Estimate the density.** Use the R function `density()` to obtain a kernel density estimate of the individual loss amounts. Plot the density with a logarithmic x-axis. What features of the loss distribution can you identify from the kernel density estimate?
+
+::: {.callout-note}
+## Kernel density estimation
+
+A kernel density estimate provides a smooth, nonparametric estimate of the probability density. Unlike a parametric model, it does not require us to assume a particular distribution for the loss amounts. It therefore provides a useful empirical reference for comparing candidate loss distributions.
+:::
+
+
+11. **Introduce a candidate probability model.** Suppose that the individual loss $X$ follows an Exponential distribution with rate parameter $\lambda$:
+
+    $$
+    f_X(x)=\lambda e^{-\lambda x},
+    \qquad x>0.
+    $$
+
+    Using maximum likelihood estimation, estimate $\lambda$ from the individual loss data.
+
+12. **Verify the Exponential MLE.** Show that the maximum likelihood estimator of $\lambda$ is
+
+    $$
+    \widehat{\lambda}
+    =
+    \frac{1}{\overline{X}}.
+    $$
+
+    Compare your result with the estimate obtained using `MASS::fitdistr()`.
+
+::: {.callout-note}
+## Maximum likelihood estimation with `MASS::fitdistr()`
+
+The `fitdistr()` function from the `MASS` package estimates the parameters of a specified probability distribution using maximum likelihood estimation (MLE). We will use it to fit candidate severity distributions to the individual loss amounts.
+
+For example, to fit an Exponential distribution:
+
+```r
+library(MASS)
+
+fit_exp <- fitdistr(
+  loss_data$Claim,
+  densfun = "exponential"
+)
+```
+:::
+
+13. **Change the parameterization.** Define the scale parameter
+
+    $$
+    \theta=\frac{1}{\lambda}.
+    $$
+
+    What does $\theta$ represent for an Exponential distribution? Calculate $\widehat{\theta}$ and compare it with the sample mean.
+
+14. **Plot the fitted Exponential density.** Overlay the fitted Exponential density on the histogram or kernel density estimate of the individual losses. Use a logarithmic scale for the x-axis. Does the Exponential distribution appear to provide a reasonable description of the data?
+
+15. **Fit a Gamma distribution.** Using `MASS::fitdistr()`, fit a Gamma distribution to the individual loss amounts. Report the estimated shape and rate parameters.
+
+16. **Fit a Lognormal distribution.** Using `MASS::fitdistr()`, fit a Lognormal distribution to the individual loss amounts. Report the estimated `meanlog` and `sdlog` parameters.
+
+17. **Fit a Pareto distribution.** Use `MASS::fitdistr()` together with the Pareto density from the `actuar` package to estimate the parameters of the Pareto distribution. Report the estimated shape and scale parameters.
+
+::: {.callout-tip}
+## Hint: Numerical optimization
+
+When fitting the Pareto distribution, you may encounter warnings such as `NaNs produced`. The Pareto parameters must be positive:
+
+$$
+\alpha>0,
+\qquad
+\lambda>0.
+$$
+
+During numerical optimization, `fitdistr()` may temporarily try parameter values that are not valid for the distribution.
+
+A useful strategy is to optimize over unrestricted parameters $\eta_1$ and $\eta_2$, and transform them to positive values:
+
+$$
+\alpha=e^{\eta_1},
+\qquad
+\lambda=e^{\eta_2}.
+$$
+
+In R, the mathematical transformations are written as:
+
+```r
+alpha <- exp(eta1)
+lambda <- exp(eta2)
+```
+
+A complete implementation is:
+
+```r
+library(MASS)
+
+dpareto <- function(x, shape, scale) {
+  ifelse(
+    x > 0,
+    shape * scale^shape / (scale + x)^(shape + 1),
+    0
+  )
+}
+
+dpareto_pos <- function(x, log_shape, log_scale) {
+  shape <- exp(log_shape)
+  scale <- exp(log_scale)
+
+  dpareto(x, shape, scale)
+}
+```
+The transformed density can then be fitted using `fitdistr()`:
+
+```r
+fit_pareto <- fitdistr(
+  loss_data$Claim,
+  densfun = dpareto_pos,
+  start = list(
+    log_shape = log(2),
+    log_scale = log(1000)
+  )
+)
+
+fit_pareto
+```
+
+The estimates returned by `fitdistr()` are on the transformed scale. Recover the Pareto parameters using:
+
+```r
+alpha_hat <- exp(fit_pareto$estimate["log_shape"])
+lambda_hat <- exp(fit_pareto$estimate["log_scale"])
+
+alpha_hat
+lambda_hat
+```
+
+Thus, the fitted Pareto model is
+
+$$
+\widehat{f}_X(x)
+=
+\frac{\widehat{\alpha}\widehat{\lambda}^{\widehat{\alpha}}}
+{(\widehat{\lambda}+x)^{\widehat{\alpha}+1}}.
+$$
+
+
+:::
+
+18. **Compare the fitted models.** Overlay the fitted Exponential, Gamma, Lognormal, and Pareto densities on the loss distribution using a logarithmic x-axis. Compare how well the models describe the central part and upper tail of the data.
+
+19. **Assess the upper tail.** Which fitted distribution appears to provide the best description of the largest losses? Why might the fit in the upper tail be particularly important in insurance loss modelling?
+
+
+20. **Assess goodness-of-fit.** Perform a chi-square goodness-of-fit test for the fitted Exponential, Gamma, Lognormal, and Pareto distributions. For each model, report the chi-square test statistic and p-value. Using a significance level of $\alpha=0.05$, determine which models can be rejected and which provide an adequate fit to the observed loss data.
+
+21. **Compare the results.** Compare the goodness-of-fit results with the graphical comparison of the fitted distributions. Do the formal tests and the graphical assessment lead to the same conclusion? Which distribution would you select as the most appropriate model for these loss data?
+
+
+<!-- 20. **Reflect on the analysis.** Explain the difference between: -->
+
+<!--     - transforming the observations using $Y=\log(X)$; and -->
+<!--     - displaying the original observations $X$ using a logarithmic x-axis. -->
+
+<!--     Which approach has been used in this workbook? -->
+
+<!-- 8. **Introduce a logarithmic transformation.** Define -->
+
+<!--    $$ -->
+<!--    Y=\log(X), -->
+<!--    $$ -->
+
+<!--    where $X$ represents an individual loss. In R, create a new variable containing $\log(X)$. Examine its summary statistics. -->
+
+<!-- 9. **Plot the logarithms.** Construct a histogram of $\log(X)$. Compare this histogram with the histogram of $X$. How has the shape of the distribution changed? -->
+
+<!-- 10. **Compare transformation and axis scaling.** Plot the original loss amounts using a logarithmic scale on the horizontal axis. Compare this graph with the histogram of $\log(X)$. Explain the difference between: -->
+
+<!--     - transforming the observations using $\log(X)$; and -->
+<!--     - plotting the original observations using a logarithmic x-axis. -->
+
+<!-- 11. **Estimate the empirical density.** Use the R function `density()` to obtain a kernel density estimate of $\log(X)$. Plot the resulting density. Why is kernel density estimation useful for this analysis? -->
+
+<!-- 12. **Interpret the kernel density estimate.** What features of the distribution of $\log(X)$ can you identify from the kernel density estimate? In particular, comment on its location, spread, and shape. -->
+
+<!-- 13. **Introduce a fitted probability model.** Suppose that the individual loss $X$ follows an Exponential distribution with rate parameter $\lambda$: -->
+
+<!--     $$ -->
+<!--     f_X(x)=\lambda e^{-\lambda x}, -->
+<!--     \qquad x>0. -->
+<!--     $$ -->
+
+<!--     Using maximum likelihood estimation, estimate $\lambda$ from the individual loss data. -->
+
+<!-- 14. **Verify the Exponential MLE.** Show that the maximum likelihood estimator of $\lambda$ is -->
+
+<!--     $$ -->
+<!--     \widehat{\lambda} -->
+<!--     = -->
+<!--     \frac{1}{\overline{X}}. -->
+<!--     $$ -->
+
+<!--     Compare your result with the estimate obtained using `MASS::fitdistr()`. -->
+
+<!-- 15. **Change the parameterization.** Define the scale parameter -->
+
+<!--     $$ -->
+<!--     \theta=\frac{1}{\lambda}. -->
+<!--     $$ -->
+
+<!--     What does $\theta$ represent for an Exponential distribution? Calculate $\widehat{\theta}$ and compare it with the sample mean. -->
+
+<!-- 16. **Transform the fitted density.** Let -->
+
+<!--     $$ -->
+<!--     Y=\log(X). -->
+<!--     $$ -->
+
+<!--     Since -->
+
+<!--     $$ -->
+<!--     X=e^Y, -->
+<!--     $$ -->
+
+<!--     use the change-of-variables formula to derive the density of $Y$: -->
+
+<!--     $$ -->
+<!--     f_Y(y) -->
+<!--     = -->
+<!--     f_X(e^y) -->
+<!--     \left| -->
+<!--     \frac{d}{dy}e^y -->
+<!--     \right|. -->
+<!--     $$ -->
+
+<!--     Show that -->
+
+<!--     $$ -->
+<!--     f_Y(y) -->
+<!--     = -->
+<!--     f_X(e^y)e^y. -->
+<!--     $$ -->
+
+<!-- 17. **Understand the Jacobian.** In the expression -->
+
+<!--     $$ -->
+<!--     f_Y(y)=f_X(e^y)e^y, -->
+<!--     $$ -->
+
+<!--     identify the Jacobian term. Explain why this term is necessary when transforming the density from the scale of $X$ to the scale of $\log(X)$. -->
+
+<!-- 18. **Plot the fitted Exponential density on the log scale.** Construct a sequence of values for $y$ and evaluate -->
+
+<!--     $$ -->
+<!--     f_Y(y)=f_X(e^y)e^y. -->
+<!--     $$ -->
+
+<!--     Overlay this fitted density on the kernel density estimate of $\log(X)$. -->
+
+<!-- 19. **Fit a Gamma distribution.** Using `MASS::fitdistr()`, fit a Gamma distribution to the original individual loss amounts. Report the estimated shape and rate parameters. -->
+
+<!-- 20. **Fit a Lognormal distribution.** Using `MASS::fitdistr()`, fit a Lognormal distribution to the original individual loss amounts. Report the estimated `meanlog` and `sdlog` parameters. -->
+
+<!-- 21. **Compare the fitted models on the log scale.** For each fitted distribution, transform its density using -->
+
+<!--     $$ -->
+<!--     f_{\log(X)}(y) -->
+<!--     = -->
+<!--     f_X(e^y)e^y. -->
+<!--     $$ -->
+
+<!--     Plot the fitted Exponential, Gamma, and Lognormal densities together with the kernel density estimate of $\log(X)$. -->
+
+<!-- 22. **Assess the models visually.** Based on the resulting graph, which distribution appears to describe the observed loss data most closely? Pay particular attention to both the central part of the distribution and the upper tail. -->
+
+<!-- 23. **Reflect on the analysis.** Why might a distribution that fits the central part of the data well still provide a poor model for insurance losses? Why is the upper tail particularly important in loss-distribution modelling? -->

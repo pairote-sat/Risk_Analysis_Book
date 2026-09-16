@@ -1,0 +1,60 @@
+---
+title: "Install gradethis"
+format:
+  pdf:
+    toc: false
+---
+
+### Install `gradethis`
+
+1. **Check your R version**
+
+   Run:
+
+   ```r
+   R.version.string
+   ```
+
+2. **Install Rtools if needed**
+
+   * For **R 4.5.x or later**, install **Rtools45**.
+   * For **R 4.4.x**, install **Rtools44**.
+   * Download Rtools from [CRAN Rtools for Windows](https://cran.r-project.org/bin/windows/Rtools/?utm_source=chatgpt.com)
+
+   * Use the default installation location.
+
+3. **Restart RStudio** after installing Rtools.
+
+4. **Check that the build tools are available**
+
+   ```r
+   pkgbuild::has_build_tools(debug = TRUE)
+   ```
+
+   The result should be `TRUE`.
+
+5. **Install `remotes`**
+
+   ```r
+   install.packages("remotes")
+   ```
+
+6. **Install `learnr` from GitHub**
+
+   ```r
+   remotes::install_github("rstudio/learnr")
+   ```
+
+7. **Install `gradethis` from GitHub**
+
+   ```r
+   remotes::install_github("rstudio/gradethis")
+   ```
+
+8. **Load `gradethis` to verify the installation**
+
+   ```r
+   library(gradethis)
+   ```
+
+**Note:** Rtools is only required when R needs to build packages from source. If `gradethis` installs successfully without Rtools, no additional Rtools setup is necessary.

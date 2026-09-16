@@ -8,6 +8,7 @@ book:
     - index.qmd  
     - chapters/01_Loss_Distributions.qmd
     - chapters/02_Risk_Sharing.qmd
+    - chapters/03_Risk_Models.qmd
 
 
 format:

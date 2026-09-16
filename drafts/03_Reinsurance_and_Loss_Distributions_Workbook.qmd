@@ -1,0 +1,398 @@
+---
+title: "Workbook 3: Reinsurance and Loss Distributions"
+format:
+  pdf:
+    toc: false
+---
+
+## Workbook 3: Reinsurance and Loss Distributions
+
+
+**Aim:** Use R to explore how reinsurance transforms common loss distributions and how the resulting distributions can be described empirically.
+
+The workbook uses **simulated losses from predefined loss distributions**. It provides **hints throughout**, including both **R code and explanations**, so students can work through the practical step by step.
+
+### Loss Distributions
+
+<!-- 1. **Simulate losses** from Exponential, Gamma, Lognormal, and Pareto II distributions using predefined parameters. -->
+1. **Simulate $n=5{,}000$ losses** from the following distributions using the predefined parameters. The parameters are chosen so that all four distributions have approximately the same mean loss, $E(X)=1{,}000$, while exhibiting different shapes and tail behaviour.
+
+| Loss distribution | Distribution and parameters                         |           $E(X)$ |
+| ----------------- | --------------------------------------------------- | ---------------: |
+| Exponential       | $X\sim\operatorname{Exp}(\lambda=0.001)$            |        $1{,}000$ |
+| Gamma             | $X\sim\operatorname{Gamma}(\alpha=2,\lambda=0.002)$ |        $1{,}000$ |
+| Lognormal         | $X\sim\operatorname{Lognormal}(\mu=6.408,\sigma=1)$ | $\approx1{,}000$ |
+| Pareto            | $X\sim\operatorname{Pa}(\alpha=2,\lambda=1{,}000)$  |        $1{,}000$ |
+
+
+2. **Explore the simulated losses** using histograms, empirical CDFs, and kernel density estimates.
+
+::: {.callout-note}
+
+## Hint: Empirical CDF
+
+The **empirical cumulative distribution function (ECDF)** describes the proportion of observations that are less than or equal to a given value.
+
+For observations $x_1,\ldots,x_n$,
+
+$$
+\widehat{F}_n(x)
+=
+\frac{1}{n}\sum_{i=1}^n I(x_i \leq x).
+$$
+
+**What is it for?**
+The ECDF provides a direct, non-parametric view of the distribution and can be used to estimate probabilities and compare distributions.
+
+**In R:** use `ecdf()` to create the ECDF function and `plot()` to display it.
+
+```r
+F_emp <- ecdf(losses)
+plot(F_emp)
+```
+
+Students can run the code by placing the cursor in the code cell and selecting **Run** in RStudio, or by clicking the green ▶ button beside the code chunk.
+:::
+
+::: {.callout-note}
+
+## Hint: Kernel Density Estimate
+
+A **kernel density estimate (KDE)** provides a smooth estimate of the probability density from observed data.
+
+**What is it for?**
+KDE helps visualize the shape of a distribution without assuming a particular parametric distribution.
+
+**In R:** use `density()` to calculate the estimate and `plot()` to display it.
+
+```r
+dens <- density(losses)
+plot(dens)
+```
+
+The choice of bandwidth controls the amount of smoothing: a smaller bandwidth produces a more detailed curve, while a larger bandwidth produces a smoother curve.
+:::
+
+### XOL Reinsurance
+
+3. **Apply XOL reinsurance** with no deductible and limit $M=2{,}000$:
+    
+    $$
+    Y=\min(X,M).
+    $$
+    
+    For each of the four simulated loss distributions:
+
+    * calculate the XOL payments $Y$;
+    * create a histogram of the payments;
+    * plot the empirical CDF of $Y$; and
+    * identify and calculate the probability mass at $M$.    
+
+### Reinsurer's XOL Payment
+  
+4. **Calculate the reinsurer's XOL payment** with attachment point $M=2{,}000$:
+
+    $$
+    Z=(X-M)^+=\max(X-M,0).
+    $$
+
+    For each loss distribution:
+    
+    * calculate the reinsurer's payments $Z$;
+    * plot the histogram;
+    * plot the ECDF; and
+    * calculate the probability mass at zero.
+  
+5. **Investigate the mixed distribution.** Explain why the reinsurer's payment has a point mass at zero and how this is reflected in the ECDF.
+
+### Compare and Interpret
+
+6. **Compare the insurer's retained payments and the reinsurer's payments** across the four loss distributions. Consider:
+
+    * the mean payment;
+    * the variability of payments; and
+    * the probability of very large payments.
+
+7. **Interpret the results.** How does XOL reinsurance change the direct insurer's **mean payment, variability, and exposure to very large claims**?
+  
+    * the **mean amount paid** by the direct insurer;
+    * the **variability of the amount paid**; and
+    * the **probability that the direct insurer pays a very large claim.
+
+
+::: {.callout-note}
+
+## Hint: Plotting Multiple Curves with `ggplot2`
+
+When comparing several distributions, `ggplot2` can display multiple curves in the same plot. Map the distribution name to `colour` to automatically obtain different colours and a legend.
+
+For example, suppose the data are stored in a data frame with `loss` and `distribution`:
+  
+```r
+library(ggplot2)
+
+ggplot(data, aes(x = loss, colour = distribution)) +
+  stat_ecdf() +
+  labs(
+    x = "Loss",
+    y = "Empirical CDF",
+    colour = "Distribution"
+  )
+```
+
+The key part is:
+  
+```r
+aes(colour = distribution)
+```
+
+This tells `ggplot2` to use a different colour for each distribution and to create a corresponding legend.
+
+The same approach can be used for kernel density estimates:
+  
+```r
+ggplot(data, aes(x = loss, colour = distribution)) +
+  geom_density() +
+  labs(
+    x = "Loss",
+    y = "Density",
+    colour = "Distribution"
+  )
+```
+
+**Tip:** Keep the same colour mapping when comparing different plots. This makes it easier to identify each distribution across the workbook.
+:::
+ 
+
+::: {.callout-note}
+
+## Hint: Useful `stat_*` Functions
+
+For this practical, the main `stat_*` function is:
+  
+  * **`stat_ecdf()`** — calculates and displays the empirical cumulative distribution function from the observed data.
+
+```r
+ggplot(data, aes(x = loss, colour = distribution)) +
+  stat_ecdf()
+```
+
+This produces an empirical CDF curve for each distribution.
+
+For kernel density estimation, use **`density()`** to calculate the KDE and then display the result with `geom_line()` or `geom_density()` when appropriate.
+
+For example:
+  
+```r
+dens <- density(losses)
+
+ggplot(data.frame(x = dens$x, y = dens$y),
+       aes(x = x, y = y)) +
+  geom_line()
+```
+
+For this workbook, `stat_ecdf()` is particularly useful because the ECDF can represent **both continuous and mixed distributions**, including the point mass created by XOL.
+:::
+
+
+<!-- 4. **Explore the XOL payment distribution** using the ECDF and KDE. -->
+
+<!-- 5. **Investigate the mixed distribution**, paying particular attention to the probability mass at $M$. -->
+
+<!-- ### Proportional Reinsurance -->
+
+<!-- 4. **Apply proportional reinsurance** with retention $c$: -->
+
+<!-- $$ -->
+<!-- Y = cX. -->
+<!-- $$ -->
+
+<!-- 5. **Compare the original and proportional-reinsurance distributions** using the ECDF and KDE. -->
+
+<!-- ### Compare and Interpret -->
+
+<!-- 6. **Compare XOL and proportional reinsurance** across the four loss distributions. -->
+
+<!-- 7. **Interpret the results:** How does each reinsurance arrangement change the distribution? Why does XOL produce a mixed distribution, whereas proportional reinsurance simply rescales the losses? -->
+
+
+**Solutons**
+
+1.**Simulate $n=5{,}000$ losses** from the following distributions using the predefined parameters.
+
+The R code for simulating the Exponential distribution.
+
+```{r}
+set.seed(123)
+
+n <- 5000
+lambda <- 0.001
+
+loss_exp <- rexp(n, rate = lambda)
+```
+
+The simulated losses are stored in `loss_exp`, with
+
+$$
+X \sim \operatorname{Exp}(\lambda=0.001),
+\qquad E(X)=\frac{1}{\lambda}=1{,}000.
+$$
+
+
+2. **Explore the simulated Exponential losses** using a histogram, empirical CDF, and kernel density estimate.
+
+**Histogram**
+
+```{r}
+library(ggplot2)
+
+ggplot(data.frame(loss = loss_exp), aes(x = loss)) +
+  geom_histogram(bins = 50) +
+  labs(x = "Loss", y = "Count")
+```
+
+**Empirical CDF**
+
+```{r}
+ggplot(data.frame(loss = loss_exp), aes(x = loss)) +
+  stat_ecdf() +
+  labs(x = "Loss", y = "Empirical CDF")
+```
+
+**Kernel density estimate**
+
+```{r}
+ggplot(data.frame(loss = loss_exp), aes(x = loss)) +
+  geom_density() +
+  labs(x = "Loss", y = "Density")
+```
+
+These three plots provide complementary views of the simulated loss distribution: the **histogram** shows the observed frequencies, the **ECDF** shows cumulative probabilities, and the **KDE** provides a smooth estimate of the density.
+
+
+3. **Apply XOL reinsurance** with no deductible and limit $M=2{,}000$:
+
+```{r}
+# XOL parameters
+M <- 2000
+
+# XOL payments
+xol_exp <- pmin(loss_exp, M)
+
+# Histogram
+ggplot(data.frame(payment = xol_exp), aes(x = payment)) +
+  geom_histogram(bins = 50) +
+  labs(x = "XOL payment", y = "Count")
+
+# Empirical CDF
+ggplot(data.frame(payment = xol_exp), aes(x = payment)) +
+  stat_ecdf() +
+  labs(x = "XOL payment", y = "Empirical CDF")
+
+# Probability mass at M
+mean(xol_exp == M)
+```
+
+The last calculation estimates
+
+$$
+P(Y=M)=P(X\geq M),
+$$
+
+which is the **point mass at the XOL limit**.
+
+
+**Expected results**
+
+* **Histogram:** Most payments are below $2{,}000$, with a clear concentration of observations at the XOL limit $M=2{,}000$.
+* **ECDF:** The curve shows a **jump at $2{,}000$**. The size of this jump is approximately $0.1352$, representing the probability mass at the limit.
+* **KDE:** A standard KDE of all payments is **not appropriate** for displaying the mixed distribution because it does not represent the point mass at $M$ correctly.
+* **Probability mass:** Approximately **13.52%** of the XOL payments are exactly $2{,}000$:
+
+$$
+P(Y=2{,}000)\approx0.1352.
+$$
+
+4. **Calculate the reinsurer's XOL payment** with attachment point $M=2{,}000$:
+
+For the reinsurer's XOL payment with attachment point $M=2{,}000$,
+
+$$
+Z=(X-M)^+=\max(X-M,0).
+$$
+
+```{r}
+# XOL attachment point
+M <- 2000
+
+# Reinsurer's XOL payment
+xol_reinsurer_exp <- pmax(loss_exp - M, 0)
+
+# Histogram
+ggplot(data.frame(payment = xol_reinsurer_exp), aes(x = payment)) +
+  geom_histogram(bins = 50) +
+  labs(x = "Reinsurer's XOL payment", y = "Count")
+
+# Empirical CDF
+ggplot(data.frame(payment = xol_reinsurer_exp), aes(x = payment)) +
+  stat_ecdf() +
+  labs(x = "Reinsurer's XOL payment", y = "Empirical CDF")
+
+# Probability mass at zero
+mean(xol_reinsurer_exp == 0)
+```
+
+The last line estimates
+
+$$
+P(Z=0)=P(X\leq M),
+$$
+
+which is the **point mass at zero** in the reinsurer's payment distribution.
+
+
+5. **Investigate the mixed distribution.** Explain why the reinsurer's payment has a point mass at zero and how this is reflected in the ECDF.
+
+The reinsurer pays nothing when $X\leq M$, so there is a point mass at zero:
+
+$$
+P(Z=0)=P(X\leq M).
+$$
+
+In the ECDF, this appears as a **vertical jump at $Z=0$**.
+
+
+6. **Compare the insurer's retained payments and the reinsurer's payments** across the four loss distributions. Consider the mean payment, variability, and probability of very large payments.
+
+For the Exponential losses:
+
+```{r} 
+data.frame(
+  Payment = c("Insurer", "Reinsurer"),
+  Mean = c(mean(xol_exp), mean(xol_reinsurer_exp)),
+  SD = c(sd(xol_exp), sd(xol_reinsurer_exp)),
+  P_Large = c(
+    mean(xol_exp > 2000),
+    mean(xol_reinsurer_exp > 2000)
+  )
+)
+```
+
+You can record the results for all four distributions in the following table:
+
+| Distribution | Insurer Mean | Insurer SD | Insurer $P(\text{large})$ | Reinsurer Mean | Reinsurer SD | Reinsurer $P(\text{large})$ |
+| ------------ | -----------: | ---------: | ------------------------: | -------------: | -----------: | --------------------------: |
+| Exponential  |              |            |                           |                |              |                             |
+| Gamma        |              |            |                           |                |              |                             |
+| Lognormal    |              |            |                           |                |              |                             |
+| Pareto       |              |            |                           |                |              |                             |
+
+Here, define a **large payment** consistently across all distributions, for example, as a payment exceeding $2{,}000$.
+
+7. **Interpret the results.** How does XOL reinsurance change the direct insurer's **mean payment, variability, and exposure to very large claims**?
+
+XOL reinsurance **reduces the direct insurer's exposure to large losses**. Compared with the original losses:
+
+* **Mean payment:** decreases because losses above the attachment point are transferred to the reinsurer.
+* **Variability:** decreases because the insurer's payment is capped at the XOL limit.
+* **Very large claims:** the probability of the direct insurer paying a very large amount is substantially reduced because payments are limited by the reinsurance arrangement.
