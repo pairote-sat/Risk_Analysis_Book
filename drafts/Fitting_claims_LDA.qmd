@@ -1,0 +1,71 @@
+---
+title: "Fitting Claims: LDA"
+---
+
+```{r}
+library(VGAM)
+claim_lev <- read.csv("Data/CLAIMLEVEL.csv", header = TRUE) 
+claim_data <- subset(claim_lev, Year == 2010); 
+
+# Inference assuming a GB2 Distribution - this is more complicated
+# The likelihood function of GB2 distribution (negative for optimization)
+lik_gb2 <- function (param) {
+  a_1 <- param[1]
+  a_2 <- param[2]
+  mu <- param[3]
+  sigma <- param[4]
+  yt <- (log(claim_data$Claim) - mu) / sigma
+  logexpyt <- ifelse(yt > 23, yt, log(1 + exp(yt)))
+  logdens <- a_1 * yt - log(sigma) - log(beta(a_1,a_2)) - 
+    (a_1+a_2) * logexpyt - log(claim_data$Claim) 
+  return(-sum(logdens))
+}
+# "optim" is a general purpose minimization function
+gb2_bop <- optim(c(1, 1, 0, 1), lik_gb2, method = c("L-BFGS-B"), 
+                 lower = c(0.01, 0.01, -500, 0.01), 
+                 upper = c(500, 500, 500, 500), hessian = TRUE)
+# Nonparametric Plot
+plot(density(log(claim_data$Claim)), main = "", xlab = "Log Expenditures",
+     ylim = c(0 ,0.37))
+x <- seq(0, 15, by = 0.01)
+#Exponential
+fit.exp <- vglm(Claim ~ 1, exponential, data = claim_data)
+theta = 1 / exp(coef(fit.exp))
+fexp_ex <- dgamma(exp(x), scale = exp(-coef(fit.exp)), shape = 1) * exp(x)
+lines(x, fexp_ex, col = "red", lty =2)
+# Inference assuming a gamma distribution
+fit.gamma <- vglm(Claim ~ 1, family = gamma2, data = claim_data)
+theta <- exp(coef(fit.gamma)[1]) / exp(coef(fit.gamma)[2])  # theta = mu / alpha
+alpha <- exp(coef(fit.gamma)[2]) 
+fgamma_ex <- dgamma(exp(x), shape = alpha, scale = theta) * exp(x)
+lines(x, fgamma_ex, col = "blue", lty =3)
+#Pareto
+fit.pareto <- vglm(Claim ~ 1, paretoII, loc = 0, data = claim_data)
+fpareto_ex <- dparetoII(exp(x), loc = 0, shape = exp(coef(fit.pareto)[2]), 
+                        scale = exp(coef(fit.pareto)[1])) * exp(x)
+lines(x, fpareto_ex, col = "purple")
+# Lognormal
+fit.LN <- vglm(Claim ~ 1, family = lognormal, data = claim_data)
+flnorm_ex <- dlnorm(exp(x), mean = coef(fit.LN)[1],
+                    sd = exp(coef(fit.LN)[2])) * exp(x)
+lines(x, flnorm_ex, col = "lightblue")
+# Density for GB II
+gb2_density <- function (x) {
+  a_1 <- gb2_bop$par[1]
+  a_2 <- gb2_bop$par[2]
+  mu <- gb2_bop$par[3]
+  sigma <- gb2_bop$par[4]
+  xt <- (log(x) - mu) / sigma
+  logexpxt <- ifelse (xt > 23, yt, log(1 + exp(xt)))
+  logdens <- a_1 * xt - log(sigma) - log(beta(a_1, a_2)) - 
+    (a_1+a_2) * logexpxt -log(x) 
+  exp(logdens)
+  }
+fGB2_ex = gb2_density(exp(x)) * exp(x)
+lines(x, fGB2_ex, col="green")
+legend("topleft", c("log(Expend)", "Exponential", "Gamma", "Pareto", 
+                    "Lognormal", "GB2"), cex=0.8,
+       lty = c(4,2,3,1,1,1), #4 is "longdash"
+       col = c("black","red","blue","purple","lightblue","green"))
+```
+

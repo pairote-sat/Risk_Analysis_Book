@@ -1559,58 +1559,63 @@ $$
 
 Calculate $E[S],\qquad\operatorname{Var}(S),\qquad\operatorname{Sk}(S).$
 
-For a Pareto distribution with shape $\alpha=4$ and scale $\beta=1$,
+
+
+---
+
+## Pareto Severity Distribution
+
+We use the **Pareto Type II (Lomax)** parameterisation $X\sim\operatorname{Pa}(\alpha,\lambda),\qquad x\geq0,$ with density
 
 $$
+f_X(x)
+=
+\frac{\alpha\lambda^\alpha}{(\lambda+x)^{\alpha+1}},
+$$
+
+and survival function
+
+$$
+P(X>x)
+=
+\left(\frac{\lambda}{\lambda+x}\right)^\alpha.
+$$
+
+For $r<\alpha$, the $r$-th raw moment is
+
+$$
+\boxed{
 E[X^r]
 =
-\frac{\alpha\beta^r}{\alpha-r},
-\qquad r<\alpha.
+\frac{\lambda^r\Gamma(r+1)\Gamma(\alpha-r)}
+{\Gamma(\alpha)}
+}.
 $$
 
 ---
 
 ## Pareto Severity Moments
 
-For $\alpha=4$ and $\beta=1$, the raw moments under the parameterisation
+For the numerical example, let
 
 $$
-f_X(x)=\frac{\alpha\beta^\alpha}{x^{\alpha+1}},
-\qquad x\geq\beta,
+\alpha=4,\qquad \lambda=1.
 $$
 
-are
-
-$$
-\boxed{
-E[X^r]=\frac{\alpha\beta^r}{\alpha-r},
-\qquad r<\alpha.
-}
-$$
-
-Hence,
-
-$$
-\boxed{m_1=E[X]=\frac43}.
-$$
-
----
-
-## Pareto Severity Moments
-
-For $\alpha=4$ and $\beta=1$,
+Then
 
 $$
 \boxed{
-m_1=\frac43,
+m_1=\frac13,
 \qquad
-m_2=2,
+m_2=\frac13,
 \qquad
-m_3=4.
+m_3=1.
 }
 $$
 
-In particular, $m_3$ exists because the condition $r<\alpha$ is satisfied for $r=3$.
+These are the raw moments used in the subsequent compound Poisson calculations.
+
 
 ---
 

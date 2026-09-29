@@ -1,0 +1,1112 @@
+---
+title: "Solutions to Mock Examination: 2020"
+format:
+  pdf:
+    toc: false
+number-sections: false
+---
+
+
+
+1. Claims occur on a general insurance portfolio independently and at random. Each claim is classified as being of Type A or Type B. Type A claim amounts are distributed $\operatorname{Pa}(4,500)$ and Type B claim amounts are distributed $\operatorname{Pa}(6,2000)$. It is known that 80\% of all claims are of Type A.
+
+   Let $X$ denote a claim chosen at random from the portfolio.
+
+   1. Calculate $\Pr(X > 1500)$.
+
+   2. Calculate $E[X]$ and $\operatorname{Var}(X)$.
+
+   3. Suppose $Y$ has a Pareto distribution with the same mean and variance as $X$. Calculate $\Pr(Y > 1500)$.
+
+   4. Comment on the difference between the answers in parts 1 and 3.
+   
+
+
+```{r}
+# Parameters
+p_A <- 0.80
+p_B <- 0.20
+
+a_A <- 4
+lambda_A <- 500
+
+a_B <- 6
+lambda_B <- 2000
+
+d <- 1500
+
+# Pareto Type II survival function
+pareto_tail <- function(x, a, lambda) {
+  (lambda / (lambda + x))^a
+}
+
+# 1. P(X > 1500)
+tail_A <- pareto_tail(d, a_A, lambda_A)
+tail_B <- pareto_tail(d, a_B, lambda_B)
+
+p_tail_X <- p_A * tail_A + p_B * tail_B
+
+# 2. E[X] and Var(X)
+pareto_mean <- function(a, lambda) {
+  lambda / (a - 1)
+}
+
+pareto_var <- function(a, lambda) {
+  a * lambda^2 / ((a - 1)^2 * (a - 2))
+}
+
+mean_A <- pareto_mean(a_A, lambda_A)
+mean_B <- pareto_mean(a_B, lambda_B)
+
+var_A <- pareto_var(a_A, lambda_A)
+var_B <- pareto_var(a_B, lambda_B)
+
+mean_X <- p_A * mean_A + p_B * mean_B
+
+# E[X^2] = Var(X) + E[X]^2
+EX2_A <- var_A + mean_A^2
+EX2_B <- var_B + mean_B^2
+
+EX2_X <- p_A * EX2_A + p_B * EX2_B
+
+var_X <- EX2_X - mean_X^2
+
+# 3. Pareto distribution Y with the same mean and variance
+# For Pareto Type II:
+# E[Y] = lambda_Y / (a_Y - 1)
+# Var(Y) = a_Y lambda_Y^2 / ((a_Y - 1)^2 (a_Y - 2))
+
+a_Y <- 2*(var_X/mean_X^2)*(1/((var_X/mean_X^2)-1))
+lambda_Y <- mean_X * (a_Y - 1)
+
+p_tail_Y <- pareto_tail(d, a_Y, lambda_Y)
+
+# Difference
+difference <- p_tail_Y - p_tail_X
+
+# Display results
+p_tail_X
+mean_X
+var_X
+a_Y
+lambda_Y
+p_tail_Y
+difference
+```
+
+1. For Type A claims,
+
+   $$
+   \Pr(X_A>1500)
+   =
+   \left(\frac{500}{500+1500}\right)^4
+   =
+   `r round(tail_A, 6)`.
+   $$
+
+   For Type B claims,
+
+   $$
+   \Pr(X_B>1500)
+   =
+   \left(\frac{2000}{2000+1500}\right)^6
+   =
+   `r round(tail_B, 6)`.
+   $$
+
+   Since 80% of claims are Type A,
+
+   $$
+   \begin{aligned}
+   \Pr(X>1500)
+   &=0.8\Pr(X_A>1500)+0.2\Pr(X_B>1500)\\
+   &=0.8(`r round(tail_A, 6)`)+0.2(`r round(tail_B, 6)`)\\
+   &=`r round(p_tail_X, 6)`.
+   \end{aligned}
+   $$
+
+2. For a Pareto Type II distribution,
+
+   $$
+   E[X]=\frac{\lambda}{a-1},
+   \qquad
+   \operatorname{Var}(X)
+   =
+   \frac{a\lambda^2}{(a-1)^2(a-2)}.
+   $$
+
+   Therefore, for Type A,
+
+   $$
+   E[X_A]
+   =
+   \frac{500}{4-1}
+   =
+   `r round(mean_A, 4)`,
+   $$
+
+   and
+
+   $$
+   \operatorname{Var}(X_A)
+   =
+   \frac{4(500)^2}{(4-1)^2(4-2)}
+   =
+   `r round(var_A, 4)`.
+   $$
+
+   For Type B,
+
+   $$
+   E[X_B]
+   =
+   \frac{2000}{6-1}
+   =
+   `r round(mean_B, 4)`,
+   $$
+
+   and
+
+   $$
+   \operatorname{Var}(X_B)
+   =
+   \frac{6(2000)^2}{(6-1)^2(6-2)}
+   =
+   `r round(var_B, 4)`.
+   $$
+
+   Hence,
+
+   $$
+   \begin{aligned}
+   E[X]
+   &=0.8E[X_A]+0.2E[X_B]\\
+   &=0.8(`r round(mean_A, 4)`)+0.2(`r round(mean_B, 4)`)\\
+   &=`r round(mean_X, 4)`.
+   \end{aligned}
+   $$
+
+   To calculate the variance of the mixture, first calculate the second moment:
+
+   $$
+   \begin{aligned}
+   E[X^2]
+   &=0.8E[X_A^2]+0.2E[X_B^2]\\
+   &=0.8\left(\operatorname{Var}(X_A)+E[X_A]^2\right)
+   +0.2\left(\operatorname{Var}(X_B)+E[X_B]^2\right).
+   \end{aligned}
+   $$
+
+   Thus,
+
+   $$
+   E[X^2]=`r round(EX2_X, 4)`,
+   $$
+
+   and
+
+   $$
+   \begin{aligned}
+   \operatorname{Var}(X)
+   &=E[X^2]-\{E[X]\}^2\\
+   &=`r round(EX2_X, 4)`-(`r round(mean_X, 4)`)^2\\
+   &=`r round(var_X, 4)`.
+   \end{aligned}
+   $$
+
+3. Let $Y$ have a Pareto distribution with the same mean and variance as $X$. Write its parameters as $a_Y$ and $\lambda_Y$.
+
+   For a Pareto Type II distribution,
+
+   $$
+   E[Y]=\frac{\lambda_Y}{a_Y-1},
+   $$
+
+   and
+
+   $$
+   \operatorname{Var}(Y)
+   =
+   \frac{a_Y\lambda_Y^2}
+   {(a_Y-1)^2(a_Y-2)}.
+   $$
+
+   Matching the mean and variance gives
+
+   $$
+   a_Y
+   =
+   2+\frac{E[X]^2}{\operatorname{Var}(X)}
+   =
+   2+\frac{(`r round(mean_X, 4)`)^2}{`r round(var_X, 4)`}
+   =
+   `r round(a_Y, 6)`.
+   $$
+
+   Then
+
+   $$
+   \lambda_Y
+   =
+   E[X](a_Y-1)
+   =
+   (`r round(mean_X, 4)`)(
+   `r round(a_Y, 6)`-1)
+   =
+   `r round(lambda_Y, 6)`.
+   $$
+
+   Therefore,
+
+   $$
+   \begin{aligned}
+   \Pr(Y>1500)
+   &=
+   \left(
+   \frac{\lambda_Y}{\lambda_Y+1500}
+   \right)^{a_Y}\\
+   &=
+   \left(
+   \frac{`r round(lambda_Y, 6)`}
+   {`r round(lambda_Y, 6)`+1500}
+   \right)^{`r round(a_Y, 6)`}\\
+   &=`r round(p_tail_Y, 6)`.
+   \end{aligned}
+   $$
+
+4. The two probabilities are
+
+   $$
+   \Pr(X>1500)=`r round(p_tail_X, 6)`
+   $$
+
+   and
+
+   $$
+   \Pr(Y>1500)=`r round(p_tail_Y, 6)`.
+   $$
+
+   Thus,
+
+   $$
+   \Pr(Y>1500)-\Pr(X>1500)
+   =
+   `r round(difference, 6)`.
+   $$
+
+   Although $X$ and $Y$ have the **same mean and variance**, they do not have the same distribution. The distribution of $X$ is a **mixture of two Pareto distributions**, whereas $Y$ is a **single Pareto distribution**. Consequently, matching only the first two moments does not guarantee that the tail probabilities will be the same.
+   
+   
+   
+<!-- A comment or text block -->   
+   
+---
+   
+2. Consider a portfolio of motor insurance policies. In the event of an accident, the cost of repairs to a car has a Pareto distribution with parameters $\alpha$ and $\lambda$. A deductible of 50 is applied to all claims, and a claim is made whenever the repair cost exceeds the deductible. A sample of 200 claims has a mean of 100 and a standard deviation of 150.**
+
+    1. Using the method of moments, estimate $\alpha$ and $\lambda$.
+    2. Estimate the proportion of accidents that do not result in a claim.
+    3. The insurance company arranges excess-of-loss reinsurance with another insurance company to reduce the mean amount it pays per claim to 70. Calculate the retention limit needed to achieve this.
+
+**R code**
+
+```{r}
+# Given sample information
+d <- 50
+mean_claim <- 100
+sd_claim <- 150
+var_claim <- sd_claim^2
+
+# ------------------------------------------------------------
+# 1. Method of moments
+#
+# Given X | X > d, the excess claim Y = X - d has
+#
+# E[Y] = (lambda + d)/(alpha - 1)
+#
+# Var(Y) = alpha (lambda + d)^2 /
+#          [(alpha - 1)^2 (alpha - 2)]
+#
+# Therefore:
+# Var(Y) / E[Y]^2 = alpha / (alpha - 2)
+# ------------------------------------------------------------
+
+alpha_hat <- 2 * var_claim / (var_claim - mean_claim^2)
+
+lambda_plus_d <- mean_claim * (alpha_hat - 1)
+
+lambda_hat <- lambda_plus_d - d
+
+# ------------------------------------------------------------
+# 2. Probability that an accident does not result in a claim
+#
+# P(X <= d) = 1 - [lambda/(lambda+d)]^alpha
+# ------------------------------------------------------------
+
+p_no_claim <- 1 - (lambda_hat / (lambda_hat + d))^alpha_hat
+
+# ------------------------------------------------------------
+# 3. XOL retention limit
+#
+# Let Y = X - d | X > d.
+#
+# E[min(Y, M)]
+#   = integral_0^M P(Y > y) dy
+#   = (lambda+d)/(alpha-1) *
+#     [1 - ((lambda+d)/(lambda+d+M))^(alpha-1)]
+#
+# Set this equal to 70 and solve for M.
+# ------------------------------------------------------------
+
+target_mean <- 70
+
+M <- (lambda_plus_d) *
+  ((1 - target_mean / mean_claim)^(-1 / (alpha_hat - 1)) - 1)
+
+# ------------------------------------------------------------
+# Display results
+# ------------------------------------------------------------
+
+alpha_hat
+lambda_hat
+p_no_claim
+M
+
+# Optional: verify the retained mean
+retained_mean <- mean_claim *
+  (1 - (lambda_plus_d / (lambda_plus_d + M))^(alpha_hat - 1))
+
+retained_mean
+```
+
+1. Let $X$ denote the original repair cost, with the two-parameter Pareto distribution
+
+   $$
+   P(X>x)=\left(\frac{\lambda}{\lambda+x}\right)^\alpha.
+   $$
+
+   Because the sample consists only of claims, the observations are from the **excess distribution**
+
+   $$
+   Y=X-50\mid X>50.
+   $$
+
+   By the threshold stability of the Pareto distribution,
+
+   $$
+   P(Y>y)
+   =
+   \left(\frac{\lambda+50}{\lambda+50+y}\right)^\alpha.
+   $$
+
+   Thus, $Y$ is again Pareto in the same parameterization, with scale parameter $\lambda+50$.
+
+   The sample moments are
+
+   $$
+   E[Y]=100,
+   \qquad
+   \operatorname{Var}(Y)=150^2=22500.
+   $$
+
+   For the excess distribution,
+
+   $$
+   E[Y]=\frac{\lambda+50}{\alpha-1},
+   $$
+
+   and
+
+   $$
+   \operatorname{Var}(Y)
+   =
+   \frac{\alpha(\lambda+50)^2}
+   {(\alpha-1)^2(\alpha-2)}.
+   $$
+
+   Dividing the variance equation by the square of the mean gives
+
+   $$
+   \frac{\operatorname{Var}(Y)}{E[Y]^2}
+   =
+   \frac{\alpha}{\alpha-2}.
+   $$
+
+   Hence,
+
+   $$
+   \frac{22500}{100^2}
+   =
+   \frac{\alpha}{\alpha-2}.
+   $$
+
+   Solving for $\alpha$ gives
+
+   $$
+   \widehat{\alpha}
+   =
+   `r alpha_hat`.
+   $$
+
+   Using the first moment,
+
+   $$
+   100
+   =
+   \frac{\lambda+50}{`r alpha_hat`-1}.
+   $$
+
+   Therefore,
+
+   $$
+   \widehat{\lambda}+50
+   =
+   100(`r alpha_hat`-1)
+   =
+   `r lambda_plus_d`,
+   $$
+
+   and hence
+
+   $$
+   \boxed{\widehat{\alpha}=`r alpha_hat`,
+   \qquad
+   \widehat{\lambda}=`r lambda_hat`.}
+   $$
+
+2. An accident does not result in a claim when the repair cost does not exceed the deductible. Therefore,
+
+   $$
+   P(\text{no claim})
+   =
+   P(X\leq50)
+   =
+   F_X(50).
+   $$
+
+   Using the fitted Pareto distribution,
+
+   $$
+   P(X\leq50)
+   =
+   1-
+   \left(
+   \frac{\widehat{\lambda}}
+   {\widehat{\lambda}+50}
+   \right)^{\widehat{\alpha}}.
+   $$
+
+   Substituting the estimates,
+
+   $$
+   P(\text{no claim})
+   =
+   `r p_no_claim`.
+   $$
+
+   Thus, the estimated proportion of accidents that do not result in a claim is
+
+   $$
+   \boxed{`r 100*p_no_claim`\%.}
+   $$
+
+<!-- A comment or text block -->
+
+3. For an excess-of-loss retention limit $M$, the insurance company pays
+
+   $$
+   \min(Y,M),
+   $$
+
+   where $Y=X-50\mid X>50$ is the amount of the claim above the deductible.
+
+   The survival function of $Y$ is
+
+   $$
+   P(Y>y)
+   =
+   \left(
+   \frac{\lambda+50}
+   {\lambda+50+y}
+   \right)^\alpha.
+   $$
+
+   The limited expected value is therefore
+
+   $$
+   E[\min(Y,M)]
+   =
+   \int_0^M P(Y>y)\,dy.
+   $$
+
+   Evaluating the integral,
+
+   $$
+   E[\min(Y,M)]
+   =
+   \frac{\lambda+50}{\alpha-1}
+   \left[
+   1-
+   \left(
+   \frac{\lambda+50}
+   {\lambda+50+M}
+   \right)^{\alpha-1}
+   \right].
+   $$
+
+  The original mean claim amount is 100, and the required mean amount paid by the insurer is 70. Hence,
+
+   $$
+   70
+   =
+   100
+   \left[
+   1-
+   \left(
+   \frac{`r lambda_plus_d`}
+   {`r lambda_plus_d`+M}
+   \right)^{`r alpha_hat`-1}
+   \right].
+   $$
+
+   Rearranging,
+
+   $$
+   \left(
+   \frac{`r lambda_plus_d`}
+   {`r lambda_plus_d`+M}
+   \right)^{`r alpha_hat`-1}
+   =
+   1-\frac{70}{100}.
+   $$
+
+   Therefore,
+
+   $$
+   M
+   =
+   `r lambda_plus_d`
+   \left[
+   \left(1-\frac{70}{100}\right)^{-1/(`r alpha_hat`-1)}
+   -1
+   \right].
+   $$
+
+   Thus, the required retention limit is
+
+   $$
+   \boxed{M=`r M`.}
+   $$
+
+  As a check, substituting this retention limit into the limited expected value formula gives
+
+   $$
+   E[\min(Y,M)]
+   =
+   `r retained_mean`,
+   $$
+
+   which is the required mean amount of 70, up to numerical precision.
+   
+
+
+---
+
+3. Consider aggregate claims $S$ with a compound Poisson distribution $\mathcal{CP}(10,F_X)$, where the individual claim amount $X$ takes values $2$, $4$, $8$, and $10$ with probabilities $0.4$, $0.3$, $0.2$, and $0.1$, respectively. The insurer enters into an excess-of-loss reinsurance contract with retention level $M=6$.
+
+    1. Calculate $E[X]$ and $E[X^2]$.
+    2. Calculate $E[S]$ and $\operatorname{Var}(S)$.
+    3. Determine the distributions of the aggregate amounts paid by the insurer, $S_I$, and the reinsurer, $S_R$, and calculate $E[S_I]$ and $E[S_R]$.
+
+
+
+```{r}
+# Parameters
+lambda <- 10
+M <- 6
+
+x <- c(2, 4, 8, 10)
+p <- c(0.4, 0.3, 0.2, 0.1)
+
+# 1. Moments of X
+EX <- sum(x * p)
+EX2 <- sum(x^2 * p)
+
+# 2. Moments of aggregate claims S
+ES <- lambda * EX
+VarS <- lambda * EX2
+
+# 3. XOL payments
+XI <- pmin(x, M)          # insurer payment
+XR <- pmax(x - M, 0)      # reinsurer payment
+
+# Aggregate means
+EXI <- sum(XI * p)
+EXR <- sum(XR * p)
+
+ESI <- lambda * EXI
+ESR <- lambda * EXR
+
+# Display results
+EX
+EX2
+ES
+VarS
+data.frame(x, p, XI, XR)
+EXI
+EXR
+ESI
+ESR
+```
+
+1. For the individual claim amount $X$, we have
+
+   $$
+   P(X=2)=0.4,\qquad
+   P(X=4)=0.3,\qquad
+   P(X=8)=0.2,\qquad
+   P(X=10)=0.1.
+   $$
+
+   Therefore,
+
+   $$
+   E[X]
+   =\sum_x xP(X=x)
+   =2(0.4)+4(0.3)+8(0.2)+10(0.1).
+   $$
+
+   Using the R code,
+
+   `r EX <- sum(x*p); EX`
+
+   Hence,
+
+   $$
+   \boxed{E[X]=`r EX`}.
+   $$
+
+   The second moment is
+
+   $$
+   E[X^2]
+   =\sum_x x^2P(X=x)
+   =2^2(0.4)+4^2(0.3)+8^2(0.2)+10^2(0.1).
+   $$
+
+   Using R,
+
+   `r EX2 <- sum(x^2*p); EX2`
+
+   Thus,
+
+   $$
+   \boxed{E[X^2]=`r EX2`}.
+   $$
+
+2. Since $S$ is compound Poisson with Poisson parameter $\lambda=10$,
+
+   $$
+   E[S]=\lambda E[X].
+   $$
+
+   Therefore,
+
+   $$
+   E[S]
+   =`r lambda`(`r EX`)
+   =`r ES`.
+   $$
+
+   Hence,
+
+   $$
+   \boxed{E[S]=`r ES`}.
+   $$
+
+   For a compound Poisson distribution,
+
+   $$
+   \operatorname{Var}(S)=\lambda E[X^2].
+   $$
+
+   Therefore,
+
+   $$
+   \operatorname{Var}(S)
+   =`r lambda`(`r EX2`)
+   =`r VarS`.
+   $$
+
+   Hence,
+
+   $$
+   \boxed{\operatorname{Var}(S)=`r VarS`}.
+   $$
+
+3. Under the excess-of-loss contract with retention $M=6$, the insurer pays
+
+   $$
+   X_I=\min(X,6),
+   $$
+
+   while the reinsurer pays
+
+   $$
+   X_R=(X-6)_+=\max(X-6,0).
+   $$
+
+   The claim-by-claim payments are therefore
+
+   $$
+   \begin{array}{c|cccc}
+   X & 2 & 4 & 8 & 10\\
+   \hline
+   X_I & 2 & 4 & 6 & 6\\
+   X_R & 0 & 0 & 2 & 4
+   \end{array}
+   $$
+
+   Thus, the insurer's payment per original claim has distribution
+
+   $$
+   P(X_I=2)=0.4,
+   $$
+
+   $$
+   P(X_I=4)=0.3,
+   $$
+
+   and
+
+   $$
+   P(X_I=6)=0.2+0.1=0.3.
+   $$
+
+   Hence,
+
+   $$
+   X_I=
+   \begin{cases}
+   2,&P=0.4,\\
+   4,&P=0.3,\\
+   6,&P=0.3.
+   \end{cases}
+   $$
+
+   The insurer's aggregate payment is
+
+   $$
+   S_I=\sum_{i=1}^{N}\min(X_i,6),
+   \qquad N\sim\operatorname{Poisson}(10).
+   $$
+
+   Therefore, $S_I$ has a **compound Poisson distribution** with frequency parameter $10$ and severity distribution given in the previous step:
+
+   $$
+   \boxed{
+   S_I\sim\mathcal{CP}\left(
+   10,
+   \begin{cases}
+   2&0.4\\
+   4&0.3\\
+   6&0.3
+   \end{cases}
+   \right)
+   }.
+   $$
+
+   The expected insurer payment per claim is
+
+   $$
+   E[X_I]
+   =2(0.4)+4(0.3)+6(0.3).
+   $$
+
+   Using R,
+
+   `r EXI <- sum(pmin(x,M)*p); EXI`
+
+   Thus,
+
+   $$
+   E[X_I]=`r EXI`.
+   $$
+
+   Consequently,
+
+   $$
+   E[S_I]
+   =10E[X_I]
+   =`r ESI`.
+   $$
+
+   Hence,
+
+   $$
+   \boxed{E[S_I]=`r ESI`}.
+   $$
+
+   For the reinsurer, the payment per claim is
+
+   $$
+   X_R=(X-6)_+.
+   $$
+
+   Therefore,
+
+   $$
+   P(X_R=0)=0.4+0.3=0.7,
+   $$
+
+   $$
+   P(X_R=2)=0.2,
+   $$
+
+   and
+
+   $$
+   P(X_R=4)=0.1.
+   $$
+
+   Hence,
+
+   $$
+   X_R=
+   \begin{cases}
+   0,&P=0.7,\\
+   2,&P=0.2,\\
+   4,&P=0.1.
+   \end{cases}
+   $$
+
+   The reinsurer's aggregate payment can therefore be written as
+
+$$
+S_R=\sum_{i=1}^{N}(X_i-6)_+,
+\qquad N\sim\operatorname{Poisson}(10).
+$$
+
+   Thus, strictly including the zero payments, $S_R$ is a compound Poisson distribution with severity distribution
+
+$$
+\boxed{
+X_R=
+\begin{cases}
+0&0.7\\
+2&0.2\\
+4&0.1.
+\end{cases}
+}
+$$
+
+   Equivalently, the positive reinsurer payments occur by **Poisson thinning**, so the number of claims producing a positive reinsurance payment is
+
+$$
+N_R\sim\operatorname{Poisson}\left(10(0.2+0.1)\right)
+=\operatorname{Poisson}(3),
+$$
+
+   with positive payment distribution
+
+$$
+P(X_R=2\mid X_R>0)=\frac{0.2}{0.3}=\frac{2}{3},
+$$
+
+   and
+
+$$
+P(X_R=4\mid X_R>0)=\frac{0.1}{0.3}=\frac{1}{3}.
+$$
+
+   The expected reinsurer payment per original claim is
+
+$$
+E[X_R]
+=0(0.7)+2(0.2)+4(0.1).
+$$
+
+   Using R, `r EXR <- sum(pmax(x-M,0)*p); EXR`
+
+   Hence,
+
+$$
+E[X_R]=`r EXR`.
+$$
+
+   Therefore,
+
+$$
+E[S_R]
+=10E[X_R]
+=`r ESR`.
+$$
+
+   Thus,
+
+$$
+\boxed{E[S_R]=`r ESR`}.
+$$
+
+   As a useful check, the insurer and reinsurer payments must add to the original claim amount:
+
+$$
+X=X_I+X_R.
+$$
+
+   Consequently,
+
+$$
+S=S_I+S_R,
+$$
+
+   and therefore their means satisfy
+
+$$
+E[S]=E[S_I]+E[S_R].
+$$
+
+   Indeed,
+
+$$
+`r ESI`+`r ESR`=`r ESI + ESR`,
+$$
+
+   which agrees with
+
+$$
+E[S]=`r ES`.
+$$
+
+   This confirms that the original aggregate expected claim amount is divided between the insurer and reinsurer as required by the excess-of-loss contract.
+
+
+
+
+
+
+
+
+
+
+
+---
+
+
+4. The number of claims $N$ during a fixed time period has the distribution
+$$P(N=0)=0.4,\qquad P(N=1)=0.3,\qquad P(N=2)=0.2,\qquad P(N=3)=0.1.$$
+Claim amounts are uniformly distributed on $(0,200)$, and the number of claims is independent of the claim amounts.
+
+   1. Find the mean and variance of the aggregate claims during the fixed time period.
+   2. Suppose a policy deductible of $10$ applies to each claim. Find the expected insurer payout.
+
+```{r}
+# Parameters
+prob_N <- c(0.4, 0.3, 0.2, 0.1)
+N_values <- 0:3
+
+# Claim amount X ~ Uniform(0, 200)
+a <- 0
+b <- 200
+
+# Moments of N
+EN <- sum(N_values * prob_N)
+EN2 <- sum(N_values^2 * prob_N)
+VarN <- EN2 - EN^2
+
+# Moments of X
+EX <- (a + b) / 2
+VarX <- (b - a)^2 / 12
+EX2 <- VarX + EX^2
+
+# Aggregate claims S = sum_{i=1}^N X_i
+ES <- EN * EX
+VarS <- EN * VarX + VarN * EX^2
+
+# Deductible d = 10
+d <- 10
+
+# Insurer payment per claim Y = (X - d)_+
+# E[Y] = E[X] - d + E[(d-X)_+]
+# For X ~ Uniform(0,200):
+EY <- (b - d)^2 / (2 * (b - a))
+
+# Expected aggregate insurer payout
+ES_deductible <- EN * EY
+
+# Display results
+EN
+VarN
+EX
+VarX
+ES
+VarS
+EY
+ES_deductible
+```
+
+1. Let the aggregate claims be
+   $S=\sum_{i=1}^{N}X_i,$
+   where $X_i$ denotes the amount of the $i$th claim. First calculate the moments of the claim count:
+
+   $$E[N]=0(0.4)+1(0.3)+2(0.2)+3(0.1)
+   =`r EN`.$$
+
+   Also,
+   $$E[N^2]=0^2(0.4)+1^2(0.3)+2^2(0.2)+3^2(0.1)
+   =`r EN2`.$$
+
+   Hence,
+   $$\operatorname{Var}(N)=E[N^2]-[E(N)]^2
+   =`r EN2`-(`r EN`)^2
+   =`r VarN`.$$
+
+
+   Since $X\sim\operatorname{Uniform}(0,200)$,
+   $E[X]=\frac{0+200}{2}=`r EX`,$
+   and
+   $\operatorname{Var}(X)=\frac{(200-0)^2}{12}=`r VarX`.$
+
+   Using the standard random-sum formulas, and the independence of $N$ and the claim amounts,
+   $E[S]=E[N]E[X].$
+   Therefore,
+   $E[S]=`r EN`\times `r EX`=`r ES`.$
+
+   For the variance of a random sum,
+
+   $$\operatorname{Var}(S)
+   =E[N]\operatorname{Var}(X)
+   +\operatorname{Var}(N)[E(X)]^2.$$
+   Thus,
+   $$\begin{aligned}
+   \operatorname{Var}(S)
+   &=(`r EN`)(`r VarX`)
+   +(`r VarN`)(`r EX`^2)\\
+   &=`r VarS`.
+   \end{aligned}$$
+
+
+2. Now suppose a deductible of $10$ applies to each claim. The insurer's payment for an individual claim is
+   $Y=(X-10)_+=\max(X-10,0).$
+   Since $X\sim\operatorname{Uniform}(0,200)$,
+
+   $$E[Y]
+   =\frac{1}{200}\int_{10}^{200}(x-10)\,dx
+   =\frac{(200-10)^2}{2(200)}
+   =`r EY`.$$
+
+   Let the aggregate insurer payout after the deductible be
+   $S_D=\sum_{i=1}^{N}(X_i-10)_+.$
+   By independence of $N$ and the claim amounts,
+   $E[S_D]=E[N]E[(X-10)_+].$
+   Therefore,
+   $E[S_D]=(`r EN`)(`r EY`)=`r ES_deductible`.$
+
+   Hence, the answers are
+   $\boxed{E[S]=`r ES`}$
+   and
+   $\boxed{\operatorname{Var}(S)=`r VarS`}.$
+   With a deductible of $10$, the expected insurer payout is
+   $\boxed{E[S_D]=`r ES_deductible`}.$
+
+   

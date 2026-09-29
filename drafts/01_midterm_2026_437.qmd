@@ -1,0 +1,203 @@
+---
+title: "01_midterm_2026_437"
+format:
+  pdf:
+    toc: false
+number-sections: false
+---
+
+
+1. An insurance company has collected a sample of **1,000 individual claim amounts**, denoted by $X_1,\ldots,X_{1000}$, from a portfolio of insurance policies. Claim amounts are measured in monetary units. The following sample information is available:
+
+$$
+n=1{,}000,\qquad
+\bar X=1{,}248.6,\qquad
+s^2=1{,}965{,}420,
+$$
+
+and
+
+$$
+\sum_{i=1}^{1000}\ln X_i=6{,}982.4.
+$$
+
+The insurer considers three candidate models for the claim amount $X$:
+
+* Gamma distribution with shape parameter $\alpha$ and rate parameter $\beta$;
+* Lognormal distribution with parameters $\mu$ and $\sigma^2$;
+* Two-parameter Pareto distribution with survival function
+
+  $$
+  P(X>x)=\left(\frac{\theta}{\theta+x}\right)^\alpha,
+  \qquad x>0.
+  $$
+
+Answer the following questions.
+
+1. Fit a Gamma distribution to the claim data using the **method of moments**. Estimate the shape parameter $\hat\alpha$ and rate parameter $\hat\beta$. Then use the fitted model to calculate the probability that a randomly selected claim exceeds $2{,}000$.
+
+2. Fit a Lognormal distribution to the claim data. Estimate $\hat\mu$ and $\hat\sigma^2$ using the sample information provided. Then calculate the **95th percentile** of the fitted claim amount distribution.
+
+3. Suppose that maximum likelihood estimation for the two-parameter Pareto model gives
+
+   $$
+   \hat\alpha=3.20,
+   \qquad
+   \hat\theta=1{,}248.6.
+   $$
+
+   Calculate the probability that a claim exceeds $2{,}000$ and the **expected claim amount given that the claim exceeds $2{,}000$**, i.e.,
+
+   $$
+   E[X\mid X>2{,}000].
+   $$
+
+4. Based on the three fitted models, explain how the choice of loss distribution could affect the assessment of **large insurance claims and excess-of-loss reinsurance**. In particular, discuss why a heavy-tailed model such as the Pareto distribution may produce different results from the Gamma distribution when estimating the cost of large claims.
+   
+   
+---
+
+2. An insurer models the individual claim amount $X$ using the following discrete distribution:
+
+$$
+\begin{array}{c|cccc}
+x & 1 & 10 & 50 & 100\\
+\hline
+P(X=x) & 0.50 & 0.30 & 0.15 & 0.05
+\end{array}
+$$
+
+The insurer purchases an **excess-of-loss reinsurance contract** with retention $M=20$. The insurer's payment per claim is
+
+$$
+Y=\min(X,M),
+$$
+
+while the reinsurer's payment per claim is
+
+$$
+Z=\max(X-M,0).
+$$
+
+Answer the following questions.
+
+1. Derive the probability distributions of the insurer's payment $Y$ and the reinsurer's payment $Z$. Present each distribution in a probability table.
+
+2. Calculate the expected payment per claim for the insurer, $E[Y]$, and for the reinsurer, $E[Z]$. Verify that
+
+   $$
+   E[X]=E[Y]+E[Z].
+   $$
+
+3. Calculate $\operatorname{Var}(Y)$ and $\operatorname{Var}(Z)$. Briefly explain why the variance of the reinsurer's payment is an important measure of the risk transferred to the reinsurer.
+
+4. Suppose the insurer changes the retention from $M=20$ to $M=50$. Calculate the new expected insurer payment and expected reinsurer payment. Comment on how increasing the retention changes the amount of risk transferred to the reinsurer.
+
+
+---
+
+
+3. An insurance portfolio has a claim frequency modeled by
+
+$$
+N\sim\operatorname{Poisson}(0.5),
+$$
+
+where $N$ is the number of claims during one year. Individual claim amounts $X_1,X_2,\ldots$ are independent of $N$ and are identically distributed as
+
+$$
+X_i\sim\operatorname{Exponential}(0.001).
+$$
+
+The annual aggregate claim amount is
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+The insurer enters into a **proportional reinsurance contract** under which the insurer retains $60%$ of every claim and the reinsurer pays the remaining $40%.
+
+Answer the following questions.
+
+1. Calculate $E[S]$ and $\operatorname{Var}(S)$ using the compound Poisson formulas.
+
+2. Let $S_I$ denote the insurer's annual aggregate payment after reinsurance. Show that
+
+   $$
+   S_I=\sum_{i=1}^{N}0.6X_i.
+   $$
+
+   Identify the distribution of the individual insurer payment $0.6X_i$, and calculate $E[S_I]$ and $\operatorname{Var}(S_I)$.
+
+3. Let $S_R$ denote the reinsurer's annual aggregate payment. Calculate $E[S_R]$ and $\operatorname{Var}(S_R)$. Verify that
+
+   $$
+   S=S_I+S_R
+   $$
+
+   and
+
+   $$
+   E[S]=E[S_I]+E[S_R].
+   $$
+
+4. Compare the insurer's expected annual loss and variance before and after reinsurance. Calculate the percentage reduction in variance resulting from the reinsurance arrangement. Explain briefly why the percentage reduction in variance differs from the percentage reduction in expected loss.
+
+
+
+
+
+---
+
+
+4. Two insurance portfolios, **Portfolio A** and **Portfolio B**, have the following characteristics. For both portfolios, the number of claims $N$ is independent of the individual claim amounts $X_1,X_2,\ldots$, and the aggregate annual claim amount is
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+The relevant moments for the two portfolios are:
+
+$$
+\begin{array}{c|cc|cc}
+& E[N] & \operatorname{Var}(N) & E[X] & \operatorname{Var}(X)\\
+\hline
+\text{Portfolio A} & 4 & 2 & 1{,}000 & 500{,}000\\
+\text{Portfolio B} & 4 & 6 & 1{,}000 & 200{,}000
+\end{array}
+$$
+
+Thus, both portfolios have the same expected number of claims and the same expected claim amount, but their frequency and severity variabilities differ.
+
+Answer the following questions.
+
+1. Calculate $E[S]$ for each portfolio. Explain why the two portfolios have the same expected annual aggregate claim amount.
+
+2. Using
+
+   $$
+   \operatorname{Var}(S)
+   =
+   E[N]\operatorname{Var}(X)
+   +
+   \operatorname{Var}(N)[E(X)]^2,
+   $$
+
+   calculate $\operatorname{Var}(S)$ and the standard deviation of $S$ for each portfolio.
+
+3. For each portfolio, calculate the two components of aggregate variance:
+
+   $$
+   E[N]\operatorname{Var}(X)
+   $$
+
+   and
+
+   $$
+   \operatorname{Var}(N)[E(X)]^2.
+   $$
+
+   Calculate the percentage contribution of each component to the total variance.
+
+4. Although the two portfolios have the same $E[N]$ and $E[X]$, their aggregate risks are different. Explain how the differences in **frequency variability** and **severity variability** lead to different values of $\operatorname{Var}(S)$. What does this illustrate about assessing the risk of an insurance portfolio using only its expected aggregate loss?
+

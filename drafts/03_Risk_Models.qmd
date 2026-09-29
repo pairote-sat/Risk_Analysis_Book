@@ -920,7 +920,7 @@ The random-sum representation also allows us to derive the moment generating
 function (MGF) of the aggregate claim amount.
 
 :::{#exm-mgf-collective-risk-model}
-### MGF of the Collective Risk Model
+## MGF of the Collective Risk Model
 
 Show that
 

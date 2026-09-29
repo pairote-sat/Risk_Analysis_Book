@@ -1,0 +1,203 @@
+---
+title: "Fitting number of claims - Poisson vs Negative Binomial"
+---
+
+
+```{r}
+# ============================================================
+# Method of Moments Estimation
+# Claim count data
+# ============================================================
+
+# Sample moments
+mean_sample <- 0.1264
+var_sample  <- 0.1628
+
+# ------------------------------------------------------------
+# 1. Poisson distribution
+# ------------------------------------------------------------
+# For X ~ Poisson(lambda):
+#
+# E[X] = lambda
+# Var(X) = lambda
+#
+# Method of Moments:
+lambda_hat <- mean_sample
+
+cat("Poisson distribution\n")
+cat("lambda =", lambda_hat, "\n\n")
+
+
+# ------------------------------------------------------------
+# 2. Negative Binomial Type 2
+# ------------------------------------------------------------
+# X = number of failures before the k-th success
+#
+# E[X]   = kq / p
+# Var(X) = kq / p^2
+#
+# where q = 1 - p.
+#
+# Method of Moments:
+#
+# From
+#     Var(X) / E[X] = 1 / p
+#
+# therefore
+#     p = E[X] / Var(X)
+#
+# and
+#     k = E[X]^2 / (Var(X) - E[X])
+
+p_hat <- mean_sample / var_sample
+q_hat <- 1 - p_hat
+
+k_hat <- mean_sample^2 / (var_sample - mean_sample)
+
+cat("Negative Binomial Type 2\n")
+cat("k =", k_hat, "\n")
+cat("p =", p_hat, "\n")
+cat("q =", q_hat, "\n\n")
+
+
+# ------------------------------------------------------------
+# Check the fitted theoretical moments
+# ------------------------------------------------------------
+
+# Poisson
+poisson_mean <- lambda_hat
+poisson_var  <- lambda_hat
+
+
+# Negative Binomial Type 2
+nb_mean <- k_hat * q_hat / p_hat
+nb_var  <- k_hat * q_hat / p_hat^2
+
+results <- data.frame(
+  Distribution = c(
+    "Poisson",
+    "Negative Binomial Type 2"
+  ),
+  Mean = c(
+    poisson_mean,
+    nb_mean
+  ),
+  Variance = c(
+    poisson_var,
+    nb_var
+  )
+)
+
+results
+```
+
+```{r}
+# ------------------------------------------------------------
+# Expected number of policies by number of claims
+# ------------------------------------------------------------
+
+n <- 10000
+
+# Claim-count categories
+claim_categories <- c("0", "1", "2", "3", "4", "5+")
+
+
+# ------------------------------------------------------------
+# Poisson expected numbers
+# ------------------------------------------------------------
+
+# Probabilities for 0, 1, 2, 3, and 4 claims
+poisson_prob <- dpois(0:4, lambda = lambda_hat)
+
+# Probability of 5 or more claims
+poisson_prob_5plus <- ppois(
+  4,
+  lambda = lambda_hat,
+  lower.tail = FALSE
+)
+
+# Combine probabilities
+poisson_prob <- c(poisson_prob, poisson_prob_5plus)
+
+# Convert probabilities to expected numbers of policies
+poisson_expected <- n * poisson_prob
+
+
+# ------------------------------------------------------------
+# Negative Binomial expected numbers
+# ------------------------------------------------------------
+
+# Probabilities for 0, 1, 2, 3, and 4 claims
+nb_prob <- dnbinom(
+  0:4,
+  size = k_hat,
+  prob = p_hat
+)
+
+# Probability of 5 or more claims
+nb_prob_5plus <- pnbinom(
+  4,
+  size = k_hat,
+  prob = p_hat,
+  lower.tail = FALSE
+)
+
+# Combine probabilities
+nb_prob <- c(nb_prob, nb_prob_5plus)
+
+# Convert probabilities to expected numbers of policies
+nb_expected <- n * nb_prob
+
+
+# ------------------------------------------------------------
+# Create comparison table
+# ------------------------------------------------------------
+
+expected_policies <- data.frame(
+  Claims = claim_categories,
+  Observed = c(8959, 852, 160, 24, 5, 0),
+  Poisson = poisson_expected,
+  Negative_Binomial = nb_expected
+)
+
+expected_policies
+```
+
+
+
+```{r}
+# ------------------------------------------------------------
+# Comparison of fitted probabilities and expected frequencies
+# ------------------------------------------------------------
+
+expected_policies <- data.frame(
+  Claims = claim_categories,
+  
+  Observed = c(8959, 852, 160, 24, 5, 0),
+  
+  Poisson_Probability = poisson_prob,
+  Poisson_Expected = poisson_expected,
+  
+  NB_Probability = nb_prob,
+  NB_Expected = nb_expected
+)
+
+expected_policies
+```
+
+
+
+```{r}
+expected_policies <- data.frame(
+  Claims = claim_categories,
+  Observed = c(8959, 852, 160, 24, 5, 0),
+  Poisson = poisson_expected,
+  Negative_Binomial = nb_expected
+)
+
+expected_policies$Poisson <- round(expected_policies$Poisson, 1)
+expected_policies$Negative_Binomial <- round(expected_policies$Negative_Binomial, 1)
+
+expected_policies
+```
+

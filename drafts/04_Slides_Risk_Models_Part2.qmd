@@ -1,0 +1,2189 @@
+---
+title: "Chapter 3: Risk Models"
+
+format:
+  beamer:
+    theme: Boadilla
+    colortheme: default
+    fonttheme: professionalfonts
+    aspectratio: 169
+    pdf-engine: xelatex
+    keep-tex: true
+    toc: false
+    number-sections: false
+    
+# format:
+#   revealjs:
+#     theme: simple
+#     css: styles.css
+#     slide-number: true
+#     scrollable: true
+#     chalkboard:
+#       buttons: false
+#     preview-links: auto
+
+execute:
+  echo: false
+
+---
+
+
+# Compound Negative Binomial Distributions {#compound-negative-binomial}
+
+## From Compound Poisson to Compound Negative Binomial
+
+In the collective risk model,
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+The distribution of $S$ depends on both:
+
+- the claim number distribution $N$;
+- the claim severity distribution $X$.
+
+So far, we have considered the compound Poisson model.
+
+## Why Do We Need Another Frequency Distribution?
+
+For a Poisson random variable,
+
+$$
+E[N]=\operatorname{Var}(N)=\lambda.
+$$
+
+However, claim-count data may exhibit **overdispersion**:
+
+$$
+\operatorname{Var}(N)>E[N].
+$$
+
+In such cases, the Poisson distribution may be too restrictive.
+
+The negative binomial distribution provides an alternative.
+
+## The Negative Binomial Distribution — Type 2
+
+Under the IFoA Type 2 convention,
+
+$$
+N\sim NB(k,p),
+$$
+
+where $N$ is the number of **failures before the $k$th success**.
+
+The parameters satisfy
+
+$$
+k>0,\qquad 0<p<1,\qquad q=1-p.
+$$
+
+The support is
+
+$$
+N=0,1,2,\ldots
+$$
+
+## What Does the Negative Binomial Count?
+
+Imagine a sequence of independent Bernoulli trials.
+
+We continue until the $k$th success occurs.
+
+The random variable $N$ counts the number of failures observed before that success.
+
+For example, when $k=3$,
+
+$$
+F,F,S,F,F,S,F,S
+$$
+
+gives $N=5$.
+
+## Probability Function
+
+For $n=0,1,2,\ldots$,
+
+$$
+\Pr(N=n)
+=
+\frac{\Gamma(k+n)}
+{\Gamma(n+1)\Gamma(k)}
+p^kq^n.
+$$
+
+When $k$ is an integer,
+
+$$
+\Pr(N=n)
+=
+\binom{k+n-1}{n}p^kq^n.
+$$
+
+This is the **Negative Binomial Type 2** parameterisation.
+
+## Properties of the Negative Binomial
+
+The mean is
+
+$$
+E[N]=\frac{kq}{p}.
+$$
+
+The variance is
+
+$$
+\operatorname{Var}(N)=\frac{kq}{p^2}.
+$$
+
+Since $0<p<1$,
+
+$$
+\operatorname{Var}(N)>E[N].
+$$
+
+## Probability Generating Function
+
+The probability generating function is
+
+$$
+G_N(s)
+=
+E[s^N]
+=
+\left(\frac{p}{1-qs}\right)^k.
+$$
+
+The moment generating function is obtained by setting
+
+$$
+s=e^t.
+$$
+
+Hence,
+
+$$
+M_N(t)
+=
+\left(\frac{p}{1-qe^t}\right)^k.
+$$
+
+## Poisson versus Negative Binomial
+
+| | Poisson | Negative Binomial |
+|---|---|---|
+| Mean | $\lambda$ | $kq/p$ |
+| Variance | $\lambda$ | $kq/p^2$ |
+| Dispersion | $\operatorname{Var}(N)=E[N]$ | $\operatorname{Var}(N)>E[N]$ |
+
+The negative binomial allows **greater variability in claim counts**.
+
+## Why Use the Negative Binomial for Claim Counts?
+
+Insurance portfolios contain risks with different claim frequencies.
+
+Consequently, observed claim counts may be more variable than allowed by a Poisson model.
+
+The negative binomial provides a flexible frequency model with
+
+$$
+\operatorname{Var}(N)>E[N].
+$$
+
+This makes it useful for modelling **overdispersed claim counts**.
+
+## From Frequency to Aggregate Loss
+
+The collective risk model is
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+Now let the claim number distribution be
+
+$$
+N\sim NB(k,p).
+$$
+
+The aggregate loss $S$ is therefore a **compound negative binomial random variable**.
+
+## The Compound Negative Binomial Distribution
+
+Let
+
+$$
+N\sim NB(k,p)
+$$
+
+and let
+
+$$
+X_1,X_2,\ldots\sim F_X
+$$
+
+be independent and identically distributed claim amounts, independent of $N$.
+
+Then
+
+$$
+S=\sum_{i=1}^{N}X_i
+$$
+
+has a **compound negative binomial distribution**.
+
+## Notation
+
+We denote the compound negative binomial distribution by
+
+$$
+S\sim\mathcal{CNB}(k,p,F_X).
+$$
+
+Here,
+
+- $k,p$ determine the claim frequency distribution;
+- $F_X$ determines the claim severity distribution;
+- $S$ represents aggregate claims.
+
+The model separates **frequency** from **severity**.
+
+## Mean of the Compound Negative Binomial
+
+For a compound distribution,
+
+$$
+E[S]=E[N]E[X].
+$$
+
+Let $m_1=E[X].$
+
+Since
+
+$$
+E[N]=\frac{kq}{p},
+$$
+
+we obtain
+
+$$
+\boxed{E[S]=\frac{kq}{p}m_1}.
+$$
+
+## Variance of the Compound Negative Binomial
+
+For a compound distribution,
+
+$$
+\operatorname{Var}(S)
+=
+E[N]\operatorname{Var}(X)
++
+\operatorname{Var}(N)(E[X])^2.
+$$
+
+Let
+
+$$
+m_1=E[X],
+\qquad
+m_2=E[X^2].
+$$
+
+Then
+
+$$
+\boxed{
+\operatorname{Var}(S)
+=
+\frac{kq}{p^2}
+\left(pm_2+qm_1^2\right)
+}.
+$$
+
+## Interpreting the Variance
+
+The aggregate loss variance reflects two sources of uncertainty:
+
+$$
+\operatorname{Var}(S)
+=
+\underbrace{E[N]\operatorname{Var}(X)}
+_{\text{severity variation}}
++
+\underbrace{\operatorname{Var}(N)(E[X])^2}
+_{\text{frequency variation}}.
+$$
+
+Thus, both claim frequency and claim severity contribute to aggregate risk.
+
+## MGF of the Compound Distribution
+
+For a compound distribution,
+
+$$
+M_S(t)=G_N(M_X(t)).
+$$
+
+For the negative binomial,
+
+$$
+G_N(s)
+=
+\left(\frac{p}{1-qs}\right)^k.
+$$
+
+Therefore,
+
+$$
+\boxed{
+M_S(t)
+=
+\left(
+\frac{p}{1-qM_X(t)}
+\right)^k
+}.
+$$
+
+## Worked Example
+
+Suppose $N\sim NB(k,p),$ with $k=4,\qquad p=0.5.$
+
+Claim amounts have $m_1=E[X]=1000,\qquad m_2=E[X^2]=1{,}500{,}000.$
+
+Calculate:
+
+* the expected number of claims;
+* the variance of the number of claims;
+* the expected aggregate loss;
+* the variance of aggregate loss.
+
+## Worked Example: Claim Number
+
+Given $k=4$, $p=0.5$, and $q=0.5$,
+
+$$
+E[N]=\frac{kq}{p}
+=\frac{4(0.5)}{0.5}=4.
+$$
+
+$$
+\operatorname{Var}(N)
+=\frac{kq}{p^2}
+=\frac{4(0.5)}{0.5^2}=8.
+$$
+
+## Worked Example: Aggregate Loss
+
+Given $m_1=1{,}000$ and $m_2=1{,}500{,}000$,
+
+$$
+E[S]=\frac{kq}{p}m_1
+=4(1{,}000)=4{,}000.
+$$
+
+$$
+\operatorname{Var}(S)
+=\frac{kq}{p^2}(pm_2+qm_1^2)
+=8[0.5(1{,}500{,}000)+0.5(1{,}000)^2]
+=10{,}000{,}000.
+$$
+
+
+
+
+## R Simulation
+
+We can simulate the collective risk model in two stages.
+
+First, simulate the number of claims:
+
+$$
+N\sim NB(k,p).
+$$
+
+Then simulate the claim amounts
+
+$$
+X_1,\ldots,X_N\sim F_X.
+$$
+
+Finally, calculate
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+
+
+
+
+## R Simulation: Setting Up the Model
+
+We simulate $n_{\text{sim}}=5{,}000$ insurance years.
+
+```r
+set.seed(123)
+
+k <- 4
+p <- 0.5
+q <- 1 - p
+
+shape <- 2
+rate <- 0.002
+n_sim <- 5000
+```
+
+Here, `k` and `p` define the negative binomial frequency, while `shape` and `rate` define the Gamma severity distribution.
+
+## R Simulation: Claim Numbers
+
+First, simulate the number of claims in each year.
+
+```r
+N <- rnbinom(
+  n_sim,
+  size = k,
+  prob = p
+)
+```
+
+Each element of `N` represents the number of claims in one simulated year.
+
+Thus,
+
+$$
+N\sim NB(k,p).
+$$
+
+For these parameters,
+
+$$
+E[N]=4,\qquad \operatorname{Var}(N)=8.
+$$
+
+## R Simulation: Claim Amounts
+
+For each simulated year, generate the individual claim amounts.
+
+```r
+S <- sapply(N, function(n) {
+  if (n == 0) return(0)
+  sum(rgamma(
+    n, shape = shape, rate = rate
+  ))
+})
+```
+
+For a year with $N=n$ claims, this code generates $n$ Gamma claim amounts and adds them together.
+
+Thus,
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+## Claim Number: Simulation Result
+
+```r
+hist(
+  N,
+  breaks = seq(-0.5, max(N) + 0.5, 1),
+  main = "Claim Number: Negative Binomial",
+  xlab = "Number of claims, N"
+)
+```
+
+The histogram shows the simulated distribution of the annual claim count.
+
+Each bar represents the number of simulated years having a particular value of $N$.
+
+The distribution includes the possibility of **zero claims**.
+
+## Aggregate Loss: Simulation Result
+
+```r
+hist(
+  S,
+  breaks = 50,
+  main = "Aggregate Loss: Compound Negative Binomial",
+  xlab = "Aggregate loss, S"
+)
+```
+
+The histogram shows the simulated distribution of annual aggregate losses.
+
+Each value of `S` represents one simulated insurance year.
+
+The right-skewed shape arises from variation in both **claim frequency** and **claim severity**.
+
+## Simulation: From Frequency to Aggregate Loss
+
+The simulation follows the compound model in three stages:
+
+$$
+N\sim NB(k,p)
+$$
+
+$$
+X_1,\ldots,X_N\sim F_X
+$$
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+Thus, each element of `S` represents **one simulated aggregate loss**.
+
+## Simulation versus Theory
+
+We can calculate the theoretical severity moments.
+
+```r
+m1 <- shape / rate
+m2 <- shape * (shape + 1) / rate^2
+
+theory_mean <- k * q / p * m1
+theory_var <- k * q / p^2 *
+  (p * m2 + q * m1^2)
+```
+
+Here, `m1` and `m2` are the first and second moments of the Gamma severity.
+
+These are substituted into the compound negative binomial formulas.
+
+## Simulation versus Theory
+
+Compare the simulated and theoretical results.
+
+```r
+c(
+  Simulated_Mean = mean(S),
+  Theoretical_Mean = theory_mean,
+  Simulated_Var = var(S),
+  Theoretical_Var = theory_var
+)
+```
+
+The simulated values should be close to the theoretical values.
+
+With many simulated years, the differences become smaller.
+
+This provides a numerical check of the compound negative binomial formulas.
+
+## Theoretical Aggregate Loss
+
+For the Gamma severity distribution,
+
+$$
+E[X]=\frac{\text{shape}}{\text{rate}}=1000
+$$
+
+and
+
+$$
+E[X^2]
+=
+\frac{\text{shape}(\text{shape}+1)}
+{\text{rate}^2}
+=1{,}500{,}000.
+$$
+
+Therefore,
+
+$$
+E[S]
+=
+\frac{kq}{p}m_1
+=
+4(1000)
+=
+4000.
+$$
+
+The simulation should produce an aggregate mean close to $4000$.
+
+
+## Graph: Aggregate Loss {.smaller}
+
+```{r}
+#| fig-width: 6
+#| fig-height: 3.5
+
+set.seed(123)
+
+n_sim <- 5000
+k <- 4
+p <- 0.5
+
+shape <- 2
+rate <- 0.002
+
+N <- rnbinom(
+  n_sim, size = k, prob = p
+)
+
+S <- sapply(N, function(n) {
+  if (n == 0) return(0)
+  sum(rgamma(
+    n, shape = shape, rate = rate
+  ))
+})
+
+hist(
+  S, breaks = 50,
+  main = "Aggregate Loss: Compound Negative Binomial",
+  xlab = "Aggregate loss, S",
+  ylab = "Frequency"
+)
+```
+
+
+
+## Compare Simulation with Theory
+
+And similarly, this can be a **self-contained chunk** that calculates the theoretical moments and compares them with the simulation:
+
+```{r}
+m1 <- shape / rate
+m2 <- shape * (shape + 1) / rate^2
+
+theory_mean <- k * (1 - p) / p * m1
+theory_var <- k * (1 - p) / p^2 *
+  (p * m2 + (1 - p) * m1^2)
+
+data.frame(
+  Measure = c("Mean", "Variance"),
+  Simulation = c(mean(S), var(S)),
+  Theory = c(theory_mean, theory_var)
+)
+```
+
+
+
+## Interpreting the Simulation
+
+The simulated and theoretical results are reasonably close:
+
+| Measure  |  Simulation |     Theory |
+| -------- | ----------: | ---------: |
+| Mean     |     3,926.8 |      4,000 |
+| Variance | 9,437,849.2 | 10,000,000 |
+
+* The simulated mean is close to the theoretical mean of $4,000$.
+* The simulated variance is also reasonably close to the theoretical value.
+* The differences arise because only $5,000$ insurance years were simulated.
+* Increasing the number of simulations would generally make the simulated results closer to the theoretical values.
+* This provides a numerical check of the compound negative binomial formulas.
+
+The key idea is that **simulation reproduces the theoretical behaviour of the model approximately**.
+
+
+
+## When Might We Use This Model?
+
+The compound negative binomial model is useful when:
+
+- claim counts are overdispersed;
+- $\operatorname{Var}(N)>E[N]$;
+- the Poisson model is too restrictive;
+- a flexible frequency model is required;
+- aggregate claim amounts are the quantity of interest.
+
+## Limitations
+
+The negative binomial distribution is not automatically appropriate whenever
+
+$$
+\operatorname{Var}(N)>E[N].
+$$
+
+The choice of frequency distribution should be supported by:
+
+- the characteristics of the data;
+- goodness-of-fit analysis;
+- the modelling assumptions;
+- the intended application.
+
+## Summary
+
+The key progression is
+
+$$
+\text{Poisson}
+\rightarrow
+\text{Overdispersion}
+\rightarrow
+\text{Negative Binomial}
+\rightarrow
+\text{Compound Negative Binomial}.
+$$
+
+For $N\sim NB(k,p)$,
+
+$$
+E[N]=\frac{kq}{p},
+\qquad
+\operatorname{Var}(N)=\frac{kq}{p^2}.
+$$
+
+## Summary: Aggregate Loss
+
+For $S=\sum_{i=1}^{N}X_i,$
+
+the compound negative binomial model gives
+
+$$
+E[S]=\frac{kq}{p}m_1,
+$$
+
+and
+
+$$
+\operatorname{Var}(S)
+=
+\frac{kq}{p^2}
+\left(pm_2+qm_1^2\right).
+$$
+
+Its MGF is
+
+$$
+M_S(t)
+=
+\left(
+\frac{p}{1-qM_X(t)}
+\right)^k.
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+# Compound Binomial Distributions {#compound-binomial}
+
+## From Individual Policies to Aggregate Loss
+
+Consider a portfolio of $n$ independent and identical policies.
+
+Each policy can give rise to **at most one claim** during the period.
+
+Let $p$ be the probability that a policy produces a claim.
+
+The number of claims in the portfolio is therefore
+
+$$
+N \sim \operatorname{Binomial}(n,p).
+$$
+
+## Why the Binomial Distribution?
+
+The binomial model is natural when:
+
+* there are a fixed number $n$ of potential claim events;
+* each policy produces either **zero or one claim**;
+* each policy has the same claim probability $p$;
+* claim events are independent.
+
+Thus, the number of claims has an upper limit:
+
+$$
+0 \leq N \leq n.
+$$
+
+## The Compound Binomial Model
+
+Let $X_i$ denote the amount of the $i$th claim.
+
+Assume that $X_1,X_2,\ldots$ are i.i.d. and independent of $N$.
+
+Then the aggregate claim amount is
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+We call $S$ a **compound binomial random variable**.
+
+The distribution is denoted by
+
+$$
+S\sim\mathcal{CB}(n,p,F_X).
+$$
+
+## Aggregate Loss Model
+
+The collective risk model is
+
+$$
+S=\sum_{i=1}^{N}X_i,
+$$
+
+where
+
+$$
+N\sim\operatorname{Binomial}(n,p).
+$$
+
+Here, $N$ determines **how many claims occur**, while $X_i$ determines **how much each claim costs**.
+
+Thus, the aggregate loss combines a **frequency model** and a **severity model**.
+
+## Expected Aggregate Loss
+
+For a random sum,
+
+$$
+S=\sum_{i=1}^{N}X_i,
+$$
+
+the expected aggregate loss is
+
+$$
+\boxed{E[S]=E[N]E[X]}.
+$$
+
+This follows from the standard result for a random sum when $N$ is independent of the claim amounts.
+
+## Binomial Frequency Model
+
+For the binomial frequency model,
+
+$$
+N\sim\operatorname{Binomial}(n,p),
+$$
+
+so
+
+$$
+E[N]=np.
+$$
+
+Let
+
+$$
+m_1=E[X].
+$$
+
+Substituting into the random-sum formula,
+
+$$
+\begin{aligned}
+E[S]
+&=E[N]E[X]\\
+&=(np)m_1.
+\end{aligned}
+$$
+
+Therefore,
+
+$$
+\boxed{E[S]=npm_1}.
+$$
+
+
+## Interpretation of Expected Aggregate Loss
+
+The formula
+
+$$
+E[S]=npm_1
+$$
+
+can be written as
+
+$$
+\boxed{
+E[S]
+=
+\underbrace{np}_{\text{expected number of claims}}
+\underbrace{m_1}_{\text{expected claim amount}}
+}.
+$$
+
+Thus, expected aggregate loss is determined by:
+
+* the expected number of claims, $np$;
+* the expected amount per claim, $m_1$.
+
+The binomial frequency model therefore gives a simple interpretation of the expected aggregate loss.
+
+## Variance of Aggregate Loss
+
+For a random sum,
+
+$$
+\operatorname{Var}(S)
+=
+E[N]\operatorname{Var}(X)
++
+\operatorname{Var}(N)\{E[X]\}^2.
+$$
+
+For
+
+$$
+N\sim\operatorname{Binomial}(n,p),
+$$
+
+we have
+
+$$
+E[N]=np,
+\qquad
+\operatorname{Var}(N)=np(1-p).
+$$
+
+Let
+
+$$
+m_1=E[X],
+\qquad
+m_2=E[X^2].
+$$
+
+## Substituting the Binomial Moments
+
+Since
+
+$$
+\operatorname{Var}(X)=m_2-m_1^2,
+$$
+
+substitute into the random-sum formula:
+
+$$
+\begin{aligned}
+\operatorname{Var}(S)
+&=np(m_2-m_1^2)
++np(1-p)m_1^2.
+\end{aligned}
+$$
+
+Expanding,
+
+$$
+\begin{aligned}
+\operatorname{Var}(S)
+&=npm_2-npm_1^2
++np(1-p)m_1^2.
+\end{aligned}
+$$
+
+## Simplifying the Variance
+
+Collect the terms involving $m_1^2$:
+
+$$
+\begin{aligned}
+\operatorname{Var}(S)
+&=npm_2
+-npm_1^2
++np(1-p)m_1^2\\
+&=npm_2-np^2m_1^2.
+\end{aligned}
+$$
+
+Therefore,
+
+$$
+\boxed{
+\operatorname{Var}(S)
+=
+npm_2-np^2m_1^2
+}.
+$$
+
+The result combines **claim-size uncertainty** and **frequency uncertainty** under the binomial model.
+
+
+## Worked Example: Compound Binomial with Gamma Severity
+
+Suppose
+
+$$
+N\sim\operatorname{Binomial}(100,0.01),
+$$
+
+and, independently,
+
+$$
+X_i\overset{\text{i.i.d.}}{\sim}\operatorname{Gamma}(20,0.1),
+$$
+
+where the Gamma distribution uses the **shape-rate** parameterisation.
+
+Let
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+## Worked Example: Tasks
+
+For the compound binomial model above, find:
+
+1. the MGF of $S$;
+2. $E[S]$ using the MGF;
+3. $\operatorname{Var}(S)$ using the MGF;
+4. $P(S=0)$.
+
+
+## 1. MGF of the Aggregate Loss
+
+For
+
+$$
+X\sim\operatorname{Gamma}(20,0.1),
+$$
+
+the MGF is
+
+$$
+M_X(t)
+=
+\left(\frac{0.1}{0.1-t}\right)^{20}.
+$$
+
+For the compound binomial model,
+
+$$
+M_S(t)
+=
+\left[q+pM_X(t)\right]^n.
+$$
+
+Here, $n=100,\qquad p=0.01,\qquad q=0.99.$
+
+## MGF of $S$
+
+Substituting the values,
+
+$$
+\boxed{
+M_S(t)=
+\left[
+0.99+
+0.01\left(\frac{0.1}{0.1-t}\right)^{20}
+\right]^{100}
+}
+$$
+
+for $t<0.1$.
+
+This follows directly from the compound binomial MGF.
+
+## 2. Expected Aggregate Loss
+
+Use $E[S]=M_S'(0).$
+
+Let
+
+$$
+A(t)=
+0.99+
+0.01\left(\frac{0.1}{0.1-t}\right)^{20}.
+$$
+
+Then
+
+$$
+M_S(t)=A(t)^{100}.
+$$
+
+Hence, $M_S'(t)=100A(t)^{99}A'(t).$
+
+At $t=0$, \qquad $A(0)=1, \qquad A'(0)=0.01M_X'(0).$
+
+## Expected Aggregate Loss
+
+For the Gamma distribution,
+
+$$
+M_X'(0)=E[X]
+=\frac{20}{0.1}=200.
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+E[S]
+&=M_S'(0)\\
+&=100(0.01)(200).
+\end{aligned}
+$$
+
+Thus,
+
+$$
+\boxed{E[S]=200}.
+$$
+
+
+## 3. Variance Using the MGF
+
+Use
+
+$$
+\operatorname{Var}(S)
+=
+M_S''(0)-[M_S'(0)]^2.
+$$
+
+From the previous result,
+
+$$
+M_S'(0)=200.
+$$
+
+We therefore need
+
+$$
+M_S''(0).
+$$
+
+## Second Derivative
+
+For
+
+$$
+M_S(t)=A(t)^{100},
+$$
+
+the second derivative is
+
+$$
+M_S''(t)
+=
+100(99)A(t)^{98}[A'(t)]^2
++
+100A(t)^{99}A''(t).
+$$
+
+At $t=0$,
+
+$$
+M_S''(0)
+=
+100(99)[A'(0)]^2
++
+100A''(0).
+$$
+
+## Evaluate the Components
+
+For the Gamma severity,
+
+$$
+E[X^2]
+=
+\operatorname{Var}(X)+[E(X)]^2.
+$$
+
+Since
+
+$$
+\operatorname{Var}(X)=\frac{20}{0.1^2}=2{,}000,
+$$
+
+we obtain
+
+$$
+E[X^2]=2{,}000+200^2=42{,}000.
+$$
+
+Therefore, $A'(0)=0.01(200), \qquad A''(0)=0.01(42{,}000).$
+
+## Variance of $S$
+
+Thus,
+
+$$
+M_S''(0)
+=
+100(99)(0.01\times200)^2
++
+100(0.01\times42{,}000).
+$$
+
+Hence,
+
+$$
+M_S''(0)=81{,}600.
+$$
+
+Finally,
+
+$$
+\begin{aligned}
+\operatorname{Var}(S)
+&=81{,}600-200^2\\
+&=\boxed{41{,}600}.
+\end{aligned}
+$$
+
+## 4. Probability of Zero Aggregate Loss
+
+Because claim amounts are positive,
+
+$$
+S=0
+\quad\Longleftrightarrow\quad
+N=0.
+$$
+
+Therefore,
+
+$$
+P(S=0)=P(N=0).
+$$
+
+For
+
+$$
+N\sim\operatorname{Binomial}(100,0.01),
+$$
+
+we have
+
+$$
+P(N=0)
+=
+(1-0.01)^{100}.
+$$
+
+## Evaluating $P(S=0)$
+
+Thus,
+
+$$
+P(S=0)
+=
+(0.99)^{100}.
+$$
+
+Numerically,
+
+$$
+\boxed{P(S=0)\approx0.3660}.
+$$
+
+So there is approximately a **36.6% probability of no aggregate claims**.
+
+## An Alternative MGF View
+
+Recall that $M_S(t)=E[e^{tS}].$
+
+As $t\to-\infty$,
+
+$$
+e^{tS}\to
+\begin{cases}
+1, & S=0,\\
+0, & S>0.
+\end{cases}
+$$
+
+Therefore,
+
+$$
+P(S=0)
+=
+\lim_{t\to-\infty}M_S(t).
+$$
+
+For this model, $\qquad \lim_{t\to-\infty}M_S(t)=(0.99)^{100} \approx0.3660.$
+
+This provides another useful interpretation of the MGF.
+
+## Key Lessons
+
+The compound binomial MGF is obtained by substituting the severity MGF into
+
+$$
+M_S(t)=\left[q+pM_X(t)\right]^n.
+$$
+
+For this example, $\boxed{M_S(t)=\left[0.99+0.01\left(\frac{0.1}{0.1-t}\right)^{20}\right]^{100}}.$
+
+The MGF can be used to obtain moments:
+
+$$
+E[S]=200,
+\qquad
+\operatorname{Var}(S)=41{,}600.
+$$
+
+The model has a positive probability of zero aggregate loss: $P(S=0)=(0.99)^{100}\approx0.3660.$
+
+**Main idea:** the compound-binomial MGF provides a single framework for obtaining both **aggregate-loss moments** and other distributional information.
+
+
+
+
+
+
+
+
+## R Simulation
+
+We can simulate the collective risk model in two stages.
+
+1. **Simulate the number of claims** $N$.
+2. **Simulate the claim amounts** $X_1,\ldots,X_N$ and calculate the aggregate loss
+
+   $$
+   S=\sum_{i=1}^{N}X_i.
+   $$
+
+For this example,
+
+$$
+N\sim\operatorname{Binomial}(100,0.01)
+$$
+
+and
+
+$$
+X_i\overset{\text{i.i.d.}}{\sim}\operatorname{Gamma}(20,0.1).
+$$
+
+## Stage 1: Simulate the Number of Claims
+
+For each simulated year, generate
+
+$$
+N\sim\operatorname{Binomial}(100,0.01).
+$$
+
+```{r}
+set.seed(123)
+
+B <- 100000
+
+N <- rbinom(
+  B, size = 100, prob = 0.01
+)
+```
+
+Each element of `N` represents the **number of claims in one simulated year**.
+
+For example,
+
+```{r}
+head(N)
+```
+
+The simulation produces $B=100{,}000$ independent insurance years.
+
+## Stage 2: Simulate Aggregate Loss
+
+For each simulated year:
+
+* If $N=0$, then $S=0$.
+* If $N=n>0$, simulate $n$ claim amounts.
+* Add the claim amounts to obtain $S$.
+
+```{r}
+S <- sapply(N, function(n) {
+  if (n == 0) {
+    0
+  } else {
+    sum(rgamma(
+      n, shape = 20, rate = 0.1
+    ))
+  }
+})
+```
+
+Thus, each element of `S` represents one simulated value of
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+
+## R Simulation
+
+We can simulate the aggregate loss directly in R.
+
+```r
+# Simulate aggregate losses
+set.seed(123)
+B <- 100000
+N <- rbinom(B, size = 100, prob = 0.01)
+S <- sapply(N, function(n) {
+  sum(rgamma(n, shape = 20, rate = 0.1))
+})
+
+# Plot the simulated aggregate losses
+hist(S, breaks = 50,
+     main = "Simulated Aggregate Loss",
+     xlab = "Aggregate loss, S")
+```
+
+## R Simulation
+
+We can simulate the aggregate loss directly in R.
+
+```{r}
+#| echo: false
+#| fig-width: 5.5
+#| fig-height: 3.5
+#| fig-align: "center"
+
+# Simulate aggregate losses
+set.seed(123)
+B <- 100000
+N <- rbinom(B, size = 100, prob = 0.01)
+S <- sapply(N, function(n) {
+  sum(rgamma(n, shape = 20, rate = 0.1))
+})
+
+# Plot the simulated aggregate losses
+hist(S, breaks = 50,
+     main = "Simulated Aggregate Loss",
+     xlab = "Aggregate loss, S",
+     col = "lightblue",
+     border = "white")
+```
+
+
+## Simulation Results
+
+Use the simulated aggregate losses to estimate the moments.
+
+```{r}
+mean(S)
+var(S)
+```
+
+For $100{,}000$ simulations, $\widehat{E[S]}=199.89$ and $\widehat{\operatorname{Var}(S)}=41{,}515.39$.
+
+
+Compare with the theoretical results:
+
+$$
+E[S]=200,
+\qquad
+\operatorname{Var}(S)=41{,}600.
+$$
+
+**The simulation closely reproduces the theoretical results.**
+
+## From Model to Simulation
+
+The simulation follows exactly the structure of the collective risk model:
+
+$$
+\boxed{
+N
+\longrightarrow
+X_1,\ldots,X_N
+\longrightarrow
+S
+}
+$$
+**Frequency:** $N\sim\operatorname{Binomial}(100,0.01)$
+
+**Severity:** $X_i\sim\operatorname{Gamma}(20,0.1)$
+
+**Aggregate loss:** $S=\sum_{i=1}^{N}X_i$
+
+
+> **Key idea:** simulation lets us generate many possible insurance years and use the simulated aggregate losses to approximate quantities such as $E[S]$ and $\operatorname{Var}(S)$.
+
+
+
+
+
+
+
+
+
+
+# Properties of the Compound Binomial Model
+
+## Comparing the Three Frequency Models
+
+The three models differ mainly in their assumptions about the number of claims $N$.
+
+| Model                      | Frequency distribution            | Support of $N$ |
+| -------------------------- | --------------------------------- | -------------- |
+| Compound Binomial          | $\operatorname{Binomial}(n,p)$    | $0,\ldots,n$   |
+| Compound Poisson           | $\operatorname{Poisson}(\lambda)$ | $0,1,2,\ldots$ |
+| Compound Negative Binomial | $\operatorname{NB}(k,p)$          | $0,1,2,\ldots$ |
+
+The claim amounts $X_i$ can have the same severity distribution in all three models.
+
+## Comparing Frequency Variability
+
+For the binomial model,
+
+$$
+E[N]=np,
+\qquad
+\operatorname{Var}(N)=np(1-p).
+$$
+
+For the Poisson model,
+
+$$
+E[N]=\lambda,
+\qquad
+\operatorname{Var}(N)=\lambda.
+$$
+
+For the negative binomial model,
+
+$$
+E[N]=\frac{kq}{p},
+\qquad
+\operatorname{Var}(N)=\frac{kq}{p^2}.
+$$
+
+Thus, the binomial model has $\operatorname{Var}(N)<E[N],$
+
+while the Poisson and negative binomial models have variance equal to or greater than their mean.
+
+## Interpretation of Frequency Variability
+
+The three models represent different patterns of claim-count variability.
+
+**Binomial:** fixed number of potential claim events and limited frequency variability.
+
+**Poisson:** no fixed upper limit, with frequency variance equal to the mean.
+
+**Negative binomial:** no fixed upper limit and greater frequency variability than the Poisson model.
+
+The choice of frequency model should reflect the underlying claim-generation mechanism.
+
+## A Fixed Upper Limit on Claims
+
+A defining feature of the compound binomial model is
+
+$$
+N\leq n.
+$$
+
+Consequently, the portfolio can contain at most $n$ claims.
+
+This is natural when there are $n$ policies and each policy can produce at most one claim.
+
+In contrast, Poisson and negative binomial models have no finite upper limit on $N$.
+
+## The Role of the Claim Probability
+
+For
+
+$$
+N\sim\operatorname{Binomial}(n,p),
+$$
+
+the expected number of claims is
+
+$$
+E[N]=np.
+$$
+
+Increasing $p$ increases the expected frequency.
+
+However,$\operatorname{Var}(N)=np(1-p),$ so frequency variability is also affected by $p$.
+
+The variance is largest when $p=0.5$.
+
+## Aggregate Loss Depends on Frequency and Severity
+
+For the compound binomial model,
+
+$$
+E[S]=npE[X].
+$$
+
+The expected aggregate loss therefore depends on:
+
+* the number of potential claims $n$;
+* the probability of a claim $p$;
+* the expected claim amount $E[X]$.
+
+Similarly,
+
+$$
+\operatorname{Var}(S)
+=
+E[N]\operatorname{Var}(X)
++
+\operatorname{Var}(N)\{E[X]\}^2.
+$$
+
+Thus, aggregate risk comes from both **claim severity** and **claim frequency**.
+
+## Binomial to Poisson as an Approximation
+
+The binomial frequency model approaches a Poisson model when
+
+$$
+n\to\infty,
+\qquad
+p\to0,
+\qquad
+np\to\lambda.
+$$
+
+Then
+
+$$
+\operatorname{Binomial}(n,p)
+\approx
+\operatorname{Poisson}(\lambda).
+$$
+
+This provides a useful connection between the compound binomial and compound Poisson models.
+
+The Poisson model can therefore be viewed as an approximation when there are many potential claim events with small individual claim probabilities.
+
+
+## Compound Binomial: Key Results
+
+For
+
+$$
+N\sim\operatorname{Binomial}(n,p),
+$$
+
+and
+
+$$
+S=\sum_{i=1}^{N}X_i,
+$$
+
+with $N$ independent of the i.i.d. claim amounts $X_i$,
+
+$$
+E[S]=np\,m_1,\qquad \operatorname{Var}(S)=npm_2-np^2m_1^2.
+$$
+
+
+The compound binomial model is particularly appropriate when there is a **fixed number of potential claim events**, with each event producing at most one claim.
+
+## Three Compound Models
+
+The main distinction among the three special compound models is their **frequency distribution**.
+
+$$
+\begin{array}{c|c|c}
+\text{Model} & E[N] & \operatorname{Var}(N)\\
+\hline
+\text{Binomial} & np & np(1-p)\\
+\text{Poisson} & \lambda & \lambda\\
+\text{Negative Binomial} & \dfrac{kq}{p} & \dfrac{kq}{p^2}
+\end{array}
+$$
+
+The frequency assumption determines the variability of the aggregate loss.
+
+
+
+# Aggregate Claims with Reinsurance
+
+## Next: Aggregate Claims with Reinsurance
+
+We now extend the collective risk model to incorporate **reinsurance**.
+
+The next section considers aggregate claim distributions under:
+
+* **Proportional reinsurance**
+* **Individual excess of loss reinsurance**
+
+We will examine how reinsurance changes the **individual claim amounts** and, consequently, the **aggregate claim distribution**.
+
+
+
+
+
+
+
+## Proportional Reinsurance
+
+Let $S$ denote the total aggregate claims from a risk during a given period.
+
+Let $S_I$ and $S_R$ denote the aggregate claims paid by the **insurer** and **reinsurer**, respectively.
+
+Then
+
+$$
+\boxed{S=S_I+S_R}.
+$$
+
+Under proportional reinsurance, the insurer retains a fixed proportion $\alpha$ of every claim.
+
+## Proportional Reinsurance
+
+For each claim $X_i$,
+
+$$
+Y_i=\alpha X_i,
+\qquad
+Z_i=(1-\alpha)X_i.
+$$
+
+Therefore,
+
+$$
+S_I=\sum_{i=1}^N\alpha X_i=\alpha S
+$$
+
+and
+
+$$
+S_R=\sum_{i=1}^N(1-\alpha)X_i=(1-\alpha)S.
+$$
+
+## Key Features
+
+* Both the insurer and reinsurer contribute to **every claim**.
+* The insurer retains the same proportion $\alpha$ of every claim.
+* The reinsurer pays the remaining proportion $1-\alpha$.
+* Both parties have **unlimited liability** unless a separate cap is imposed.
+
+Thus,
+
+$$
+\boxed{S_I=\alpha S,\qquad S_R=(1-\alpha)S}.
+$$
+
+## Worked Example
+
+Suppose aggregate claims follow a compound Poisson distribution with
+
+$$
+N\sim\operatorname{Poisson}(10)
+$$
+
+and individual claim amounts
+
+$$
+X\sim Pa(4,1).
+$$
+
+The insurer purchases proportional reinsurance with retention $\alpha=0.8.$
+
+Find:
+
+1. the distributions of $S_I$ and $S_R$;
+2. their means and variances;
+3. compare $\operatorname{Var}(S_I)+\operatorname{Var}(S_R)$ with $\operatorname{Var}(S)$.
+
+
+## Solution: Set Up the Reinsurance Model
+
+The original aggregate claim is
+
+$$
+S=\sum_{i=1}^{N}X_i.
+$$
+
+Under proportional reinsurance with $\alpha=0.8$,
+
+$$
+S_I=0.8S,
+\qquad
+S_R=0.2S.
+$$
+
+Equivalently,
+
+$$
+S_I=\sum_{i=1}^{N}0.8X_i,
+\qquad
+S_R=\sum_{i=1}^{N}0.2X_i.
+$$
+
+## Solution: Claim Amounts After Reinsurance
+
+Define the insurer's payment per claim as
+
+$$
+Y_i=0.8X_i.
+$$
+
+Define the reinsurer's payment per claim as
+
+$$
+Z_i=0.2X_i.
+$$
+
+Then
+
+$$
+S_I=\sum_{i=1}^{N}Y_i,
+\qquad
+S_R=\sum_{i=1}^{N}Z_i.
+$$
+
+Both are therefore compound Poisson distributions.
+
+## Solution: Distribution of the Insurer's Claim
+
+Recall the scaling property:
+
+$$
+X\sim Pa(\alpha,\lambda)
+\quad\Longrightarrow\quad
+kX\sim Pa(\alpha,k\lambda).
+$$
+
+Since
+
+$$
+X_i\sim Pa(4,1)
+$$
+
+and
+
+$$
+Y_i=0.8X_i,
+$$
+
+we obtain
+
+$$
+\boxed{Y_i\sim Pa(4,0.8)}.
+$$
+
+## Solution: Distribution of the Reinsurer's Claim
+
+Similarly,
+
+$$
+Z_i=0.2X_i.
+$$
+
+Therefore,
+
+$$
+\boxed{Z_i\sim Pa(4,0.2)}.
+$$
+
+Hence,
+
+$$
+\boxed{
+S_I\sim\mathcal{CP}(10,Pa(4,0.8))
+}
+$$
+
+and
+
+$$
+\boxed{
+S_R\sim\mathcal{CP}(10,Pa(4,0.2))
+}.
+$$
+
+## Solution: Moments of the Original Severity
+
+For
+
+$$
+X\sim Pa(4,1),
+$$
+
+the mean is
+
+$$
+E[X]=\frac{\lambda}{\alpha-1}
+=\frac{1}{4-1}
+=\frac{1}{3}.
+$$
+
+The second moment is
+
+$$
+E[X^2]
+=
+\frac{\Gamma(\alpha-2)\Gamma(3)}
+{\Gamma(\alpha)}
+\lambda^2.
+$$
+
+Thus, $E[X^2]=\frac{\Gamma(2)\Gamma(3)}{\Gamma(4)}=\frac{1}{3}.$
+
+## Solution: Original Aggregate Moments
+
+For a compound Poisson model,
+
+$$
+E[S]=\lambda E[X]
+$$
+
+and
+
+$$
+\operatorname{Var}(S)=\lambda E[X^2].
+$$
+
+Here $\lambda=10$, so
+
+$$
+E[S]
+=
+10\left(\frac{1}{3}\right)
+=
+\boxed{\frac{10}{3}}.
+$$
+
+## Solution: Original Aggregate Variance
+
+Using
+
+$$
+\operatorname{Var}(S)=\lambda E[X^2],
+$$
+
+we obtain
+
+$$
+\operatorname{Var}(S)
+=
+10\left(\frac{1}{3}\right).
+$$
+
+Therefore,
+
+$$
+\boxed{\operatorname{Var}(S)=\frac{10}{3}}.
+$$
+
+## Solution: Insurer's Mean
+
+Since
+
+$$
+S_I=0.8S,
+$$
+
+we can use the scaling property of expectation:
+
+$$
+E[S_I]
+=
+0.8E[S].
+$$
+
+Therefore,
+
+$$
+E[S_I]
+=
+0.8\left(\frac{10}{3}\right)
+=
+\boxed{\frac{8}{3}}.
+$$
+
+## Solution: Insurer's Variance
+
+For a constant $c$,
+
+$$
+\operatorname{Var}(cS)=c^2\operatorname{Var}(S).
+$$
+
+Therefore,
+
+$$
+\operatorname{Var}(S_I)
+=
+(0.8)^2\operatorname{Var}(S).
+$$
+
+Hence,
+
+$$
+\operatorname{Var}(S_I)
+=
+(0.8)^2\left(\frac{10}{3}\right)
+=
+\boxed{\frac{32}{15}}.
+$$
+
+## Solution: Reinsurer's Mean
+
+Similarly,
+
+$$
+S_R=0.2S.
+$$
+
+Therefore,
+
+$$
+E[S_R]
+=
+0.2E[S]
+=
+0.2\left(\frac{10}{3}\right).
+$$
+
+Thus,
+
+$$
+\boxed{E[S_R]=\frac{2}{3}}.
+$$
+
+## Solution: Reinsurer's Variance
+
+Using the variance scaling property,
+
+$$
+\operatorname{Var}(S_R)
+=
+(0.2)^2\operatorname{Var}(S).
+$$
+
+Therefore,
+
+$$
+\operatorname{Var}(S_R)
+=
+(0.2)^2\left(\frac{10}{3}\right)
+=
+\boxed{\frac{2}{15}}.
+$$
+
+## Solution: Compare the Variances
+
+The sum of the two individual variances is
+
+$$
+\operatorname{Var}(S_I)+\operatorname{Var}(S_R)
+=
+\frac{32}{15}+\frac{2}{15}
+=
+\boxed{\frac{34}{15}}.
+$$
+
+The original aggregate variance is
+
+$$
+\operatorname{Var}(S)=\frac{10}{3}
+=\frac{50}{15}.
+$$
+
+Therefore,
+
+$$
+\boxed{
+\frac{34}{15}<\frac{50}{15}
+}.
+$$
+
+## Solution: Why Are They Different?
+
+We know that
+
+$$
+S=S_I+S_R.
+$$
+
+Thus,
+
+$$
+\operatorname{Var}(S)
+=
+\operatorname{Var}(S_I)
++
+\operatorname{Var}(S_R)
++
+2\operatorname{Cov}(S_I,S_R).
+$$
+
+The covariance term is important because
+
+$$
+S_I=0.8S,
+\qquad
+S_R=0.2S.
+$$
+
+## Solution: The Covariance
+
+We have
+
+$$
+\operatorname{Cov}(S_I,S_R)
+=
+\operatorname{Cov}(0.8S,0.2S).
+$$
+
+Therefore,
+
+$$
+\operatorname{Cov}(S_I,S_R)
+=
+0.8(0.2)\operatorname{Var}(S).
+$$
+
+Hence,
+
+$$
+\operatorname{Cov}(S_I,S_R)
+=
+0.16\left(\frac{10}{3}\right)
+=
+\boxed{\frac{8}{15}}.
+$$
+
+So the variance decomposition becomes $\frac{32}{15}+\frac{2}{15}+2\left(\frac{8}{15}\right)=\frac{50}{15}=\frac{10}{3}.$
+
+
+## Key Takeaways
+
+Under proportional reinsurance,
+
+$$
+\boxed{S_I=\alpha S,\qquad S_R=(1-\alpha)S}.
+$$
+
+Therefore,
+
+$$
+E[S_I]=\alpha E[S],
+\qquad
+E[S_R]=(1-\alpha)E[S].
+$$
+
+and
+
+$$
+\operatorname{Var}(S_I)=\alpha^2\operatorname{Var}(S),
+\qquad
+\operatorname{Var}(S_R)=(1-\alpha)^2\operatorname{Var}(S).
+$$
+
+The insurer and reinsurer payments are **dependent**, so
+
+$$
+\operatorname{Var}(S_I)+\operatorname{Var}(S_R)
+\neq
+\operatorname{Var}(S).
+$$
+
+
+
+
+
+
+
+
+
+
